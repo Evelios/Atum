@@ -45,3 +45,9 @@ Instance "Battle Map" Generation
 
 Rendering
   - SVG creation and rendering library
+
+Automating Tools and Library Pulling
+  - Grunt
+    + JS Concatination (Dev & Build)
+    + JS Minification (Build)
+    + Live Reload (Dev)
