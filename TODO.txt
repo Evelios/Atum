@@ -1,0 +1,47 @@
+Diagram
+  - Use ES6 standards
+  - Recursive divisions
+    + Voronoi recursion
+    + Simple subdivisions
+    + L-Systems divisions
+  - Diagram traversal
+    + A-star
+    + Dijkstra
+
+Utilities
+  - Vector ES6 class complient
+  - Redistribution ES6 modular
+  - Clean up the Util File and put in ES6 capabilities
+  - Point placement by density or number
+    + Random
+    + poisson
+    + Box blue noise
+    + Square
+    + Hexagonn
+    + Circular
+
+Shapes modules
+  - Basic Classes
+    + Polygon
+    + Square
+    + Circle
+    + Triangle
+
+  - Shape Modufications
+    + Inset
+    + Outset
+    + Perturb
+  
+Town Generation
+  - Roads
+  - Town Shape
+  - Rivers
+  - Town Subdivision
+  - Districts / Wards / Borough
+    + Resursive subdivision
+
+Instance "Battle Map" Generation
+  - Low priority
+
+Rendering
+  - SVG creation and rendering library
