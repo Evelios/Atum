@@ -10,7 +10,7 @@
  * @summary 2D Vector Library
  * @class Vector
  */
-class Vector {
+export class Vector {
     /**
      * Creates an instance of Vector.
      * @param {Number} x The x component
@@ -18,12 +18,42 @@ class Vector {
      * @memberof Vector
      */
     constructor(x, y) {
+        this._set(x, y);
+    }
+
+    //---- Helper Functions ----
+
+    /**
+     * Internal Helper Function for setting variable properties
+     * 
+     * @private
+     * @param {Number} x The x component
+     * @param {Number} y The y component
+     * @memberof Vector
+     */
+    _set(x, y) {
         this.x = x;
         this.y = y;
+    }
 
-        this.asKey = function() {
-            return [this.x, this.y];
-        };
+    /**
+     * Get the vector key:Symbol representation
+     * 
+     * @returns {Symbol} The vector key element
+     * @memberof Vector
+     */
+    key() {
+        return Symbol(this.list());
+    }
+
+    /**
+     * Key the vector in list form
+     * 
+     * @returns {[Number, Number]} List representation of the vector
+     * @memberof Vector
+     */
+    list() {
+        return [this.x, this.y];
     }
 
     //---- Basic Math Functions ----
