@@ -9,7 +9,6 @@ Diagram
     + Dijkstra
 
 Utilities
-  - Redistribution ES6 modular
   - Clean up the Util File and put in ES6 capabilities
   - Point placement by density or number
     + Random
