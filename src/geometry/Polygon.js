@@ -4,9 +4,8 @@
  * for more specific geometric shapes.
  * 
  * @class Polygon
- * @extends {Array}
  */
-class Polygon extends Array {
+class Polygon extends Shape {
     /**
      * Creates an instance of Polygon.
      * @param {any} x The first input. This can be a polygon, an array of
