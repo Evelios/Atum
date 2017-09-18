@@ -1,21 +1,23 @@
 /**
- * @author Thomas Waters
- * 
  * This is a basic vector class that is used for geometry, position inforamtion,
  * movement infomation, and more complex structures.
  * The vector class follows a immutable paradigm where changes are not made to the
  * vectors themselves. Any change to a vector is returned as a new vector that
  * must be captured.
  * 
+ * @export
+ * @author Thomas Waters
  * @summary 2D Vector Library
+ * @extends Array
  * @class Vector
  */
-export class Vector {
+class Vector extends Array {
     /**
      * Creates an instance of Vector.
+     * @constructor
      * @param {Number} x The x component
      * @param {Number} y The y component
-     * @memberof Vector
+     * @class Vector
      */
     constructor(x, y) {
         this._set(x, y);
@@ -32,6 +34,7 @@ export class Vector {
      * @memberof Vector
      */
     _set(x, y) {
+        super(x, y);
         this.x = x;
         this.y = y;
     }
@@ -49,7 +52,7 @@ export class Vector {
     /**
      * Key the vector in list form
      * 
-     * @returns {[Number, Number]} List representation of the vector
+     * @returns {Array.<Number>} List representation of the vector of length 2
      * @memberof Vector
      */
     list() {
@@ -333,7 +336,7 @@ export class Vector {
     /**
      * Get the two normal vectors that are perpendicular to the current vector
      * 
-     * @returns {[Vector, Vector]} The two normal vectors that are perpendicular
+     * @returns {Array.<Vector>} The two normal vectors that are perpendicular
      *  to the vector. The first vector is the normal vector that is +90 deg or
      *  +PI/2 rad. The second vector is the noraml vector that is -90 deg or
      *  -PI/2 rad.
@@ -345,31 +348,72 @@ export class Vector {
         return [plus90, minus90];
     }
 
+    //---- Standard Static Vector Objects ----
+
+    /**
+     * Get a vector of no magnitude and no direction
+     * 
+     * @static
+     * @function
+     * @returns {Vector} Vector of magnitude zero
+     * @memberof Vector
+     */
+    static zero() {
+        "use strict";
+        return new Vector(0, 0);
+    }
+
+    /**
+     * Get the unit vector pointing in the positive y direction
+     * 
+     * @static
+     * @function
+     * @returns {Vector} Unit vector pointing up
+     * @memberof Vector
+     */
+    static up() {
+        "use strict";
+        return new Vector(0, 1);
+    }
+
+    /**
+     * Get the unit vector pointing in the negative y direction
+     * 
+     * @static
+     * @function
+     * @returns {Vector} Unit vector pointing down
+     * @memberof Vector
+     */
+    static down() {
+        "use strict";
+        return new Vector(0, -1);
+    }
+
+    /**
+     * Get the unit vector pointing in the negative x direction
+     * 
+     * @static
+     * @function
+     * @returns {Vector} Unit vector pointing right
+     * @memberof Vector
+     */
+    static left() {
+        "use strict";
+        return new Vector(-1, 0);
+    }
+
+    /**
+     * Get the unit vector pointing in the positive x direction
+     * 
+     * @static
+     * @function
+     * @returns {Vector} Unit vector pointing right
+     * @memberof Vector
+     */
+    static right() {
+        "use strict";
+        return new Vector(1, 0);
+    }
 }
 
-//---- Standard Static Vector Objects ----
-
-Vector.zero = function() {
-    "use strict";
-    return new Vector(0, 0);
-};
-
-Vector.up = function() {
-    "use strict";
-    return new Vector(0, 1);
-};
-
-Vector.down = function() {
-    "use strict";
-    return new Vector(0, -1);
-};
-
-Vector.left = function() {
-    "use strict";
-    return new Vector(-1, 0);
-};
-
-Vector.right = function() {
-    "use strict";
-    return new Vector(1, 0);
-};
+export default Vector;

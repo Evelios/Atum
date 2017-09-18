@@ -1,6 +1,4 @@
 /**
- * @author Thomas Waters
- * 
  * Theses function are used to redistribute data located in the range 0-1
  * They take all the data and rearrange them and purturbe them slightly so that
  * they fit a particular distrubution function. For example you can use these
@@ -12,8 +10,9 @@
  * in this range the function is one to one
  * f(0) == 0 and f(1) == 1
  * 
+ * @author Thomas Waters
  * @summary Functions used to redistrubute values in the range 0-1
- * @module Redist
+ * @class Redist
  */
 
 "use strict";
@@ -22,6 +21,7 @@
  * The identity function. It returns the input value x
  * 
  * @export
+ * @function
  * @param {Number} x The input number in the range [0-1]
  * @returns {Number} Input value
  * @memberof Redist
@@ -35,6 +35,7 @@ export function identity(x) {
  * from [0-1]. This is simply 1 - x.
  * 
  * @export
+ * @function
  * @param {Number} x The input number in the range [0-1]
  * @returns {Number} The redistributed input value, 1 - x
  * @memberof Redist
@@ -49,6 +50,7 @@ export function inverse(x) {
  * output distribution will be slight exponential shaped.
  * 
  * @export
+ * @function
  * @param {Number} x The input number in the range [0-1]
  * @param {Number} [amm=1] The strength of the redistribution
  * @param {Boolean} [inc=true] If you want to increase or decrease the input
@@ -75,6 +77,7 @@ export function exp(x, amm = 1, inc = true) {
  * distribution also has a slight skew up or down on top of the redistribution.
  * 
  * @export
+ * @function
  * @param {Number} x The input number in the range [0-1] 
  * @param {Number} [amm=2] The strength of the redistribution
  * @param {Boolean} [inc=true] If you want to increase or decrease the input
@@ -105,6 +108,7 @@ export function pow(x, amm = 2, inc = true, skewDown = true) {
  * a specific number of bins to but the distribution into.
  * 
  * @export
+ * @function
  * @param {Number} x The input number in the range [0-1]
  * @param {Number} [bins=10] The number of bins for the discrite distribution
  * @returns {Number} The discretized input value
