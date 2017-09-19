@@ -20,7 +20,9 @@ class Vector extends Array {
      * @class Vector
      */
     constructor(x, y) {
-        this._set(x, y);
+        super(x, y);
+        this.x = x;
+        this.y = y;
     }
 
     //---- Helper Functions ----
@@ -34,7 +36,6 @@ class Vector extends Array {
      * @memberof Vector
      */
     _set(x, y) {
-        super(x, y);
         this.x = x;
         this.y = y;
     }

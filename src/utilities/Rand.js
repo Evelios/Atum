@@ -11,7 +11,7 @@
 
 "use strict";
 
-var seedRand = require('seedrandom');
+// var seedRand = require('seedrandom');
 
 /**
  * Set the seed for the seeded random number generator. After the seed has been
