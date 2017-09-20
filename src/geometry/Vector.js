@@ -1,28 +1,30 @@
-/**
- * This is a basic vector class that is used for geometry, position inforamtion,
- * movement infomation, and more complex structures.
- * The vector class follows a immutable paradigm where changes are not made to the
- * vectors themselves. Any change to a vector is returned as a new vector that
- * must be captured.
- * 
- * @export
- * @author Thomas Waters
- * @summary 2D Vector Library
- * @extends Array
- * @class Vector
- */
-class Vector extends Array {
+class Vector {
     /**
-     * Creates an instance of Vector.
-     * @constructor
-     * @param {Number} x The x component
-     * @param {Number} y The y component
      * @class Vector
+     * 
+     * This is a basic vector class that is used for geometry, position inforamtion,
+     * movement infomation, and more complex structures.
+     * The vector class follows a immutable paradigm where changes are not made to the
+     * vectors themselves. Any change to a vector is returned as a new vector that
+     * must be captured. 
+     * 
+     * @description This vector class was constructed so that it can mirror two types of common
+     * point/vector type objects. This is having object properties stored as object
+     * properties (eg. vector.x, vector.y) or as list properties, [x, y] which can
+     * be accessed by vector[0], or vector[1].
+     * 
+     * @summary Create a 2D Vector object
+     * 
+     * @property {number} x The x vector component
+     * @property {number} y The y vector component
+     * @property {number} 0 The x vector component
+     * @property {number} 1 The y vector component
+     * 
+     * @param {number} x The x component
+     * @param {number} y The y component
      */
     constructor(x, y) {
-        super(x, y);
-        this.x = x;
-        this.y = y;
+        this._set(x, y);
     }
 
     //---- Helper Functions ----
@@ -31,11 +33,13 @@ class Vector extends Array {
      * Internal Helper Function for setting variable properties
      * 
      * @private
-     * @param {Number} x The x component
-     * @param {Number} y The y component
+     * @param {number} x The x component
+     * @param {number} y The y component
      * @memberof Vector
      */
     _set(x, y) {
+        this.__proto__[0] = x;
+        this.__proto__[1] = y;
         this.x = x;
         this.y = y;
     }
@@ -53,7 +57,7 @@ class Vector extends Array {
     /**
      * Key the vector in list form
      * 
-     * @returns {Array.<Number>} List representation of the vector of length 2
+     * @returns {number[]} List representation of the vector of length 2
      * @memberof Vector
      */
     list() {
@@ -123,7 +127,7 @@ class Vector extends Array {
     /**
      * Multiply the vector by a scalar value
      * 
-     * @param {Number} scalar The number to multiply the vector by
+     * @param {number} scalar The number to multiply the vector by
      * @returns {Vector} The result of multiplying the vector by a scalar
      *  element wise
      * @memberof Vector
@@ -135,7 +139,7 @@ class Vector extends Array {
     /**
      * Divide the vector by a scalar value
      * 
-     * @param {Number} scalar 
+     * @param {number} scalar 
      * @returns {Vector} The result of multiplying the vector by a scalar
      * @memberof Vector
      */
@@ -148,7 +152,7 @@ class Vector extends Array {
     /**
      * Get the magnitude of the vector
      * 
-     * @returns {Number} The magniture of the vector
+     * @returns {number} The magniture of the vector
      * @memberof Vector
      */
     magnitude() {
@@ -169,7 +173,7 @@ class Vector extends Array {
     /**
      * Get the get the current vector rotated by a certain ammount
      * 
-     * @param {Number} radians 
+     * @param {number} radians 
      * @returns {Vector} The vector that results from rotating the current
      *  vector by a particular ammount
      * @memberof Vector
@@ -186,7 +190,7 @@ class Vector extends Array {
      * @static
      * @param {Vector} a The first vector
      * @param {Vector} b The second vector
-     * @returns {Number} The dot product of the two vectors
+     * @returns {number} The dot product of the two vectors
      * @memberof Vector
      */
     static dot(a, b) {
@@ -194,10 +198,25 @@ class Vector extends Array {
     }
 
     /**
+     * Get the average location between several vectors
+     * 
+     * @param {Vector[]} vectors The list of vectors to average
+     * @memberof Vector
+     */
+    avg(vectors) {
+        let average = Vector.zero();
+
+        for (const vector of vectors) {
+            average = Vector.add(average, vector);
+        }
+        return average.divide(vectors.length);
+    }
+
+    /**
      * Get the dot product of this vector and another vector
      * 
      * @param {Vector} other The other vector
-     * @returns {Number} The dot product of this and the other vector
+     * @returns {number} The dot product of this and the other vector
      * @memberof Vector
      */
     dot(other) {
@@ -210,7 +229,7 @@ class Vector extends Array {
      * @static
      * @param {Vector} a The first vector
      * @param {Vector} b The second vector
-     * @returns {Number} The cross product of the two vectors
+     * @returns {number} The cross product of the two vectors
      * @memberof Vector
      */
     static cross(a, b) {
@@ -221,7 +240,7 @@ class Vector extends Array {
      * Get the cross product of this and the other vector
      * 
      * @param {Vector} other The other vector
-     * @returns {Number} The cross product of this and the other vector
+     * @returns {number} The cross product of this and the other vector
      * @memberof Vector
      */
     cross(other) {
@@ -347,7 +366,7 @@ class Vector extends Array {
     /**
      * Get the two normal vectors that are perpendicular to the current vector
      * 
-     * @returns {Array.<Vector>} The two normal vectors that are perpendicular
+     * @returns {Vector[]} The two normal vectors that are perpendicular
      *  to the vector. The first vector is the normal vector that is +90 deg or
      *  +PI/2 rad. The second vector is the noraml vector that is -90 deg or
      *  -PI/2 rad.
