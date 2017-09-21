@@ -5,23 +5,24 @@
 module.exports = function(grunt) {
     "use strict";
 
+    // ---- Require Tasks ----
     require("load-grunt-tasks")(grunt);
     require("load-grunt-config")(grunt);
 
+    // ---- Load Tasks ----
+    grunt.loadNpmTasks("grunt-contrib-uglify");
+    grunt.loadNpmTasks("grunt-contrib-watch");
+    grunt.loadNpmTasks('grunt-browserify');
+    grunt.loadNpmTasks('grunt-jsdoc');
+
     grunt.initConfig({
         pkg: grunt.file.readJSON("package.json"),
-
-        // ---- Grunt Uglify Task ----
-        uglify: {
-            src: "build/Atum.js",
-            dest: "build/Atum.min.js"
-        },
 
         // ---- Grunt Browserify Task ----
         browserify: {
             vendor: {
                 src: ["."],
-                dist: "build/libs.js",
+                dist: "./build/libs.js",
                 options: {
                     debug: false,
                     alias: [
@@ -31,20 +32,21 @@ module.exports = function(grunt) {
             },
             build: {
                 files: {
-                    "build/Atum.js": "src/main.js"
+                    "./build/Atum.js": "./src/main.js"
                 },
                 options: {
                     transform: [
                         ["babelify", { presets: "es2015" }]
                     ],
                     browserifyOptions: {
+                        standalone: "Atum",
                         debug: true
                     }
                 }
             },
             test: {
                 files: {
-                    "test/test.build.js": "test/test.js"
+                    "./test/test.build.js": "./test/test.js"
                 },
                 options: {
                     transform: [
@@ -82,14 +84,14 @@ module.exports = function(grunt) {
                         // configure : 
                 }
             }
+        },
+
+        // ---- Grunt Uglify Task ----
+        uglify: {
+            src: "build/Atum.js",
+            dest: "build/Atum.min.js"
         }
     });
-
-    // ---- Load Tasks ----
-    grunt.loadNpmTasks("grunt-contrib-uglify");
-    grunt.loadNpmTasks("grunt-contrib-watch");
-    grunt.loadNpmTasks('grunt-browserify');
-    grunt.loadNpmTasks('grunt-jsdoc');
 
     // ---- Register Tasks ----
     grunt.registerTask("default", [
