@@ -1,13 +1,4 @@
 Basics:
-  - Set up proper build syatem
-    + Grunt vs Gulp
-  - Allow for build of source code to usable format
-    + Surface level package
-      > <script src="Atum.js"></script>
-    + npm or node package
-      > require("Atum")
-      > import Atum from "Atum"
-  - Allow inclusion of external libaries
   - Test pre written code
     + Vector
     + Redist
@@ -15,12 +6,12 @@ Basics:
 
 Automating Tools and Library Pulling
   - Grunt
-    + JS Concatination (Dev & Build)
     + JS Minification (Build)
     + Live Reload (Dev)
-    + ES6 Capabilities
     + Packaging external libaries
-    + Allowing the end user to access the Atum bundle
+    + npm or node package
+      > require("Atum")
+      > import Atum from "Atum"
 
 Diagram
   - Use ES6 standards
