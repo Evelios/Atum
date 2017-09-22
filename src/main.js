@@ -1,4 +1,14 @@
-import Vector from "./utilities/Vector";
+import Vector from "./geometry/Vector";
+import Shape from "./geometry/Shape";
+import Line from "./geometry/Line";
+import Polygon from "./geometry/Polygon";
+import Rectangle from "./geometry/Rectangle";
+import Triangle from "./geometry/Triangle";
+import Center from "./diagram/Center";
+import Corner from "./diagram/Corner";
+import Edge from "./diagram/Edge";
+import Diagram from "./diagram/Diagram";
+import * as PointDistribution from "./Utilities/PointDistribution";
 import * as Redist from "./utilities/Redist";
 import * as Rand from "./utilities/Rand";
 
@@ -10,11 +20,25 @@ import * as Rand from "./utilities/Rand";
  * @see {@link https://github.com/Evelios/Atum}
  */
 const Atum = {
-    Vector,
-    Redist,
-    Rand
+    Geometry: {
+        Vector,
+        Shape,
+        Line,
+        Polygon,
+        Rectangle,
+        Triangle
+    },
+    Diagram: {
+        Center,
+        Corner,
+        Edge,
+        Diagram
+    },
+    Util: {
+        PointDistribution,
+        Redist,
+        Rand
+    }
 };
 
-console.log(Atum);
-
-// export default Atum;
+export default Atum;
