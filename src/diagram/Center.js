@@ -1,15 +1,16 @@
 import Vector from "../geometry/Vector";
+import Polygon from "../geometry/Polygon";
 
 class Center extends Vector {
     constructor(position) {
         super(position);
-        // Set of adjacent polygons
         this.id = -1;
-        this.neighbors = [];
+        // Set of adjacent polygons
+        this.neighbors = new Polygon();
         // Set of bordering edges
         this.borders = [];
         // Set of polygon corners
-        this.corners = [];
+        this.corners = new Polygon();
         this.border = false;
     }
 }

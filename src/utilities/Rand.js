@@ -11,7 +11,7 @@
 
 "use strict";
 
-// var seedRand = require('seedrandom');
+var seedRandom = require("seedRandom");
 
 /**
  * Set the seed for the seeded random number generator. After the seed has been
@@ -23,5 +23,52 @@
  * @memberof Rand
  */
 export function setSeed(seed) {
-    seedRand(seed);
+    seedRandom(seed);
 }
+
+export function rand() {
+
+}
+
+export function randRange() {
+
+}
+
+export function randHex() {
+
+}
+
+export function randHexColor() {
+
+}
+
+// //------------------------------------------------------------------------------
+// // Returns a random number between 0 (inclusive) and 1 (exclusive
+// Util.rand = function() {
+//     return Math.random();
+// }
+
+//   //------------------------------------------------------------------------------
+//   // Returns a random number between min (included) and max(excluded)
+//   Util.randRange = function(min, max) {
+//     return Math.random() * (max - min) + min;
+//   }
+
+//   //------------------------------------------------------------------------------
+//   // Returns a random integer from min (included) to max (excluded)
+//   Util.randInt = function(min, max) {
+//     return Math.floor(Math.random() * (max - min)) + min;
+//   }
+
+//   //------------------------------------------------------------------------------
+//   // Returns a random integer from min (included) to max (included)
+//   Util.randIntInclusive = function(min, max) {
+//     return Math.floor(Math.random() * (max - min + 1)) + min;
+//   }
+
+//   //------------------------------------------------------------------------------
+//   // Generates a random hexidecimal color
+//   // http://www.paulirish.com/2009/random-hex-color-code-snippets/
+//   Util.randHexColor = function() {
+//     return '#' + Math.floor(Math.random() * 16777215).toString(16);
+//   }

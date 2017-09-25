@@ -1,3 +1,11 @@
+Complete the following to Finish Version 1.0:
+  - Basics
+  - Automating Tools
+  - Shapes Libraries
+  - Point Generation
+  - Random Library
+  - Basic Diagram with PAN connection
+
 Basics:
   - Test pre written code
     + Vector

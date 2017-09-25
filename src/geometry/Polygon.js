@@ -19,12 +19,34 @@ class Polygon extends Shape {
      * @param {Vector} [center=average(verticies)] The center of the polygon
      */
     constructor(verticies, center) {
-        this.verticies = verticies;
+        super(verticies);
         if (center) {
             this.center = center;
         } else {
             center = Vector.avg(verticies);
         }
+    }
+
+    /**
+     * Get the polygon inset of the current polygon by the input ammount
+     * 
+     * @param ammount
+     * @returns {Polygon} The inset of the current polygon by
+     * @memberOf Polygon
+     */
+    inset(ammount) {
+        return ammount;
+    }
+
+    /**
+     * Returns wheither or not this polygon is a convex polygon. If this is
+     * not true then the polygon is convace or more complex.
+     * 
+     * @returns {boolean} If the polygon is convex
+     * @memberOf Polygon
+     */
+    isConvex() {
+
     }
 }
 

@@ -1,8 +1,17 @@
 /**
- * Point Generator Class
+ * This module is used to create different point distributions that can be
+ * turned into different tile sets when made into a graph format. There are
+ * various different distributions that can be used to create interesting
+ * tile patterns when turned into a voronoi diagram. 
+ * 
+ * @author Thomas Waters
+ * @class PointDistribution
  */
 
-import * as Rand from "util/Rand";
+"use strict";
+
+import Vector from "../geometry/Vector";
+import * as Rand from "./Rand";
 
 // Depends on the Rectangle Class & the Vector CLass
 
@@ -41,7 +50,7 @@ export function square(bbox, d) {
 
     for (let y = 0; y < bbox.height / d; y++) {
         for (let x = 0; x < bbox.width / d; x++) {
-            points.push(new Vector(dx + x*d, dy + y*d));
+            points.push(new Vector(dx + x * d, dy + y * d));
         }
     }
 
@@ -50,15 +59,16 @@ export function square(bbox, d) {
 
 export function hexagons(bbox, d, flatTop = true, w, h) {
     // Temporary, Need to allow for the change of height and width
-    w, h = d;
+    w,
+    h = d;
 
     const dx = dy = d / 2;
     let points = [];
 
     for (let y = 0; y < bbox.height / d; y++) {
         for (let x = 0; x < bbox.width / d; x++) {
-            points.push(new Vector((x % 1)*dx + x*d,
-                                   (y % 1)*dy + y*d));
+            points.push(new Vector((x % 1) * dx + x * d,
+                (y % 1) * dy + y * d));
         }
     }
 
@@ -66,5 +76,5 @@ export function hexagons(bbox, d, flatTop = true, w, h) {
 }
 
 export function circular(bbox, d) {
-    throw "Error: Not Implemented"
+    throw "Error: Not Implemented";
 }
