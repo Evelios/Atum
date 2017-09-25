@@ -20,11 +20,15 @@ class Vector {
      * @property {number} 0 The x vector component
      * @property {number} 1 The y vector component
      * 
-     * @param {number} x The x component
-     * @param {number} y The y component
+     * @param {number|Vector} x The x component or another vector
+     * @param {number} [y] The y component
      */
     constructor(x, y) {
-        this._set(x, y);
+        if (x instanceof Vector && !y) {
+            this._set(x.x, x.y);
+        } else {
+            this._set(x, y);
+        }
     }
 
     //---- Helper Functions ----
@@ -55,13 +59,24 @@ class Vector {
     }
 
     /**
-     * Key the vector in list form
+     * Get the vector in list form
      * 
      * @returns {number[]} List representation of the vector of length 2
      * @memberof Vector
      */
     list() {
         return [this.x, this.y];
+    }
+
+    /**
+     * Get a copy of the input vector
+     * 
+     * @param {Vector} v the vector to be coppied
+     * @returns {Vector} The vector copy
+     * @memberof Vector
+     */
+    static copy(v) {
+        return new Vector(v.x, v.y);
     }
 
     //---- Basic Math Functions ----
@@ -87,7 +102,7 @@ class Vector {
      * @memberof Vector
      */
     add(other) {
-        return this.add(this, other);
+        return Vector.add(this, other);
     }
 
     /**
@@ -111,7 +126,7 @@ class Vector {
      * @memberof Vector
      */
     subtract(other) {
-        return this.subtract(this, other);
+        return Vector.subtract(this, other);
     }
 
     /**
