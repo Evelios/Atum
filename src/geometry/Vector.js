@@ -79,6 +79,16 @@ class Vector {
         return new Vector(v.x, v.y);
     }
 
+    /**
+     * Returns the vector as a string of (x, y)
+     * 
+     * @returns {string} The string representation of a vector in (x, y) form
+     * @memberof Vector
+     */
+    toString() {
+        return `(${this.x}, ${this.y})`;
+    }
+
     //---- Basic Math Functions ----
 
     /**
