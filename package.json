@@ -1,46 +1,47 @@
 {
-    "name": "atum",
-    "version": "1.0.0",
-    "description": "A Procedural Graph Based Javascript Library",
-    "main": "/src/main.js",
-    "dependencies": {},
-    "devDependencies": {
-        "babel-cli": "^6.26.0",
-        "babel-preset-es2015": "^6.24.1",
-        "babelify": "^7.3.0",
-        "browserify": "^14.4.0",
-        "grunt": "^1.0.1",
-        "grunt-browserify": "^5.2.0",
-        "grunt-contrib-uglify": "^3.1.0",
-        "grunt-contrib-watch": "^1.0.0",
-        "grunt-jsdoc": "^2.1.1",
-        "load-grunt-config": "^0.19.2",
-        "load-grunt-tasks": "^3.5.2",
-        "tape": "^4.8.0"
-    },
-    "scripts": {
-        "init": "if not exist \"build\" mkdir build",
-        "clean": "if exist \"build\" rd /s /q \"build\"",
-        "prebuild": "npm run clean && npm run init",
-        "build:single": "babel ./src/main.js -o ./build/Atum.js --presets es2015",
-        "build": "babel src -d build --presets es2015",
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/Evelios/Atum.git"
-    },
-    "keywords": [
-        "Atum",
-        "Procedural",
-        "Generative",
-        "Graph",
-        "Javascript"
-    ],
-    "author": "Thomas Waters",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/Evelios/Atum/issues"
-    },
-    "homepage": "https://github.com/Evelios/Atum#readme"
+  "name": "atum",
+  "version": "1.0.0",
+  "description": "A Procedural Graph Based Javascript Library",
+  "main": "/src/main.js",
+  "dependencies": {},
+  "devDependencies": {
+    "almost-equal": "^1.1.0",
+    "babel-cli": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^7.3.0",
+    "browserify": "^14.4.0",
+    "grunt": "^1.0.1",
+    "grunt-browserify": "^5.2.0",
+    "grunt-contrib-uglify": "^3.1.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-jsdoc": "^2.1.1",
+    "load-grunt-config": "^0.19.2",
+    "load-grunt-tasks": "^3.5.2",
+    "tape": "^4.8.0"
+  },
+  "scripts": {
+    "init": "if not exist \"build\" mkdir build",
+    "clean": "if exist \"build\" rd /s /q \"build\"",
+    "prebuild": "npm run clean && npm run init",
+    "build:single": "babel ./src/main.js -o ./build/Atum.js --presets es2015",
+    "build": "babel src -d build --presets es2015",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Evelios/Atum.git"
+  },
+  "keywords": [
+    "Atum",
+    "Procedural",
+    "Generative",
+    "Graph",
+    "Javascript"
+  ],
+  "author": "Thomas Waters",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Evelios/Atum/issues"
+  },
+  "homepage": "https://github.com/Evelios/Atum#readme"
 }
