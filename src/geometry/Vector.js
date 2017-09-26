@@ -192,7 +192,7 @@ class Vector {
      * @memberof Vector
      */
     normalize() {
-        return this.divide(this.magnitude());
+        return Vector.divide(this.magnitude());
     }
 
     /**
@@ -205,7 +205,7 @@ class Vector {
      */
     rotate(radians) {
         const c = Math.cos(radians);
-        const s = Math.cos(radians);
+        const s = Math.sin(radians);
         return new Vector(c * this.x - s * this.y, s * this.x + c * this.y);
     }
 
@@ -245,7 +245,7 @@ class Vector {
      * @memberof Vector
      */
     dot(other) {
-        return this.dot(this, other);
+        return Vector.dot(this, other);
     }
 
     /**
@@ -269,7 +269,7 @@ class Vector {
      * @memberof Vector
      */
     cross(other) {
-        return this.cross(this, other);
+        return Vector.cross(this, other);
     }
 
 
