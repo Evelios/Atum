@@ -228,7 +228,7 @@ class Vector {
      * @param {Vector[]} vectors The list of vectors to average
      * @memberof Vector
      */
-    avg(vectors) {
+    static avg(vectors) {
         let average = Vector.zero();
 
         for (const vector of vectors) {
