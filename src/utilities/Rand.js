@@ -1,3 +1,7 @@
+"use strict";
+
+import seedRandom from "seedRandom";
+
 /**
  * Wrapper library for David Bau's seeded random number generator which is a
  * wrapper for the Math.rand() functionality. This library is implemented to
@@ -8,67 +12,59 @@
  * @see {@link https://github.com/davidbau/seedrandom}
  * @class Rand
  */
+class Rand {
+    constructor(seed) {
+        this.rng = seedRandom(seed);
+    }
 
-"use strict";
+    /**
+     * Set the seed for the seeded random number generator. After the seed has been
+     * set. The random numbers will be predictable and repeatable given the same
+     * input seed. If no seed is specified, then a random seed will be assigned to
+     * the random number generator using added system entropy.
+     * 
+     * @export
+     * @param {Number | String} [seed=0] The seed to be applied to the RNG
+     * @memberof Rand
+     */
+    static setSeed(seed = 0) {
+        const options = {
+            global: true,
+            entropy: seed === undefined
+        };
+        seedRandom(seed, options);
+    }
 
-var seedRandom = require("seedRandom");
+    setSeed(seed) {
+        const options = {
+            entropy: seed === undefined
+        };
+        this.rng = seedRandom(seed, options);
+    }
 
-/**
- * Set the seed for the seeded random number generator. After the seed has been
- * set. The random numbers will be predictable and repeatable given the same
- * input seed.
- * 
- * @export
- * @param {Number | String} seed
- * @memberof Rand
- */
-export function setSeed(seed) {
-    seedRandom(seed);
+    static rand() {
+        return Math.random();
+    }
+
+    rand() {
+        return this.rng();
+    }
+
+    static randRange(min, max) {
+        return Rand.rand() * (max - min) + min;
+    }
+
+    static randInt(min, max) {
+        return Math.floor(Rand.rand() * (max - min + 1)) + min;
+    }
+
+    static randHex() {
+        return Rand.randInt(0, 16777215);
+    }
+
+    static randHexColor() {
+        return '#' + Rand.randHex().toString(16);
+    }
 }
 
-export function rand() {
-
-}
-
-export function randRange() {
-
-}
-
-export function randHex() {
-
-}
-
-export function randHexColor() {
-
-}
-
-// //------------------------------------------------------------------------------
-// // Returns a random number between 0 (inclusive) and 1 (exclusive
-// Util.rand = function() {
-//     return Math.random();
-// }
-
-//   //------------------------------------------------------------------------------
-//   // Returns a random number between min (included) and max(excluded)
-//   Util.randRange = function(min, max) {
-//     return Math.random() * (max - min) + min;
-//   }
-
-//   //------------------------------------------------------------------------------
-//   // Returns a random integer from min (included) to max (excluded)
-//   Util.randInt = function(min, max) {
-//     return Math.floor(Math.random() * (max - min)) + min;
-//   }
-
-//   //------------------------------------------------------------------------------
-//   // Returns a random integer from min (included) to max (included)
-//   Util.randIntInclusive = function(min, max) {
-//     return Math.floor(Math.random() * (max - min + 1)) + min;
-//   }
-
-//   //------------------------------------------------------------------------------
-//   // Generates a random hexidecimal color
-//   // http://www.paulirish.com/2009/random-hex-color-code-snippets/
-//   Util.randHexColor = function() {
-//     return '#' + Math.floor(Math.random() * 16777215).toString(16);
-//   }
+export default Rand;

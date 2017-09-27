@@ -34,7 +34,7 @@ const Atum = {
         Edge,
         Diagram
     },
-    Util: {
+    Utility: {
         PointDistribution,
         Redist,
         Rand
