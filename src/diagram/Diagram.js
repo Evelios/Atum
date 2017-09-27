@@ -128,8 +128,8 @@ class Diagram {
         let edgeId = 0;
 
         // Copy over all the center nodes
-        for (let i = 0; i < voronoi.cells.length; i++) {
-            const site = voronoi.cells[i].site;
+        for (const cell of voronoi.cells) {
+            const site = cell.site;
             const pos = new Vector(site.x, site.y);
             const center = new Center(pos);
             center.id = site.voronoiId;
@@ -139,9 +139,7 @@ class Diagram {
 
         // Create and copy over the edges and corners
         // This portion also creates the connections between all the nodes
-        for (let i = 0; i < voronoi.edges.length; i++) {
-            const edge = voronoi.edges[i];
-
+        for (let edge of voronoi.edges) {
             const newEdge = new Edge();
             newEdge.id = edgeId++;
 
@@ -196,21 +194,31 @@ class Diagram {
             corner2.protrudes.push(newEdge);
 
             corner1.touches.pushNew(center1);
-            if (center2) corner1.touches.pushNew(center2);
+            if (center2) {
+                corner1.touches.pushNew(center2);
+            }
             corner2.touches.pushNew(center1);
-            if (center2) corner2.touches.pushNew(center2);
+            if (center2) {
+                corner2.touches.pushNew(center2);
+            }
 
             corner1.adjacent.push(corner2);
             corner2.adjacent.push(corner1);
 
             // Update the center objects
             center1.borders.push(newEdge);
-            if (center2) center2.borders.push(newEdge);
+            if (center2) {
+                center2.borders.push(newEdge);
+            }
 
             center1.corners.pushNew(corner1);
             center1.corners.pushNew(corner2);
-            if (center2) center2.corners.pushNew(corner1);
-            if (center2) center2.corners.pushNew(corner2);
+            if (center2) {
+                center2.corners.pushNew(corner1);
+            }
+            if (center2) {
+                center2.corners.pushNew(corner2);
+            }
 
             if (center2) {
                 center1.neighbors.push(center2);
@@ -218,13 +226,14 @@ class Diagram {
             }
 
             // If either corner is a border, both centers are borders
-            center1.border = center1.border || corner1.border || corner2.border
+            center1.border = center1.border || corner1.border || corner2.border;
             if (center2) {
                 center2.border = center2.border || corner1.border || corner2.border;
             }
 
             this.edges.push(newEdge);
         }
+
         this.improveCorners();
         this.sortCorners();
     }
@@ -276,8 +285,7 @@ class Diagram {
     // using a standard polygon drawing method
 
     sortCorners() {
-        for (let i = 0, l = this.centers.length; i < l; i++) {
-            const center = this.centers[i];
+        for (const center of this.centers) {
             const comp = this.comparePolyPoints(center);
             center.corners.sort(comp);
         }
@@ -337,4 +345,5 @@ class Diagram {
     }
 
 }
+
 export default Diagram;
