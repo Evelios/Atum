@@ -1,6 +1,7 @@
 "use strict";
 
 import seedRandom from "seedRandom";
+import Vector from "../geometry/Vector";
 
 /**
  * Wrapper library for David Bau's seeded random number generator which is a
@@ -64,6 +65,13 @@ class Rand {
 
     static randHexColor() {
         return '#' + Rand.randHex().toString(16);
+    }
+
+    //---- Random Geometry ----
+
+    static vector(bbox) {
+        return new Vector(Rand.randRange(bbox.x, bbox.x + bbox.width),
+            Rand.randRange(bbox.y, bbox.y + bbox.height));
     }
 }
 

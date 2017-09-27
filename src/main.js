@@ -10,7 +10,7 @@ import Edge from "./diagram/Edge";
 import Diagram from "./diagram/Diagram";
 import * as PointDistribution from "./Utilities/PointDistribution";
 import * as Redist from "./utilities/Redist";
-import * as Rand from "./utilities/Rand";
+import Rand from "./utilities/Rand";
 
 /**
  * The Atum procedural graph based library

@@ -3,7 +3,7 @@
 const test = require("tape");
 const Atum = require("../build/Atum").default;
 
-const Rand = Atum.Utility.Rand.default;
+const Rand = Atum.Utility.Rand;
 
 // ---- Helper Function ----
 function inBounds(t, x, low, high) {

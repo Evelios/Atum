@@ -11,17 +11,19 @@
 "use strict";
 
 import Vector from "../geometry/Vector";
-import * as Rand from "./Rand";
+import Rand from "./Rand";
 
 // Depends on the Rectangle Class & the Vector CLass
 
 /**
  * Creates a random distribution of points in a particular bounding box
- * with a particular average d of points.
+ * with a particular average distance of between points.
  * 
  * @export
- * @param {Rectangle} bbox 
- * @param {Number} d 
+ * @param {Rectangle} bbox The bounding box to create the points in
+ * @param {Number} d Average distance between points
+ * 
+ * @returns {Vector[]} The list of randomly distributed points
  */
 export function random(bbox, d) {
     let points = [];
@@ -30,18 +32,20 @@ export function random(bbox, d) {
     for (let i = 0; i < nPoints; i++) {
         points.push(Rand.vector(bbox));
     }
+
+    return points;
 }
 
 export function blueNoise(bbox, d) {
-    throw "Error: Not Implemented"
+    throw "Error: Not Implemented";
 }
 
 export function poisson(bbox, d) {
-    throw "Error: Not Implemented"
+    throw "Error: Not Implemented";
 }
 
 export function recursiveWang(bbox, d) {
-    throw "Error: Not Implemented"
+    throw "Error: Not Implemented";
 }
 
 export function square(bbox, d) {

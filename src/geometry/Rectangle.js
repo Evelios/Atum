@@ -8,7 +8,11 @@ class Rectangle extends Polygon {
      * 
      * Class to store array information about a rectangle
      * 
-     * @property {Vector}
+     * @property {Vector} position
+     * @property {number} x
+     * @property {number} y
+     * @property {number} width
+     * @property {number} height
      * 
      * @param {Vector} position
      * @param {number} width
@@ -17,13 +21,15 @@ class Rectangle extends Polygon {
 
     constructor(position, width, height) {
         const points = [position,
-            position.add(new Vector(width)),
+            position.add(new Vector(width, 0)),
             position.add(new Vector(width, height)),
-            position.add(new Vector(height))
+            position.add(new Vector(0, height))
         ];
         super(points);
 
         this.position = position;
+        this.x = position.x;
+        this.y = position.y;
         this.width = width;
         this.height = height;
         this.area = width * height;
