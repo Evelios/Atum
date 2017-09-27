@@ -47,8 +47,8 @@ class Diagram {
         this.bbox = bbox;
 
         // Compute Voronoi from initial points
-        var rhillVoronoi = new Voronoi();
-        var voronoi = rhillVoronoi.compute(points, bbox);
+        const rhillVoronoi = new Voronoi();
+        let voronoi = rhillVoronoi.compute(points, bbox);
 
         // Lloyds Relaxations
         while (relaxations--) {
@@ -62,10 +62,11 @@ class Diagram {
     }
 
     relaxSites(voronoi) {
-        var cells = voronoi.cells;
-        var iCell = cells.length;
-        var cell;
-        var site, sites = [];
+        const cells = voronoi.cells;
+        let iCell = cells.length;
+        let cell;
+        let site;
+        const sites = [];
 
         while (iCell--) {
             cell = cells[iCell];
@@ -76,10 +77,10 @@ class Diagram {
     }
 
     cellArea(cell) {
-        var area = 0;
-        var halfedges = cell.halfedges;
-        var iHalfedge = halfedges.length;
-        var halfedge, p1, p2;
+        let area = 0;
+        const halfedges = cell.halfedges;
+        let iHalfedge = halfedges.length;
+        let halfedge, p1, p2;
         while (iHalfedge--) {
             halfedge = halfedges[iHalfedge];
             p1 = halfedge.getStartpoint();
@@ -92,12 +93,12 @@ class Diagram {
     }
 
     cellCentroid(cell) {
-        var x = 0,
+        let x = 0,
             y = 0;
-        var halfedges = cell.halfedges;
-        var iHalfedge = halfedges.length;
-        var halfedge;
-        var v, p1, p2;
+        const halfedges = cell.halfedges;
+        let iHalfedge = halfedges.length;
+        let halfedge;
+        let v, p1, p2;
 
         while (iHalfedge--) {
             halfedge = halfedges[iHalfedge];
@@ -117,20 +118,20 @@ class Diagram {
     }
 
     convertDiagram(voronoi) {
-        var centerLookup = {};
-        var cornerLookup = {};
+        const centerLookup = {};
+        const cornerLookup = {};
         this.centers = [];
         this.corners = [];
         this.edges = [];
 
-        var cornerId = 0;
-        var edgeId = 0;
+        let cornerId = 0;
+        let edgeId = 0;
 
         // Copy over all the center nodes
-        for (var i = 0; i < voronoi.cells.length; i++) {
-            var site = voronoi.cells[i].site;
-            var pos = new Vector(site.x, site.y);
-            var center = new Center(pos);
+        for (let i = 0; i < voronoi.cells.length; i++) {
+            const site = voronoi.cells[i].site;
+            const pos = new Vector(site.x, site.y);
+            const center = new Center(pos);
             center.id = site.voronoiId;
             centerLookup[pos.asKey()] = center;
             this.centers.push(center);
@@ -138,33 +139,31 @@ class Diagram {
 
         // Create and copy over the edges and corners
         // This portion also creates the connections between all the nodes
-        for (var i = 0; i < voronoi.edges.length; i++) {
-            var edge = voronoi.edges[i];
+        for (let i = 0; i < voronoi.edges.length; i++) {
+            const edge = voronoi.edges[i];
 
-            var newEdge = new Edge();
+            const newEdge = new Edge();
             newEdge.id = edgeId++;
 
             // Convert voronoi edge to a useable form
             // Corner positions
-            var va = new Vector(Math.round(edge.va.x), Math.round(edge.va.y));
-            var vb = new Vector(Math.round(edge.vb.x), Math.round(edge.vb.y));
+            const va = new Vector(Math.round(edge.va.x), Math.round(edge.va.y));
+            const vb = new Vector(Math.round(edge.vb.x), Math.round(edge.vb.y));
             // Center positions
-            var site1 = new Vector(edge.lSite.x, edge.lSite.y);
-            var site2 = edge.rSite ? new Vector(edge.rSite.x, edge.rSite.y) : null;
+            const site1 = new Vector(edge.lSite.x, edge.lSite.y);
+            const site2 = edge.rSite ? new Vector(edge.rSite.x, edge.rSite.y) : null;
 
             // Lookup the two center objects
-            var center1 = centerLookup[site1.asKey()];
-            var center2 = site2 ? centerLookup[site2.asKey()] : null;
+            const center1 = centerLookup[site1.asKey()];
+            const center2 = site2 ? centerLookup[site2.asKey()] : null;
 
             // Lookup the corner objects and if one isn't created
             // create one and add it to corners set
-            var corner1;
-            var corner2;
+            let corner1;
+            let corner2;
 
-            var isBorder = function(point, bbox) {
-                return point.x <= bbox.xl || point.x >= bbox.xr ||
-                    point.y <= bbox.yt || point.y >= bbox.yb;
-            };
+            const isBorder = (point, bbox) => point.x <= bbox.xl || point.x >= bbox.xr ||
+                point.y <= bbox.yt || point.y >= bbox.yb;
 
             if (!has(cornerLookup, va.asKey())) {
                 corner1 = new Corner(va);
@@ -238,19 +237,18 @@ class Diagram {
     // to the average of their neighbors
     // This breakes the voronoi diagram properties
     improveCorners() {
-        var newCorners = [];
+        const newCorners = [];
 
         // Calculate new corner positions
-        for (var i = 0; i < this.corners.length; i++) {
-            var corner = this.corners[i];
+        for (let i = 0; i < this.corners.length; i++) {
+            let corner = this.corners[i];
 
             if (corner.border) {
                 newCorners[i] = corner.position;
             } else {
-                var newPos = Vector.zero();
+                let newPos = Vector.zero();
 
-                for (var k = 0; k < corner.touches.length; k++) {
-                    var neighbor = corner.touches[k];
+                for (const neighbor of corner.touches) {
                     newPos = Vector.add(newPos, neighbor.position);
                 }
 
@@ -260,15 +258,13 @@ class Diagram {
         }
 
         // Assign new corner positions
-        for (var i = 0; i < this.corners.length; i++) {
-            var corner = this.corners[i];
+        for (let i = 0; i < this.corners.length; i++) {
+            let corner = this.corners[i];
             corner.position = newCorners[i];
         }
 
         // Recompute edge midpoints
-        for (var j = 0; j < this.edges.length; j++) {
-            var edge = this.edges[j];
-
+        for (const edge of this.edges) {
             if (edge.v0 && edge.v1) {
                 edge.midpoint = Vector.midpoint(edge.v0.position, edge.v1.position);
             }
@@ -280,9 +276,9 @@ class Diagram {
     // using a standard polygon drawing method
 
     sortCorners() {
-        for (var i = 0, l = this.centers.length; i < l; i++) {
-            var center = this.centers[i];
-            var comp = this.comparePolyPoints(center);
+        for (let i = 0, l = this.centers.length; i < l; i++) {
+            const center = this.centers[i];
+            const comp = this.comparePolyPoints(center);
             center.corners.sort(comp);
         }
     }
@@ -292,9 +288,9 @@ class Diagram {
     // assuming a convex polygon
     // http://stackoverflow.com/questions/6989100/sort-points-in-clockwise-order
     comparePolyPoints(c) {
-        var center = c.position;
-        return function(p1, p2) {
-            var a = p1.position,
+        const center = c.position;
+        return (p1, p2) => {
+            const a = p1.position,
                 b = p2.position;
 
             if (a.x - center.x >= 0 && b.x - center.x < 0) {
@@ -319,7 +315,7 @@ class Diagram {
             }
 
             // compute the cross product of vectors (center -> a) x (center -> b)
-            var det = (a.x - center.x) * (b.y - center.y) - (b.x - center.x) * (a.y - center.y);
+            const det = (a.x - center.x) * (b.y - center.y) - (b.x - center.x) * (a.y - center.y);
             if (det < 0) {
                 return -1;
             }
@@ -329,15 +325,15 @@ class Diagram {
 
             // points a and b are on the same line from the center
             // check which point is closer to the center
-            var d1 = (a.x - center.x) * (a.x - center.x) + (a.y - center.y) * (a.y - center.y);
-            var d2 = (b.x - center.x) * (b.x - center.x) + (b.y - center.y) * (b.y - center.y);
+            const d1 = (a.x - center.x) * (a.x - center.x) + (a.y - center.y) * (a.y - center.y);
+            const d2 = (b.x - center.x) * (b.x - center.x) + (b.y - center.y) * (b.y - center.y);
             if (d1 > d2) {
                 return -1;
             } else {
                 return 1;
             }
 
-        }
+        };
     }
 
 }
