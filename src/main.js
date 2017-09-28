@@ -4,10 +4,10 @@ import Line from "./geometry/Line";
 import Polygon from "./geometry/Polygon";
 import Rectangle from "./geometry/Rectangle";
 import Triangle from "./geometry/Triangle";
-import Center from "./diagram/Center";
-import Corner from "./diagram/Corner";
-import Edge from "./diagram/Edge";
-import Diagram from "./diagram/Diagram";
+import Center from "./graph/Center";
+import Corner from "./graph/Corner";
+import Edge from "./graph/Edge";
+import Diagram from "./graph/Diagram";
 import * as PointDistribution from "./Utilities/PointDistribution";
 import * as Redist from "./utilities/Redist";
 import Rand from "./utilities/Rand";
@@ -28,7 +28,7 @@ const Atum = {
         Rectangle,
         Triangle
     },
-    Diagram: {
+    Graph: {
         Center,
         Corner,
         Edge,
