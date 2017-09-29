@@ -155,3 +155,14 @@ test("Vector Angle Between Vectors", function(t) {
     almost(t, Vector.angle(v1, v2), eq);
     t.end();
 });
+
+test("Vector Averaging", function(t) {
+    const v1 = new Vector(8, 7);
+    const v2 = new Vector(7, 4);
+    const v3 = new Vector(3, 1);
+    const points = [v1, v2, v3];
+    const eq = new Vector(6, 4);
+
+    t.deepEqual(Vector.avg(points), eq);
+    t.end();
+});

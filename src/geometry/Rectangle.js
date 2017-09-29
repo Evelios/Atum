@@ -21,9 +21,9 @@ class Rectangle extends Polygon {
 
     constructor(position, width, height) {
         const points = [position,
-            position.add(new Vector(width, 0)),
-            position.add(new Vector(width, height)),
-            position.add(new Vector(0, height))
+            Vector.add(position, new Vector(width, 0)),
+            Vector.add(position, new Vector(width, height)),
+            Vector.add(position, new Vector(0, height))
         ];
         super(points);
 
