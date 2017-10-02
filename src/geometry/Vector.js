@@ -55,7 +55,8 @@ class Vector {
      * @memberof Vector
      */
     key() {
-        return Symbol(this.list());
+        return this.list();
+        // return Symbol(this.list()); // Not currently working as a key symbol
     }
 
     /**
