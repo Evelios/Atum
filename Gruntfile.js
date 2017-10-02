@@ -20,16 +20,6 @@ module.exports = function(grunt) {
 
         // ---- Grunt Browserify Task ----
         browserify: {
-            vendor: {
-                src: ["."],
-                dist: "./build/libs.js",
-                options: {
-                    debug: false,
-                    alias: [
-
-                    ],
-                }
-            },
             build: {
                 files: {
                     "./build/Atum.js": "./src/main.js"
@@ -38,40 +28,30 @@ module.exports = function(grunt) {
                     transform: [
                         ["babelify", { presets: "es2015" }]
                     ],
+                    watch: true,
+                    keepAlive: true,
                     browserifyOptions: {
                         standalone: "Atum",
                         debug: true
                     }
                 }
             },
-            test: {
-                files: {
-                    "./test/test.build.js": "./test/test.js"
-                },
-                options: {
-                    transform: [
-                        ["babelify", { presets: "es2015" }]
-                    ],
-                    browserifyOptions: {
-                        debug: true
-                    }
-                }
+        },
+
+        // ---- Grunt Watchify ----
+        watchify: {
+            build: {
+                src: "./src/main.js",
+                dest: "./build/Atum.js"
             }
         },
 
         // ---- Grunt Watch Task ----
         watch: {
-            options: {
-                livereload: true
-            },
             js: {
-                files: ["src/**/*.js"],
-                tasks: ["browserify:dev"]
+                files: ["./build/Atum.js"],
+                tasks: [""],
             },
-            libs: {
-                files: ["node_modules/**/*.js"],
-                tasks: ["browserify:vendor"]
-            }
         },
 
         // ---- Grunt JSDoc Taks ----
@@ -99,11 +79,10 @@ module.exports = function(grunt) {
         "browserify:build",
         "watch"
     ]);
-    grunt.registerTask("libs", ["browserify:vendor"]);
     grunt.registerTask("build", ["browserify:build"]);
-    // grunt.registerTask("build", ["browserify:vendor", "browserify:build"]);
+    grunt.registerTask("minify", ["uglify"]);
     grunt.registerTask("test", ["browserify:build", "browserify:test"]);
-    grunt.registerTask("watch", ["watch"]);
+    grunt.registerTask("watch", ["browserify:build", "watch:js"]);
     grunt.registerTask("docs", ["jsdoc"]);
 
 };

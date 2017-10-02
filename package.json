@@ -2,9 +2,10 @@
   "name": "atum",
   "version": "1.0.0",
   "description": "A Procedural Graph Based Javascript Library",
-  "main": "/src/main.js",
+  "main": "./src/main.js",
   "dependencies": {
-    "seedrandom": "^2.4.3"
+    "seedrandom": "^2.4.3",
+    "voronoi": "git+https://github.com/gorhill/Javascript-Voronoi.git"
   },
   "devDependencies": {
     "almost-equal": "^1.1.0",
@@ -18,10 +19,11 @@
     "grunt-contrib-uglify": "^3.1.0",
     "grunt-contrib-watch": "^1.0.0",
     "grunt-jsdoc": "^2.1.1",
+    "grunt-watchify": "^0.1.0",
     "load-grunt-config": "^0.19.2",
     "load-grunt-tasks": "^3.5.2",
     "tape": "^4.8.0",
-    "voronoi": "git+https://github.com/gorhill/Javascript-Voronoi.git"
+    "tui-jsdoc-template": "^1.2.2"
   },
   "scripts": {
     "init": "if not exist \"build\" mkdir build",
