@@ -1,6 +1,6 @@
 import Vector from "./Vector";
 
-class Shape {
+class Shape extends Array {
     /**
      * @class Shape
      * 
@@ -10,12 +10,10 @@ class Shape {
      * 
      * @summary Creates an instance of Shape.
      * 
-     * @property {Vector[]} verticies
-     * 
-     * @param {Vector[]} verticies
+     * @param {Vector[]} verticies The shapes vector verticies
      */
     constructor(verticies) {
-        this.verticies = verticies;
+        super(...verticies);
     }
 }
 

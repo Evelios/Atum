@@ -21,7 +21,6 @@ class Triangle extends Polygon {
         this.v1 = v1;
         this.v2 = v2;
         this.v3 = v3;
-        this.verticies = verticies;
     }
 }
 

@@ -12,14 +12,12 @@ class Polygon extends Shape {
      * 
      * @summary Creates an instance of Polygon.
      * 
-     * @property {Vector[]} verticies The polygon position verticies 
      * @property {Vector} center The center of the polygon. If not otherwise
      *  stated, the center defaults to the centriod. Any transformations on
      *  the polygon are done about the center of the polygon.
      * @property {Vector} centroid The centriod or average location of the
      *  verticies in the polygon
      * 
-     * @param {Vector[]} verticies The vector verticies
      * @param {Vector} [center=average(verticies)] The center of the polygon
      */
     constructor(verticies, center) {
@@ -27,7 +25,7 @@ class Polygon extends Shape {
         if (center) {
             this.center = center;
         } else {
-            this.centroid = Vector.avg(this.verticies);
+            this.centroid = Vector.avg(this);
             this.center = this.centroid;
         }
     }
