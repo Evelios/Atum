@@ -8,7 +8,6 @@ Complete the following to Finish Version 1.0:
 
 Basics:
   - Test pre written code
-    + Vector
     + Redist
     + Rand
 
