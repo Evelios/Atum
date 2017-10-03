@@ -26,24 +26,45 @@ module.exports = function(grunt) {
                 },
                 options: {
                     transform: [
-                        ["babelify", { presets: "es2015" }]
+                        ["babelify", {
+                            presets: "es2015",
+                            "plugins": [
+                                "add-module-exports", ["babel-plugin-transform-builtin-extend", {
+                                    globals: ["Error", "Array"]
+                                }]
+                            ]
+                        }]
                     ],
-                    watch: true,
-                    keepAlive: true,
                     browserifyOptions: {
                         standalone: "Atum",
-                        debug: true
-                    }
-                }
+                    },
+                },
             },
-        },
-
-        // ---- Grunt Watchify ----
-        watchify: {
-            build: {
-                src: "./src/main.js",
-                dest: "./build/Atum.js"
-            }
+            dev: {
+                files: {
+                    "./build/Atum.js": "./src/main.js"
+                },
+                options: {
+                    transform: [
+                        ["babelify", {
+                            presets: "es2015",
+                            "plugins": [
+                                "add-module-exports", ["babel-plugin-transform-builtin-extend", {
+                                    globals: ["Error", "Array"]
+                                }]
+                            ]
+                        }]
+                    ],
+                    browserifyOptions: {
+                        standalone: "Atum",
+                        watch: true,
+                        keepAlive: true,
+                        browserifyOptions: {
+                            debug: true
+                        }
+                    },
+                },
+            },
         },
 
         // ---- Grunt Watch Task ----
@@ -79,6 +100,8 @@ module.exports = function(grunt) {
         "browserify:build",
         "watch"
     ]);
+
+    grunt.registerTask("dev", ["browserify:dev"]);
     grunt.registerTask("build", ["browserify:build"]);
     grunt.registerTask("minify", ["uglify"]);
     grunt.registerTask("test", ["browserify:build", "browserify:test"]);

@@ -1,7 +1,7 @@
 "use strict";
 
 const test = require("tape");
-const Atum = require("../build/Atum").default;
+const Atum = require("../build/Atum");
 
 const Rand = Atum.Utility.Rand;
 

@@ -1,7 +1,7 @@
 "use strict";
 
 const test = require("tape");
-const Atum = require('../build/Atum').default;
+const Atum = require('../build/Atum');
 
 const PointDistribution = Atum.Utility.PointDistribution;
 const Vector = Atum.Geometry.Vector;
@@ -29,7 +29,6 @@ test("Corners Exist", function(t) {
 
 test("Edges Exist", function(t) {
     for (let edge of graph.edges) {
-        console.log(edge.v0.protrudes);
         t.notEqual(edge, undefined);
     }
     t.end();

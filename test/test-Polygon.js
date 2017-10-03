@@ -2,7 +2,7 @@
 
 const test = require("tape");
 const almostEqual = require("almost-equal");
-const Atum = require("../build/Atum").default;
+const Atum = require("../build/Atum");
 
 const Vector = Atum.Geometry.Vector;
 const Polygon = Atum.Geometry.Polygon;
@@ -28,12 +28,8 @@ test("Polygon Centroid Averaging", function(t) {
     const centroid = new Vector(6, 4);
     const poly = new Polygon(points);
 
-    for (let vert of poly) {
-        console.log(vert);
-    }
-
-    t.deepEqual(poly.centroid, centroid, "Polygon centroid is correct");
-    t.deepEqual(poly.center, poly.centroid, "Center is centroid");
+    t.deepEqual(poly.centroid(), centroid, "Polygon centroid is correct");
+    t.deepEqual(poly.center, poly.centroid(), "Center is centroid");
     t.end();
 });
 

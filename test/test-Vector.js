@@ -2,7 +2,7 @@
 
 const test = require("tape");
 const almostEqual = require("almost-equal");
-const Atum = require("../build/Atum").default;
+const Atum = require("../build/Atum");
 
 const Vector = Atum.Geometry.Vector;
 

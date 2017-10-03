@@ -2,7 +2,7 @@
 
 const test = require("tape");
 const almostEqual = require("almost-equal");
-const Atum = require("../build/Atum").default;
+const Atum = require("../build/Atum");
 
 const Vector = Atum.Geometry.Vector;
 const Shape = Atum.Geometry.Shape;
@@ -27,6 +27,6 @@ test("Shape Constructor", function(t) {
 
     const triangle = new Shape(points);
 
-    t.deepEqual(triangle.verticies, points);
+    t.deepEqual(triangle, points);
     t.end();
 });
