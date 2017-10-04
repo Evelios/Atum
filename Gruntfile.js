@@ -55,13 +55,11 @@ module.exports = function(grunt) {
                             ]
                         }]
                     ],
+                    watch: true,
+                    keepAlive: true,
                     browserifyOptions: {
                         standalone: "Atum",
-                        watch: true,
-                        keepAlive: true,
-                        browserifyOptions: {
-                            debug: true
-                        }
+                        debug: true
                     },
                 },
             },
