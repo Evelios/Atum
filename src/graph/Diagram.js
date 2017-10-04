@@ -8,7 +8,6 @@ import Voronoi from "Voronoi";
 "use strict";
 
 // Need to ES6ify
-
 class Diagram {
     /**
      * The Diagram class is an extenstion of the voronoi Diagram. It turns the
@@ -31,10 +30,13 @@ class Diagram {
      * @param {integer} [relaxations=0] The number of lloyd relaxations to do.
      *  This turns a noisy diagram into a more uniform diagram iteration by iteration.
      *  This helps to improve the spacing between points in the diagram.
+     * @param {bool} [improveCorners=false] This improves uniformity among the
+     *  corners by setting them to the average of their neighbors. This breaks
+     *  the voronoi properties of the diagram.
      * 
      * @memberOf Diagram
      */
-    constructor(points, bbox, relaxations = 0) {
+    constructor(points, bbox, relaxations = 0, improveCorners = false) {
         this.bbox = bbox;
         this._rhillbbox = {
             xl: this.bbox.x,
@@ -48,13 +50,18 @@ class Diagram {
         this._voronoi = rhillVoronoi.compute(points, this._rhillbbox);
 
         // Lloyds Relaxations
-        // while (relaxations--) {
-        //     const sites = this.relaxSites(voronoi);
-        //     rhillVoronoi.recycle(voronoi);
-        //     voronoi = rhillVoronoi.compute(sites, this._rhillbbox);
-        // }
+        while (relaxations--) {
+            const sites = this.relaxSites(this._voronoi);
+            rhillVoronoi.recycle(this._voronoi);
+            this._voronoi = rhillVoronoi.compute(sites, this._rhillbbox);
+        }
 
         this.convertDiagram(this._voronoi);
+
+        if (improveCorners) {
+            this.improveCorners();
+        }
+        this.sortCorners();
 
     }
 
@@ -238,15 +245,12 @@ class Diagram {
 
             this.edges.push(newEdge);
         }
-
-        // this.improveCorners();
-        // this.sortCorners();
     }
 
     //------------------------------------------------------------------------------
     // Helper function to create diagram
     //
-    // Lloyd relaxation helped to create uniformity among polygon centers,
+    // Lloyd relaxation helped to create uniformity among polygon corners,
     // This function creates uniformity among polygon corners by setting the corners
     // to the average of their neighbors
     // This breakes the voronoi diagram properties

@@ -18,8 +18,10 @@ class Center extends Vector {
     constructor(position) {
         super(position);
         this.id = -1;
+        // this.neighbors = [];
         this.neighbors = new Polygon();
         this.borders = [];
+        // this.corners = [];
         this.corners = new Polygon();
         this.border = false;
     }

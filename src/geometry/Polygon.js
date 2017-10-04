@@ -15,19 +15,25 @@ class Polygon extends Shape {
      * @property {Vector} center The center of the polygon. If not otherwise
      *  stated, the center defaults to the centriod. Any transformations on
      *  the polygon are done about the center of the polygon.
-     * @property {Vector} centroid The centriod or average location of the
-     *  verticies in the polygon
      * 
+     * @param {Vector[]} [verticies=null] The verticies of the polyon
      * @param {Vector} [center=average(verticies)] The center of the polygon
      */
     constructor(verticies, center) {
         super(verticies);
-        if (center) {
-            this.center = center;
-        } else {
-            this.centroid = Vector.avg(this);
-            this.center = this.centroid;
-        }
+        this.center = center ? center : this.centroid();
+    }
+
+    /**
+     * Get the centroid of the polygon. This is the vector average of all the
+     * points that make up the polygon.
+     * 
+     * @returns {Vector} The centroid of the polygon
+     * 
+     * @memberOf Polygon
+     */
+    centroid() {
+        return Vector.avg(this);
     }
 
     /**

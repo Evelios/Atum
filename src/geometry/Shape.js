@@ -10,10 +10,14 @@ class Shape extends Array {
      * 
      * @summary Creates an instance of Shape.
      * 
-     * @param {Vector[]} verticies The shapes vector verticies
+     * @param {Vector[]} [verticies] The shapes vector verticies
      */
     constructor(verticies) {
-        super(...verticies);
+        if (verticies) {
+            super(...verticies);
+        } else {
+            super();
+        }
     }
 }
 
