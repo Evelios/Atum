@@ -78,9 +78,9 @@ module.exports = function(grunt) {
             dist: {
                 src: ["src/**/*.js"],
                 options: {
-                    destination: "doc"
-                        // template :
-                        // configure : 
+                    destination: "doc",
+                    template: "./node_modules/jaguarjs-jsdoc-patched",
+                    // template: "node_modules/tui-jsdoc-template/", // This is the goal
                 }
             }
         },
