@@ -75,9 +75,11 @@ var graph = new Diagram(points, bbox, 2);
 Here you can see the contents of the graph object that we just created. All it takes is 3 lines to get a voronoi graph!
 
 The Generated Voronoi Diagram
+
 <img src="./Voronoi.png" alt="Voronoi diagram generated from the graph" width="600">
 
 The Generated Delaunay Diagram
+
 <img src="./Delaunay.png" alt="Delaunay diagram generated from the graph" width="600">
 
 ## Attributions
