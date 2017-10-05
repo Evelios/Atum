@@ -60,11 +60,13 @@ This example is all done within the .html document for simplicity. But once you 
 Lets create a basic voronoi graph. Let's assume you have done the above and have the Atum variable in scope. We want to create short handles for all the classes we are going to use. Then lets greate a graph object!
 
 ```js
+// First we declare the dependencies to shorten their names
 var PointDistribution = Atum.Utility.PointDistribution;
 var Rectangle = Atum.Geometry.Rectangle;
 var Vector = Atum.Geometry.Vector;
 var Diagram = Atum.Graph.Diagram;
 
+// Now lets create a voronoi diagram
 var bbox = new Rectangle(Vector.zero(), width, height);
 var points = PointDistribution.random(bbox, 50);
 var graph = new Diagram(points, bbox, 2);
@@ -72,9 +74,11 @@ var graph = new Diagram(points, bbox, 2);
 
 Here you can see the contents of the graph object that we just created. All it takes is 3 lines to get a voronoi graph!
 
-![The Generated Voronoi Diagram](/Voronoi.png "Voronoi diagram generated from the graph")
+The Generated Voronoi Diagram
+<img src="./Voronoi.png" alt="Voronoi diagram generated from the graph" width="600">
 
-![The Generated Delaunay Diagram](/Delaunay.png "Delaunay Diagram generated from the graph")
+The Generated Delaunay Diagram
+<img src="./Delaunay.png" alt="Delaunay diagram generated from the graph" width="600">
 
 ## Attributions
 
