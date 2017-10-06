@@ -10,7 +10,6 @@
  * in this range the function is one to one
  * f(0) == 0 and f(1) == 1
  * 
- * @author Thomas Waters
  * @summary Functions used to redistrubute values in the range 0-1
  * @class Redist
  */

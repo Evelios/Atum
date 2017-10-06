@@ -4,7 +4,6 @@
  * various different distributions that can be used to create interesting
  * tile patterns when turned into a voronoi diagram. 
  * 
- * @author Thomas Waters
  * @class PointDistribution
  */
 
