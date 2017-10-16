@@ -87,8 +87,10 @@ module.exports = function(grunt) {
 
         // ---- Grunt Uglify Task ----
         uglify: {
-            src: "build/Atum.js",
-            dest: "build/Atum.min.js"
+            js: {
+                src: "build/Atum.js",
+                dest: "build/Atum.min.js"
+            }
         }
     });
 
@@ -100,8 +102,7 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask("dev", ["browserify:dev"]);
-    grunt.registerTask("build", ["browserify:build"]);
-    grunt.registerTask("minify", ["uglify"]);
+    grunt.registerTask("build", ["browserify:build", "uglify"]);
     grunt.registerTask("test", ["browserify:build", "browserify:test"]);
     grunt.registerTask("watch", ["browserify:build", "watch:js"]);
     grunt.registerTask("docs", ["jsdoc"]);
