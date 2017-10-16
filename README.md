@@ -21,9 +21,7 @@ npm install npm
 npm install https://github.com/Evelios/Atum.git
 
 # Installs grunt for command line use
-npm install -g grunt-cli
-
-# You can then access the package from ./node_modules/Atum/build/Atum.js               
+npm install -g grunt-cli           
 ```
 
 ### Grunt Tasks
@@ -31,14 +29,14 @@ npm install -g grunt-cli
 Once the source and dependencies are downloaded. Navigate to the source directory and grunt can run the following commands.
 
 ```bash
-# Build the source code to ./build/Atum.js
-grunt build     
+# Build the source code to ./build/Atum.js and minify to ./build/Atum.min.js
+grunt build
 
-# Build the source code and watch for changes, then rebuild
-grunt dev       
+# Build the source code in debug mode and watch for changes, then rebuild
+grunt dev      
 
 # Generate the documentation in ./docs with root at ./docs/index.html
-grunt docs      
+grunt docs
 ```
 
 ## Basic Usage

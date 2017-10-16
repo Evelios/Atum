@@ -78,6 +78,7 @@ module.exports = function(grunt) {
             dist: {
                 src: ["src/**/*.js"],
                 options: {
+                    readme: "./README.md",
                     destination: "docs",
                     template: "./node_modules/jaguarjs-jsdoc-patched",
                     // template: "node_modules/tui-jsdoc-template/", // This is the goal
