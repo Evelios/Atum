@@ -1,19 +1,29 @@
 # Atum Procedural Generation Library
 
-Atum is a graph based procedural generation library build for Javascript. The approach to this library is to make as little assumptions as possible about the content that is being generated. The only main assumption is that the generative structure is based off a graph structure.
+Atum is a graph based procedural generation library build for Javascript. I started the library as an extension to a map generator that I was developing. All the core functionality was to better create and document those common processies. This library is tailored in that direction. I do intend to expand into other useful procedural generation techniques but everything takes time. This library is intended to make getting into procedural generation as easy as possible. Due to the generic graph structure implemented this library is not as efficient as a specifically grid or square based approach. 
 
 ## Getting Started With Atum Development / Build
+
+### Documentation
+
+The documentation for the Atum library is listed [**here**](https://evelios.github.io/Atum/). This is where you find out all the nitty-gritty details of what the methods do and where this library can take you. I plan to have examples on how this code can be used to at least spark some ideas and allow the library to get used to its full potential.
 
 ### Dependencies and Tools
 
 Atum uses [**Node's npm**](https://nodejs.org/en/download/) for package management and [**Grunt**](https://gruntjs.com/) as a task runner. These are required in order to get started with development. They are quite usefull tools if you don't have them already.
 
 ```bash
-# Get the code from repository and download the dependencies
+# Install Node and npm and get the most recent version of npm
+# Get the latest version of npm and ensure node was installed
+npm install npm
+
+# Get the Atum code from repository and download the dependencies
 npm install https://github.com/Evelios/Atum.git
 
 # Installs grunt for command line use
-npm install -g grunt-cli                         
+npm install -g grunt-cli
+
+# You can then access the package from ./node_modules/Atum/build/Atum.js               
 ```
 
 ### Grunt Tasks
@@ -21,11 +31,14 @@ npm install -g grunt-cli
 Once the source and dependencies are downloaded. Navigate to the source directory and grunt can run the following commands.
 
 ```bash
-grunt build     # Build the source code to ./build/Atum.js
+# Build the source code to ./build/Atum.js
+grunt build     
 
-grunt dev       # Build the source code and watch for changes to rebuild
+# Build the source code and watch for changes, then rebuild
+grunt dev       
 
-grunt docs      # Generate the documentation in ./doc with root at ./doc/index.html
+# Generate the documentation in ./docs with root at ./docs/index.html
+grunt docs      
 ```
 
 ## Basic Usage
@@ -37,7 +50,8 @@ All the code is written to the new [ES6 Standards](http://es6-features.org). The
 There is support for the AMD style inclusion so as not to clutter the global space.
 
 ```js
-var Atum = require('Atum');     // Locally Scoped Atum variable
+// Create a Locally Scoped Atum variable
+var Atum = require('Atum');     
 
 var vector = new Atum.Geometry.Vector(5, 7);
 ```
@@ -57,7 +71,7 @@ This example is all done within the .html document for simplicity. But once you 
 
 ## A Simple Example
 
-Lets create a basic voronoi graph. Let's assume you have done the above and have the Atum variable in scope. We want to create short handles for all the classes we are going to use. Then lets greate a graph object!
+Lets create a basic voronoi graph. Let's assume you have done the above and have the Atum variable in scope. We want to create short handles for all the classes we are going to use so that our code is easier to use and we can see the dependencies in the beginning. Then lets greate a graph object!
 
 ```js
 // First we declare the dependencies to shorten their names
@@ -67,18 +81,23 @@ var Vector = Atum.Geometry.Vector;
 var Diagram = Atum.Graph.Diagram;
 
 // Now lets create a voronoi diagram
-var bbox = new Rectangle(Vector.zero(), width, height);
-var points = PointDistribution.random(bbox, 50);
-var graph = new Diagram(points, bbox, 2);
+var boundingBox = new Rectangle(Vector.zero(), width, height);
+var points = PointDistribution.random(boundingBox, 50);
+var graph = new Diagram(points, boundingBox, 2);
+
+// You can now access different parts of the graph
+var centers = graph.centers;
+var edges = graph.edges;
+var corners = graph.corners;
 ```
 
-Here you can see the contents of the graph object that we just created. All it takes is 3 lines to get a voronoi graph!
+Here you can see the contents of the graph object that we just created. All it takes is 3 lines to get a voronoi graph! And with this we can go on to use the graph. Below are two images of the interconnectedness of the graph we created.
 
-The Generated Voronoi Diagram
+The Generated Voronoi Diagram Showing Connected Corners Points
 
 <img src="./Voronoi.png" alt="Voronoi diagram generated from the graph" width="600">
 
-The Generated Delaunay Diagram
+The Generated Delaunay Diagram Showing Connected Center Points
 
 <img src="./Delaunay.png" alt="Delaunay diagram generated from the graph" width="600">
 
