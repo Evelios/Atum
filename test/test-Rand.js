@@ -25,7 +25,7 @@ test("Seeded random number generation", function(t) {
     t.end();
 });
 
-test("rand stays in 0-1 boundary", function(t) {
+test("Global rng, rand stays in 0-1 boundary", function(t) {
     Rand.setSeed();
 
     const n = 3;
@@ -38,7 +38,20 @@ test("rand stays in 0-1 boundary", function(t) {
     }
 });
 
-test("randRange stays in boundary", function(t) {
+test("Local rng, rand stays in 0-1 boundary", function(t) {
+    var rng = new Rand();
+
+    const n = 3;
+    t.plan(n);
+
+    let x;
+    for (let i = 0; i < n; i++) {
+        x = rng.rand();
+        inBounds(t, x, 0, 1);
+    }
+});
+
+test("Global rng, randRange stays in boundary", function(t) {
     Rand.setSeed();
     const n = 5;
     t.plan(n);
@@ -50,7 +63,19 @@ test("randRange stays in boundary", function(t) {
     }
 });
 
-test("randInt stays in boundary", function(t) {
+test("Local rng, randRange stays in boundary", function(t) {
+    var rng = new Rand();
+    const n = 5;
+    t.plan(n);
+
+    let x;
+    for (let i = 0; i < n; i++) {
+        x = rng.randRange(5, 10);
+        inBounds(t, x, 5, 10);
+    }
+});
+
+test("Global rng, randInt stays in boundary", function(t) {
     Rand.setSeed();
     const n = 5;
     t.plan(n);
@@ -62,10 +87,47 @@ test("randInt stays in boundary", function(t) {
     }
 });
 
-test("randInt returns an int", function(t) {
+test("Local rng, randInt stays in boundary", function(t) {
+    var rng = new Rand();
+    const n = 5;
+    t.plan(n);
+
+    let x;
+    for (let i = 0; i < n; i++) {
+        x = rng.randInt(5, 10);
+        inBounds(t, x, 5, 10);
+    }
+});
+
+test("Global rng, randInt returns an int", function(t) {
     Rand.setSeed();
     const x = Rand.randInt(0, 100);
 
     t.equals(x, Math.round(x));
+    t.end();
+});
+
+test("Local rng, randInt returns an int", function(t) {
+    var rng = new Rand();
+    const x = rng.randInt(0, 100);
+
+    t.equals(x, Math.round(x));
+    t.end();
+});
+
+test("Global rng, randHexColor is string", function(t) {
+    Rand.setSeed();
+    const x = Rand.randHexColor();
+
+    t.equals(typeof x, "string");
+    t.end();
+});
+
+test("Local rng, randHexColor is string", function(t) {
+    var rng = new Rand();
+    const x = rng.randHexColor();
+
+    console.log(typeof x);
+    t.equals(typeof x, "string");
     t.end();
 });

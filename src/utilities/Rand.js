@@ -3,29 +3,42 @@
 import seedRandom from "seedRandom";
 import Vector from "../geometry/Vector";
 
-/**
- * Wrapper library for David Bau's seeded random number generator which is a
- * wrapper for the Math.rand() functionality. This library is implemented to
- * fill out the functionality of the random capabilities as well as build
- * on the capabilities existing in the framework currently. 
- * 
- * @author Thomas Waters
- * @see {@link https://github.com/davidbau/seedrandom}
- * @class Rand
- */
 class Rand {
-    constructor(seed) {
+    /**
+     * Wrapper library for David Bau's seeded random number generator which is a
+     * wrapper for the Math.rand() functionality. This library is implemented to
+     * fill out the functionality of the random capabilities as well as build
+     * on the capabilities existing in the framework currently. This class can
+     * be used on a global or local scale.
+     * 
+     * @example
+     * Rand.seedRandom(0);      // Set the global seed
+     * Rand.rand();             // Predictable based off seed
+     * 
+     * @example 
+     * var rng = new Rand(0);   // Set the local rng seed
+     * rng.rand();              // Predictable based off seed
+     * 
+     * Rand.rand();             // Unpredictable since global seed is not set
+     * 
+     * @see {@link https://github.com/davidbau/seedrandom}
+     * @param {number|string} [seed=0] The seed to be applied to the local
+     *  random number generator
+     * @class Rand
+     */
+    constructor(seed = 0) {
         this.rng = seedRandom(seed);
     }
 
     /**
-     * Set the seed for the seeded random number generator. After the seed has been
+     * Set the global seed for the seeded random number generator. After the seed has been
      * set. The random numbers will be predictable and repeatable given the same
      * input seed. If no seed is specified, then a random seed will be assigned to
      * the random number generator using added system entropy.
      * 
      * @export
-     * @param {Number | String} [seed=0] The seed to be applied to the RNG
+     * @param {number|string} [seed=0] The seed to be applied to the global
+     *  random number generator
      * @memberof Rand
      */
     static setSeed(seed = 0) {
@@ -36,6 +49,17 @@ class Rand {
         seedRandom(seed, options);
     }
 
+    /**
+     * Set the seed for the seeded random number generator. After the seed has been
+     * set. The random numbers will be predictable and repeatable given the same
+     * input seed. If no seed is specified, then a random seed will be assigned to
+     * the random number generator using added system entropy.
+     * 
+     * @export
+     * @param {number|string} [seed=0] The seed to be applied to the RNG
+     * 
+     * @memberof Rand
+     */
     setSeed(seed) {
         const options = {
             entropy: seed === undefined
@@ -43,35 +67,239 @@ class Rand {
         this.rng = seedRandom(seed, options);
     }
 
+    /**
+     * Get a random number from 0 to 1. 
+     * 
+     * @static
+     * @returns {number} random number from 0 to 1
+     * 
+     * @memberof Rand
+     */
     static rand() {
         return Math.random();
     }
 
+    /**
+     * Get a random number from 0 to 1.
+     * 
+     * @returns {number} random number from 0 to 1
+     * 
+     * @memberof Rand
+     */
     rand() {
         return this.rng();
     }
 
+    /**
+     * Private Helper Function:
+     * Get a random float value in a particular range
+     * 
+     * @private
+     * @static
+     * @param {any} rng The local or global rng to use (Rand or this)
+     * @param {any} min 
+     * @param {any} max 
+     * 
+     * @memberof Rand
+     */
+    static _randRange(rng, min, max) {
+        return rng.rand() * (max - min) + min;
+    }
+
+    /**
+     * Get a random float value in a particular range
+     * 
+     * @static
+     * @param {any} min 
+     * @param {any} max 
+     * @returns {number} Random float number from min (inclusive) 
+     *  to max (exclusive)
+     * 
+     * @memberof Rand
+     */
     static randRange(min, max) {
-        return Rand.rand() * (max - min) + min;
+        return Rand._randRange(Rand, min, max);
     }
 
+    /**
+     * Get a random float value in a particular range
+     * 
+     * @param {any} min 
+     * @param {any} max 
+     * @returns {number} Random float number from min (inclusive) 
+     *  to max (exclusive)
+     * 
+     * @memberof Rand
+     */
+    randRange(min, max) {
+        return Rand._randRange(this, min, max);
+    }
+
+    /**
+     * Private Helper Function:
+     * Get a random int in a particular range (min and max inclusive)
+     * 
+     * @private
+     * @static
+     * @param {any} rng The local or global rng to use (Rand or this)
+     * @param {any} min 
+     * @param {any} max 
+     * @returns {number} Random float number from min (inclusive) 
+     *  to max (exclusive)
+     * 
+     * @memberOf Rand
+     */
+    static _randInt(rng, min, max) {
+        return Math.floor(rng.rand() * (max - min + 1)) + min;
+    }
+
+    /**
+     * Get a random int in a particular range (min and max inclusive)
+     * 
+     * @static
+     * @param {any} min 
+     * @param {any} max 
+     * @returns {number} Random float number from min (inclusive) 
+     *  to max (exclusive)
+     * 
+     * @memberOf Rand
+     */
     static randInt(min, max) {
-        return Math.floor(Rand.rand() * (max - min + 1)) + min;
+        return Rand._randInt(Rand, min, max);
     }
 
+    /**
+     * Get a random int in a particular range (min and max inclusive)
+     * 
+     * @param {any} min 
+     * @param {any} max 
+     * @returns {number} Random float number from min (inclusive) 
+     *  to max (exclusive)
+     * 
+     * @memberOf Rand
+     */
+    randInt(min, max) {
+        return Rand._randInt(this, min, max);
+    }
+
+    /**
+     * Private Helper Function:
+     * Get the random hex value of a color represented in the hexidecimal format
+     * 
+     * @private
+     * @static
+     * @param {any} rng The local or global rng to use (Rand or this)
+     * @returns {hex} The random hex value in the color spectrum
+     * 
+     * @memberOf Rand
+     */
+    static _randHex(rng) {
+        return rng.randInt(0, 16777215);
+    }
+
+    /**
+     * Get the random hex value of a color represented in the hexidecimal format
+     * 
+     * @static
+     * @returns {hex} 
+     * 
+     * @memberOf Rand
+     */
     static randHex() {
-        return Rand.randInt(0, 16777215);
+        return Rand._randHex(Rand);
     }
 
+    /**
+     * Get the random hex value of a color represented in the hexidecimal format
+     * 
+     * @returns {hex} 
+     * 
+     * @memberOf Rand
+     */
+    randHex() {
+        return Rand._randHex(this);
+    }
+
+    /**
+     * Private Helper Function:
+     * Get a random hex color string represented in "#HEXSTR" format
+     * 
+     * @private
+     * @static
+     * @param {any} rng The local or global rng to use (Rand or this)
+     * @returns {string}
+     * 
+     * @memberOf Rand
+     */
+    static _randHexColor(rng) {
+        return "#" + rng.randHex().toString(16);
+    }
+
+    /**
+     * Get a random hex color string represented in "#HEXSTR" format
+     * 
+     * @static
+     * @returns {string}
+     * 
+     * @memberOf Rand
+     */
     static randHexColor() {
-        return '#' + Rand.randHex().toString(16);
+        return Rand._randHexColor(Rand);
+    }
+
+    /**
+     * Get a random hex color string represented in "#HEXSTR" format
+     * 
+     * @static
+     * @returns {string}
+     * 
+     * @memberOf Rand
+     */
+    randHexColor() {
+        return Rand._randHexColor(this);
     }
 
     //---- Random Geometry ----
 
-    static vector(bbox) {
+    /**
+     * Get a random vector in a bounding box
+     * 
+     * @private
+     * @static
+     * @param {any} rng The local or global rng to use (Rand or this)
+     * @param {Rectangle} bbox The bounding box of the random vector
+     * @returns {Vector} A random vector
+     * 
+     * @memberOf Rand
+     */
+    static _vector(rng, bbox) {
         return new Vector(Rand.randRange(bbox.x, bbox.x + bbox.width),
             Rand.randRange(bbox.y, bbox.y + bbox.height));
+    }
+
+    /**
+     * Get a random vector in a bounding box
+     * 
+     * @static
+     * @param {Rectangle} bbox The bounding box of the random vector
+     * @returns {Vector} A random vector
+     * 
+     * @memberOf Rand
+     */
+    static vector(bbox) {
+        return Rand._vector(Rand, bbox);
+    }
+
+    /**
+     * Get a random vector in a bounding box
+     * 
+     * @param {Rectangle} bbox The bounding box of the random vector
+     * @returns {Vector} A random vector
+     * 
+     * @memberOf Rand
+     */
+    vector(bbox) {
+        return Rand._vector(this, bbox);
     }
 }
 

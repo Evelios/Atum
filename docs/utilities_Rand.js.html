@@ -278,7 +278,17 @@
             
                 <li data-name="Rand#rand"><a href="Rand.html#rand">rand</a></li>
             
+                <li data-name="Rand#randHex"><a href="Rand.html#randHex">randHex</a></li>
+            
+                <li data-name="Rand#randHexColor"><a href="Rand.html#randHexColor">randHexColor</a></li>
+            
+                <li data-name="Rand#randInt"><a href="Rand.html#randInt">randInt</a></li>
+            
+                <li data-name="Rand#randRange"><a href="Rand.html#randRange">randRange</a></li>
+            
                 <li data-name="Rand#setSeed"><a href="Rand.html#setSeed">setSeed</a></li>
+            
+                <li data-name="Rand#vector"><a href="Rand.html#vector">vector</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -517,7 +527,7 @@ class Rand {
      * on the capabilities existing in the framework currently. This class can
      * be used on a global or local scale.
      * 
-     * @example 
+     * @example
      * Rand.seedRandom(0);      // Set the global seed
      * Rand.rand();             // Predictable based off seed
      * 
@@ -602,11 +612,11 @@ class Rand {
      * 
      * @private
      * @static
-     * @param {any} rng 
+     * @param {any} rng The local or global rng to use (Rand or this)
      * @param {any} min 
      * @param {any} max 
      * 
-     * @memberOf Rand
+     * @memberof Rand
      */
     static _randRange(rng, min, max) {
         return rng.rand() * (max - min) + min;
@@ -621,11 +631,42 @@ class Rand {
      * @returns {number} Random float number from min (inclusive) 
      *  to max (exclusive)
      * 
-     * @memberOf Rand
+     * @memberof Rand
      */
     static randRange(min, max) {
         return Rand._randRange(Rand, min, max);
-        // return Rand.rand() * (max - min) + min;
+    }
+
+    /**
+     * Get a random float value in a particular range
+     * 
+     * @param {any} min 
+     * @param {any} max 
+     * @returns {number} Random float number from min (inclusive) 
+     *  to max (exclusive)
+     * 
+     * @memberof Rand
+     */
+    randRange(min, max) {
+        return Rand._randRange(this, min, max);
+    }
+
+    /**
+     * Private Helper Function:
+     * Get a random int in a particular range (min and max inclusive)
+     * 
+     * @private
+     * @static
+     * @param {any} rng The local or global rng to use (Rand or this)
+     * @param {any} min 
+     * @param {any} max 
+     * @returns {number} Random float number from min (inclusive) 
+     *  to max (exclusive)
+     * 
+     * @memberOf Rand
+     */
+    static _randInt(rng, min, max) {
+        return Math.floor(rng.rand() * (max - min + 1)) + min;
     }
 
     /**
@@ -640,11 +681,40 @@ class Rand {
      * @memberOf Rand
      */
     static randInt(min, max) {
-        return Math.floor(Rand.rand() * (max - min + 1)) + min;
+        return Rand._randInt(Rand, min, max);
     }
 
     /**
-     * Get the random hex value of a color 
+     * Get a random int in a particular range (min and max inclusive)
+     * 
+     * @param {any} min 
+     * @param {any} max 
+     * @returns {number} Random float number from min (inclusive) 
+     *  to max (exclusive)
+     * 
+     * @memberOf Rand
+     */
+    randInt(min, max) {
+        return Rand._randInt(this, min, max);
+    }
+
+    /**
+     * Private Helper Function:
+     * Get the random hex value of a color represented in the hexidecimal format
+     * 
+     * @private
+     * @static
+     * @param {any} rng The local or global rng to use (Rand or this)
+     * @returns {hex} The random hex value in the color spectrum
+     * 
+     * @memberOf Rand
+     */
+    static _randHex(rng) {
+        return rng.randInt(0, 16777215);
+    }
+
+    /**
+     * Get the random hex value of a color represented in the hexidecimal format
      * 
      * @static
      * @returns {hex} 
@@ -652,11 +722,37 @@ class Rand {
      * @memberOf Rand
      */
     static randHex() {
-        return Rand.randInt(0, 16777215);
+        return Rand._randHex(Rand);
     }
 
     /**
-     * Get a random hex color string
+     * Get the random hex value of a color represented in the hexidecimal format
+     * 
+     * @returns {hex} 
+     * 
+     * @memberOf Rand
+     */
+    randHex() {
+        return Rand._randHex(this);
+    }
+
+    /**
+     * Private Helper Function:
+     * Get a random hex color string represented in "#HEXSTR" format
+     * 
+     * @private
+     * @static
+     * @param {any} rng The local or global rng to use (Rand or this)
+     * @returns {string}
+     * 
+     * @memberOf Rand
+     */
+    static _randHexColor(rng) {
+        return "#" + rng.randHex().toString(16);
+    }
+
+    /**
+     * Get a random hex color string represented in "#HEXSTR" format
      * 
      * @static
      * @returns {string}
@@ -664,10 +760,38 @@ class Rand {
      * @memberOf Rand
      */
     static randHexColor() {
-        return "#" + Rand.randHex().tostring(16);
+        return Rand._randHexColor(Rand);
+    }
+
+    /**
+     * Get a random hex color string represented in "#HEXSTR" format
+     * 
+     * @static
+     * @returns {string}
+     * 
+     * @memberOf Rand
+     */
+    randHexColor() {
+        return Rand._randHexColor(this);
     }
 
     //---- Random Geometry ----
+
+    /**
+     * Get a random vector in a bounding box
+     * 
+     * @private
+     * @static
+     * @param {any} rng The local or global rng to use (Rand or this)
+     * @param {Rectangle} bbox The bounding box of the random vector
+     * @returns {Vector} A random vector
+     * 
+     * @memberOf Rand
+     */
+    static _vector(rng, bbox) {
+        return new Vector(Rand.randRange(bbox.x, bbox.x + bbox.width),
+            Rand.randRange(bbox.y, bbox.y + bbox.height));
+    }
 
     /**
      * Get a random vector in a bounding box
@@ -679,8 +803,19 @@ class Rand {
      * @memberOf Rand
      */
     static vector(bbox) {
-        return new Vector(Rand.randRange(bbox.x, bbox.x + bbox.width),
-            Rand.randRange(bbox.y, bbox.y + bbox.height));
+        return Rand._vector(Rand, bbox);
+    }
+
+    /**
+     * Get a random vector in a bounding box
+     * 
+     * @param {Rectangle} bbox The bounding box of the random vector
+     * @returns {Vector} A random vector
+     * 
+     * @memberOf Rand
+     */
+    vector(bbox) {
+        return Rand._vector(this, bbox);
     }
 }
 
@@ -696,7 +831,7 @@ export default Rand;</code></pre>
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Fri Oct 06 2017 10:50:15 GMT-0400 (Eastern Daylight Time)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Oct 16 2017 14:49:33 GMT-0400 (Eastern Daylight Time)
         </footer>
     </div>
 </div>
