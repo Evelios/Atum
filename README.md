@@ -6,7 +6,7 @@ Atum is a graph based procedural generation library build for Javascript. I star
 
 ### Documentation
 
-The documentation for the Atum library is listed [**here**](https://evelios.github.io/Atum/). This is where you find out all the nitty-gritty details of what the methods do and where this library can take you. I plan to have examples on how this code can be used to at least spark some ideas and allow the library to get used to its full potential.
+The documentation for the Atum library is listed [**here**](https://evelios.github.io/Atum/index.html). This is where you find out all the nitty-gritty details of what the methods do and where this library can take you. I plan to have examples on how this code can be used to at least spark some ideas and allow the library to get used to its full potential.
 
 ### Dependencies and Tools
 
