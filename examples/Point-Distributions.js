@@ -11,42 +11,98 @@ var bgAccent;
 var centerColor;
 var voronoiColor;
 var cornerColor;
-var delauanyColor;
-
+var delaunayColor;
 
 var width;
 var height;
 var graph;
 
+var params = {
+    // Parameters
+    pointFunctions: {
+        "Square": PointDistribution.square,
+        "Hexagon": PointDistribution.hexagon,
+        "Random": PointDistribution.random,
+        "Poisson": PointDistribution.poisson
+    },
+    distributionOptions: [
+        "Square",
+        "Hexagon",
+        "Random",
+        "Poisson"
+    ],
+    pointDistribution: "Random",
+    density: 50,
+    relaxations: 0,
 
+    // Rendering
+    centers: true,
+    corners: true,
+    voronoi: true,
+    delaunay: false,
+};
+
+//---- Main Setup Function ----
 function setup() {
+
     Rand.setSeed(0);
+
     width = document.body.clientWidth || window.innerWidth;
     height = document.body.clientHeight || window.innerHeight;
 
     bgColor = color("#303030");
     bgAccent = color("#393939");
     centerColor = color("#AA7539");
-    delauanyColor = color("#A23645");
+    delaunayColor = color("#A23645");
     cornerColor = color("#479030");
     voronoiColor = color("#27566B");
 
+    setUpGui();
+
     createCanvas(width, height);
 
-    createGraph();
-
-    drawGrid(50);
-    drawGraph();
+    createAndRender();
 }
+
+//---- Main Draw Function ----
 
 function draw() {
 
 }
 
+//---- Secondary Setup Functions ----
+
+function setUpGui() {
+    var gui = new dat.GUI();
+
+    var paramsFolder = gui.addFolder("Parameters");
+
+    paramsFolder.add(params, "pointDistribution", params.distributionOptions).name("Point Distribution").onChange(createAndRender);
+    paramsFolder.add(params, "density", 25, 100).step(5).name("Point Density").onChange(createAndRender);
+    paramsFolder.add(params, "relaxations", 0, 10).name("Lloyd Relaxations").onChange(createAndRender);
+
+    var renderFolder = gui.addFolder("Rendering");
+
+    renderFolder.add(params, "centers").name("Centers").onChange(createAndRender);
+    renderFolder.add(params, "corners").name("Corners").onChange(createAndRender);
+    renderFolder.add(params, "voronoi").name("Voronoi").onChange(createAndRender);
+    renderFolder.add(params, "delaunay").name("Delauanay").onChange(createAndRender);
+}
+
+//---- Other Functions
+
+function createAndRender() {
+    createGraph();
+    drawGrid(50);
+    drawGraph();
+}
+
 function createGraph() {
     var bbox = new Rectangle(Vector.zero(), width, height);
-    var points = PointDistribution.random(bbox, 50);
-    graph = new Diagram(points, bbox, 2);
+    var pointFunction = params.pointFunctions[params.pointDistribution];
+    console.log(pointFunction)
+    var points = pointFunction(bbox, params.density);
+    graph = new Diagram(points, bbox, params.relaxations);
 }
 
 function drawGrid(d) {
@@ -61,23 +117,31 @@ function drawGrid(d) {
 }
 
 function drawGraph() {
-    for (var edge of graph.edges) {
-        stroke(voronoiColor);
-        // line(edge.v0.x, edge.v0.y, edge.v1.x, edge.v1.y);
-        if (edge.d0 && edge.d1) {
-            stroke(delauanyColor);
-            line(edge.d0.x, edge.d0.y, edge.d1.x, edge.d1.y);
+    if (params.voronoi || params.delaunay) {
+        for (var edge of graph.edges) {
+            if (params.voronoi) {
+                stroke(voronoiColor);
+                line(edge.v0.x, edge.v0.y, edge.v1.x, edge.v1.y);
+            }
+            if (params.delaunay && edge.d0 && edge.d1) {
+                stroke(delaunayColor);
+                line(edge.d0.x, edge.d0.y, edge.d1.x, edge.d1.y);
+            }
         }
     }
 
     noStroke();
-    fill(cornerColor);
-    for (var corner of graph.corners) {
-        ellipse(corner.x, corner.y, 6);
+    if (params.corners) {
+        fill(cornerColor);
+        for (var corner of graph.corners) {
+            ellipse(corner.x, corner.y, 6);
+        }
     }
 
-    fill(centerColor);
-    for (var center of graph.centers) {
-        ellipse(center.x, center.y, 6);
+    if (params.centers) {
+        fill(centerColor);
+        for (var center of graph.centers) {
+            ellipse(center.x, center.y, 6);
+        }
     }
 }

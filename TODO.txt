@@ -32,7 +32,9 @@ Diagram
 
 Utilities
   - Clean up the Util File and put in ES6 capabilities
-  - Point placement by density or number
+  - Rand
+    + Have the Point Distributions key off of a local or global rng
+  - Point Distributions
     + Random
     + poisson
     + Box blue noise
