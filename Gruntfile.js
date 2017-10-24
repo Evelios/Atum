@@ -78,8 +78,11 @@ module.exports = function(grunt) {
             dist: {
                 src: ["src/**/*.js"],
                 options: {
+                    verbose: true,
                     readme: "./README.md",
+                    // tutorials: "examples",
                     destination: "docs",
+                    // There is the option of using jaguarjs-jsdoc-patched-2
                     template: "./node_modules/jaguarjs-jsdoc-patched",
                     // template: "node_modules/tui-jsdoc-template/", // This is the goal
                 }
@@ -103,7 +106,7 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask("dev", ["browserify:dev"]);
-    grunt.registerTask("build", ["browserify:build", "uglify"]);
+    grunt.registerTask("build", ["browserify:build", "uglify", "jsdoc"]);
     grunt.registerTask("test", ["browserify:build", "browserify:test"]);
     grunt.registerTask("watch", ["browserify:build", "watch:js"]);
     grunt.registerTask("docs", ["jsdoc"]);

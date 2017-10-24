@@ -12,6 +12,7 @@ var centerColor;
 var voronoiColor;
 var cornerColor;
 var delaunayColor;
+var centroidColor;
 
 var width;
 var height;
@@ -23,15 +24,18 @@ var params = {
         "Square": PointDistribution.square,
         "Hexagon": PointDistribution.hexagon,
         "Random": PointDistribution.random,
+        "Jittered Grid": PointDistribution.jitteredGrid,
         "Poisson": PointDistribution.poisson
     },
     distributionOptions: [
         "Square",
         "Hexagon",
         "Random",
+        "Jittered Grid",
         "Poisson"
     ],
-    pointDistribution: "Random",
+    pointDistribution: "Poisson",
+    seed: 0,
     density: 50,
     relaxations: 0,
 
@@ -40,19 +44,18 @@ var params = {
     corners: true,
     voronoi: true,
     delaunay: false,
+    centroids: false
 };
 
 //---- Main Setup Function ----
 function setup() {
-
-    Rand.setSeed(0);
-
     width = document.body.clientWidth || window.innerWidth;
     height = document.body.clientHeight || window.innerHeight;
 
     bgColor = color("#303030");
     bgAccent = color("#393939");
     centerColor = color("#AA7539");
+    centroidColor = color("#804E16");
     delaunayColor = color("#A23645");
     cornerColor = color("#479030");
     voronoiColor = color("#27566B");
@@ -78,6 +81,7 @@ function setUpGui() {
     var paramsFolder = gui.addFolder("Parameters");
 
     paramsFolder.add(params, "pointDistribution", params.distributionOptions).name("Point Distribution").onChange(createAndRender);
+    paramsFolder.add(params, "seed", 0, 100).name("Seed").onChange(createAndRender);
     paramsFolder.add(params, "density", 25, 100).step(5).name("Point Density").onChange(createAndRender);
     paramsFolder.add(params, "relaxations", 0, 10).name("Lloyd Relaxations").onChange(createAndRender);
 
@@ -87,21 +91,23 @@ function setUpGui() {
     renderFolder.add(params, "corners").name("Corners").onChange(createAndRender);
     renderFolder.add(params, "voronoi").name("Voronoi").onChange(createAndRender);
     renderFolder.add(params, "delaunay").name("Delauanay").onChange(createAndRender);
+    renderFolder.add(params, "centroids").name("Centroids").onChange(createAndRender);
 }
 
 //---- Other Functions
 
 function createAndRender() {
+    Rand.setSeed(params.seed);
+
     createGraph();
-    drawGrid(50);
+    drawGrid(params.density);
     drawGraph();
 }
 
 function createGraph() {
     var bbox = new Rectangle(Vector.zero(), width, height);
     var pointFunction = params.pointFunctions[params.pointDistribution];
-    console.log(pointFunction)
-    var points = pointFunction(bbox, params.density);
+    var points = pointFunction(bbox, params.density, 25);
     graph = new Diagram(points, bbox, params.relaxations);
 }
 
@@ -134,14 +140,24 @@ function drawGraph() {
     if (params.corners) {
         fill(cornerColor);
         for (var corner of graph.corners) {
-            ellipse(corner.x, corner.y, 6);
+            if (params.corners) {
+                ellipse(corner.x, corner.y, 6);
+            }
         }
     }
 
-    if (params.centers) {
-        fill(centerColor);
+    if (params.centers || params.centroids) {
         for (var center of graph.centers) {
-            ellipse(center.x, center.y, 6);
+            if (params.centroids) {
+                var centroid = center.corners.centroid();
+                fill(centroidColor);
+                ellipse(centroid.x, centroid.y, 6);
+            }
+
+            if (params.centers) {
+                fill(centerColor);
+                ellipse(center.x, center.y, 6);
+            }
         }
     }
 }

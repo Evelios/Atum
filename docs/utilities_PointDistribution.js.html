@@ -200,11 +200,11 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="PointDistribution.exports.blueNoise"><a href="PointDistribution.html#.exports.blueNoise">exports.blueNoise</a></li>
-            
                 <li data-name="PointDistribution.exports.circular"><a href="PointDistribution.html#.exports.circular">exports.circular</a></li>
             
                 <li data-name="PointDistribution.exports.hexagon"><a href="PointDistribution.html#.exports.hexagon">exports.hexagon</a></li>
+            
+                <li data-name="PointDistribution.exports.jitteredGrid"><a href="PointDistribution.html#.exports.jitteredGrid">exports.jitteredGrid</a></li>
             
                 <li data-name="PointDistribution.exports.poisson"><a href="PointDistribution.html#.exports.poisson">exports.poisson</a></li>
             
@@ -525,6 +525,7 @@
 
 "use strict";
 
+import Poisson from "poisson-disk-sample";
 import Vector from "../geometry/Vector";
 import Rectangle from "../geometry/Rectangle";
 import Rand from "./Rand";
@@ -536,79 +537,21 @@ import Rand from "./Rand";
  * @export
  * @param {Rectangle} bbox The bounding box to create the points in
  * @param {number} d Average distance between points
+ * @param {number} [seed=null] If specified use a local seed for creating the point
+ *  distribution. Otherwise, use the current global seed for generation
  * @returns {Vector[]} The list of randomly distributed points
  * @memberof PointDistribution
  */
-export function random(bbox, d) {
-    let points = [];
-
+export function random(bbox, d, seed = null) {
+    const rng = seed ? new Rand(seed) : Rand;
     const nPoints = bbox.area / (d * d);
+
+    let points = [];
     for (let i = 0; i &lt; nPoints; i++) {
-        points.push(Rand.vector(bbox));
+        points.push(rng.vector(bbox));
     }
 
     return points;
-}
-
-/**
- * Creates a blue noise distribution of points in a particular bounding box
- * with a particular average distance between points. This is done by
- * creating a grid system and picking a random point in each grid. This has
- * the effect of creating a less random distribution of points. The second
- * parameter m determins the spacing between points in the grid. This ensures
- * that no two points are in the same grid.
- * 
- * @summary Create a grid based random blue noise point distribution.
- * 
- * @export
- * @param {Rectangle} bbox The bounding box to create the points in
- * @param {number} d Average distance between points
- * @param {number} m Maximum distance away from the center of the grid that a
- *  point can be placed. This acts to increase the padding between points. 
- *  This makes the noise less random. This number must be smaller than d.
- * @returns {Vector[]} The list of randomly distributed points
- * @memberof PointDistribution
- */
-export function blueNoise(bbox, d) {
-    throw "Error: Not Implemented";
-}
-
-/**
- * Creates a poisson or blue noise distribution of points in a particular
- * bounding box with a particular average distance between points. This is
- * done by using poisson disk sampling which tries to create points so that the
- * distance between neighbors is as close to a fixed number (the distance d)
- * as possible.
- * 
- * @summary Create a blue noise distribution of points using poisson disk
- *  sampling.
- * 
- * @export
- * @param {Rectangle} bbox The bounding box to create the points in
- * @param {number} d Average distance between points
- * @returns {Vector[]} The list of randomly distributed points
- * 
- * @memberof PointDistribution
- */
-export function poisson(bbox, d) {
-    throw "Error: Not Implemented";
-}
-
-/**
- * Creates a blue noise distribution of points in a particular bounding box
- * with a particular average distance between points. This is done by using
- * recursive wang tiles to create this distribution of points.
- * 
- * @summary Not Implemented Yet
- * 
- * @export
- * @param {Rectangle} bbox The bounding box to create the points in
- * @param {number} d Average distance between points
- * @returns {Vector[]} The list of randomly distributed points
- * @memberof PointDistribution
- */
-export function recursiveWang(bbox, d) {
-    throw "Error: Not Implemented";
 }
 
 /**
@@ -673,6 +616,89 @@ export function hexagon(bbox, d, flatTop = true, w, h) {
 }
 
 /**
+ * Creates a blue noise distribution of points in a particular bounding box
+ * with a particular average distance between points. This is done by
+ * creating a grid system and picking a random point in each grid. This has
+ * the effect of creating a less random distribution of points. The second
+ * parameter m determins the spacing between points in the grid. This ensures
+ * that no two points are in the same grid.
+ * 
+ * @summary Create a jittered grid based random blue noise point distribution.
+ * 
+ * @export
+ * @param {Rectangle} bbox The bounding box to create the points in
+ * @param {number} d Average distance between points
+ * @param {number} [seed=null] If specified use a local seed for creating the point
+ *  distribution. Otherwise, use the current global seed for generation
+ * @param {number} [m=0] Maximum distance away from the edge of the grid that a
+ *  point can be placed. This acts to increase the padding between points. 
+ *  This makes the noise less random. This number must be smaller than d.
+ * @returns {Vector[]} The list of randomly distributed points
+ * @memberof PointDistribution
+ */
+export function jitteredGrid(bbox, d, seed = null, m = 0) {
+    const rng = seed ? new Rand(seed) : Rand;
+
+    let points = [];
+    let pointBox;
+    for (let y = 0; y &lt; bbox.height - d; y += d) {
+        for (let x = 0; x &lt; bbox.width - d; x += d) {
+            // Local bbox for the point to generate in
+            const boxPos = new Vector(x - d + m, y - d + m);
+            pointBox = new Rectangle(boxPos, x - m, y - m);
+            points.push(rng.vector(pointBox));
+        }
+    }
+
+    return points;
+}
+
+/**
+ * Creates a poisson, or blue noise distribution of points in a particular
+ * bounding box with a particular average distance between points. This is
+ * done by using poisson disk sampling which tries to create points so that the
+ * distance between neighbors is as close to a fixed number (the distance d)
+ * as possible. This algorithm is implemented using the poisson dart throwing
+ * algorithm.
+ *  
+ * @summary Create a blue noise distribution of points using poisson disk
+ *  sampling.
+ * 
+ * @export
+ * @param {Rectangle} bbox The bounding box to create the points in
+ * @param {number} d Average distance between points
+ * @returns {Vector[]} The list of randomly distributed points
+ * 
+ * @see {@link https://www.jasondavies.com/poisson-disc/}
+ * @see {@link https://github.com/jeffrey-hearn/poisson-disk-sample}
+ * @memberof PointDistribution
+ */
+export function poisson(bbox, d) {
+    var sampler = new Poisson(bbox.width, bbox.height, d, d);
+    var solution = sampler.sampleUntilSolution();
+    var points = solution.map(point => new Vector(point));
+
+    return points;
+}
+
+/**
+ * Creates a blue noise distribution of points in a particular bounding box
+ * with a particular average distance between points. This is done by using
+ * recursive wang tiles to create this distribution of points.
+ * 
+ * @summary Not Implemented Yet
+ * 
+ * @export
+ * @param {Rectangle} bbox The bounding box to create the points in
+ * @param {number} d Average distance between points
+ * @returns {Vector[]} The list of randomly distributed points
+ * @memberof PointDistribution
+ */
+export function recursiveWang(bbox, d) {
+    throw "Error: Not Implemented";
+}
+
+/**
  * Creates a circular distribution of points in a particular bounding box
  * with a particular average distance between points.
  * 
@@ -698,7 +724,7 @@ export function circular(bbox, d) {
         
 
         <footer>
-            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Oct 16 2017 15:58:21 GMT-0400 (Eastern Daylight Time)
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Oct 24 2017 14:51:28 GMT-0400 (Eastern Daylight Time)
         </footer>
     </div>
 </div>

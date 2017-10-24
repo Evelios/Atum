@@ -200,11 +200,11 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="PointDistribution.exports.blueNoise"><a href="PointDistribution.html#.exports.blueNoise">exports.blueNoise</a></li>
-            
                 <li data-name="PointDistribution.exports.circular"><a href="PointDistribution.html#.exports.circular">exports.circular</a></li>
             
                 <li data-name="PointDistribution.exports.hexagon"><a href="PointDistribution.html#.exports.hexagon">exports.hexagon</a></li>
+            
+                <li data-name="PointDistribution.exports.jitteredGrid"><a href="PointDistribution.html#.exports.jitteredGrid">exports.jitteredGrid</a></li>
             
                 <li data-name="PointDistribution.exports.poisson"><a href="PointDistribution.html#.exports.poisson">exports.poisson</a></li>
             
@@ -621,206 +621,6 @@ tile patterns when turned into a voronoi diagram.
             
 <dt>
     <div class="nameContainer">
-        <h4 class="name" id=".exports.blueNoise">
-            
-            <span class="type-signature static">static</span>PointDistribution.exports.blueNoise<span class="signature">(bbox, d, m)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Array.&lt;<a href="Vector.html">Vector</a>>}</span>
-        </h4>
-    
-        
-        <div class="tag-source">
-            <a href="utilities_PointDistribution.js.html">utilities/PointDistribution.js</a>, <a href="utilities_PointDistribution.js.html#line56">line 56</a>
-        </div>
-        
-    </div>
-
-    
-    <p class="summary">Create a grid based random blue noise point distribution.</p>
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Creates a blue noise distribution of points in a particular bounding box
-with a particular average distance between points. This is done by
-creating a grid system and picking a random point in each grid. This has
-the effect of creating a less random distribution of points. The second
-parameter m determins the spacing between points in the grid. This ensures
-that no two points are in the same grid.
-    </div>
-    
-
-    
-    
-    
-    
-    
-        
-
-<table class="params">
-    <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
-        <tr>
-            
-                <td class="name"><code>bbox</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type"><a href="Rectangle.html">Rectangle</a></span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                The bounding box to create the points in</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>d</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                Average distance between points</td>
-        </tr>
-	
-	
-	
-        <tr>
-            
-                <td class="name"><code>m</code></td>
-            
-            
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-            
-            
-            
-            <td class="description last">
-                
-                Maximum distance away from the center of the grid that a
- point can be placed. This acts to increase the padding between points. 
- This makes the noise less random. This number must be smaller than d.</td>
-        </tr>
-	
-	
-	</tbody>
-</table>
-    
-    
-    
-<dl class="details">
-    
-        
-    
-    
-    
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-</dl>
-
-    
-    
-
-    
-
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Type</th>
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-    <tbody>
-    
-        <tr>
-            
-            <td class="type">
-            
-                        Array.&lt;<a href="Vector.html">Vector</a>>
-                        
-                    
-            </td>
-            <td class="description last">The list of randomly distributed points</td>
-        </tr>
-    
-    </tbody>
-</table>
-
-    
-    
-    
-</dd>
-
-        
-            
-<dt>
-    <div class="nameContainer">
         <h4 class="name" id=".exports.circular">
             
             <span class="type-signature static">static</span>PointDistribution.exports.circular<span class="signature">(bbox, d)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Array.&lt;<a href="Vector.html">Vector</a>>}</span>
@@ -828,7 +628,7 @@ that no two points are in the same grid.
     
         
         <div class="tag-source">
-            <a href="utilities_PointDistribution.js.html">utilities/PointDistribution.js</a>, <a href="utilities_PointDistribution.js.html#line171">line 171</a>
+            <a href="utilities_PointDistribution.js.html">utilities/PointDistribution.js</a>, <a href="utilities_PointDistribution.js.html#line197">line 197</a>
         </div>
         
     </div>
@@ -999,7 +799,7 @@ with a particular average distance between points.
     
         
         <div class="tag-source">
-            <a href="utilities_PointDistribution.js.html">utilities/PointDistribution.js</a>, <a href="utilities_PointDistribution.js.html#line138">line 138</a>
+            <a href="utilities_PointDistribution.js.html">utilities/PointDistribution.js</a>, <a href="utilities_PointDistribution.js.html#line81">line 81</a>
         </div>
         
     </div>
@@ -1284,6 +1084,276 @@ that have "pointy" tops or "flat" tops. By default it makes flat tops.
             
 <dt>
     <div class="nameContainer">
+        <h4 class="name" id=".exports.jitteredGrid">
+            
+            <span class="type-signature static">static</span>PointDistribution.exports.jitteredGrid<span class="signature">(bbox, d, <span class="optional">seed</span>, <span class="optional">m</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Array.&lt;<a href="Vector.html">Vector</a>>}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="utilities_PointDistribution.js.html">utilities/PointDistribution.js</a>, <a href="utilities_PointDistribution.js.html#line123">line 123</a>
+        </div>
+        
+    </div>
+
+    
+    <p class="summary">Create a jittered grid based random blue noise point distribution.</p>
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Creates a blue noise distribution of points in a particular bounding box
+with a particular average distance between points. This is done by
+creating a grid system and picking a random point in each grid. This has
+the effect of creating a less random distribution of points. The second
+parameter m determins the spacing between points in the grid. This ensures
+that no two points are in the same grid.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Default</th>
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>bbox</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Rectangle.html">Rectangle</a></span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                The bounding box to create the points in</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>d</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                    
+                    
+                        
+                    
+                
+                Average distance between points</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>seed</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                If specified use a local seed for creating the point
+ distribution. Otherwise, use the current global seed for generation</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>m</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    0
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                Maximum distance away from the edge of the grid that a
+ point can be placed. This acts to increase the padding between points. 
+ This makes the noise less random. This number must be smaller than d.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        Array.&lt;<a href="Vector.html">Vector</a>>
+                        
+                    
+            </td>
+            <td class="description last">The list of randomly distributed points</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer">
         <h4 class="name" id=".exports.poisson">
             
             <span class="type-signature static">static</span>PointDistribution.exports.poisson<span class="signature">(bbox, d)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Array.&lt;<a href="Vector.html">Vector</a>>}</span>
@@ -1291,7 +1361,7 @@ that have "pointy" tops or "flat" tops. By default it makes flat tops.
     
         
         <div class="tag-source">
-            <a href="utilities_PointDistribution.js.html">utilities/PointDistribution.js</a>, <a href="utilities_PointDistribution.js.html#line77">line 77</a>
+            <a href="utilities_PointDistribution.js.html">utilities/PointDistribution.js</a>, <a href="utilities_PointDistribution.js.html#line160">line 160</a>
         </div>
         
     </div>
@@ -1305,11 +1375,12 @@ that have "pointy" tops or "flat" tops. By default it makes flat tops.
     
     
     <div class="description">
-        Creates a poisson or blue noise distribution of points in a particular
+        Creates a poisson, or blue noise distribution of points in a particular
 bounding box with a particular average distance between points. This is
 done by using poisson disk sampling which tries to create points so that the
 distance between neighbors is as close to a fixed number (the distance d)
-as possible.
+as possible. This algorithm is implemented using the poisson dart throwing
+algorithm.
     </div>
     
 
@@ -1408,6 +1479,15 @@ as possible.
     
     
     
+    <dt class="tag-see">See:</dt>
+    <dd class="tag-see">
+        <ul>
+            <li><a target="_blank" href="https://www.jasondavies.com/poisson-disc/">https://www.jasondavies.com/poisson-disc/</a></li>
+        
+            <li><a target="_blank" href="https://github.com/jeffrey-hearn/poisson-disk-sample">https://github.com/jeffrey-hearn/poisson-disk-sample</a></li>
+        </ul>
+    </dd>
+    
     
     
 </dl>
@@ -1461,12 +1541,12 @@ as possible.
     <div class="nameContainer">
         <h4 class="name" id=".exports.random">
             
-            <span class="type-signature static">static</span>PointDistribution.exports.random<span class="signature">(bbox, d)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Array.&lt;<a href="Vector.html">Vector</a>>}</span>
+            <span class="type-signature static">static</span>PointDistribution.exports.random<span class="signature">(bbox, d, <span class="optional">seed</span>)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{Array.&lt;<a href="Vector.html">Vector</a>>}</span>
         </h4>
     
         
         <div class="tag-source">
-            <a href="utilities_PointDistribution.js.html">utilities/PointDistribution.js</a>, <a href="utilities_PointDistribution.js.html#line26">line 26</a>
+            <a href="utilities_PointDistribution.js.html">utilities/PointDistribution.js</a>, <a href="utilities_PointDistribution.js.html#line29">line 29</a>
         </div>
         
     </div>
@@ -1499,6 +1579,8 @@ with a particular average distance between points.
 		<th>Type</th>
 		
 		
+		<th>Default</th>
+		
 		
 		<th class="last">Description</th>
 	</tr>
@@ -1522,8 +1604,17 @@ with a particular average distance between points.
             </td>
             
             
+                <td class="default">
+                
+                </td>
+            
             
             <td class="description last">
+                
+                    
+                    
+                        
+                    
                 
                 The bounding box to create the points in</td>
         </tr>
@@ -1545,10 +1636,56 @@ with a particular average distance between points.
             </td>
             
             
+                <td class="default">
+                
+                </td>
+            
             
             <td class="description last">
                 
+                    
+                    
+                        
+                    
+                
                 Average distance between points</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>seed</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+            
+            
+                <td class="default">
+                
+                    null
+                
+                </td>
+            
+            
+            <td class="description last">
+                
+                    
+                        <span class="optional">optional</span>
+                    
+                    
+                        
+                    
+                
+                If specified use a local seed for creating the point
+ distribution. Otherwise, use the current global seed for generation</td>
         </tr>
 	
 	
@@ -1635,7 +1772,7 @@ with a particular average distance between points.
     
         
         <div class="tag-source">
-            <a href="utilities_PointDistribution.js.html">utilities/PointDistribution.js</a>, <a href="utilities_PointDistribution.js.html#line94">line 94</a>
+            <a href="utilities_PointDistribution.js.html">utilities/PointDistribution.js</a>, <a href="utilities_PointDistribution.js.html#line181">line 181</a>
         </div>
         
     </div>
@@ -1807,7 +1944,7 @@ recursive wang tiles to create this distribution of points.
     
         
         <div class="tag-source">
-            <a href="utilities_PointDistribution.js.html">utilities/PointDistribution.js</a>, <a href="utilities_PointDistribution.js.html#line108">line 108</a>
+            <a href="utilities_PointDistribution.js.html">utilities/PointDistribution.js</a>, <a href="utilities_PointDistribution.js.html#line51">line 51</a>
         </div>
         
     </div>
@@ -1982,7 +2119,7 @@ box with a particular distance between points.
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Oct 16 2017 15:58:21 GMT-0400 (Eastern Daylight Time)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Oct 24 2017 14:51:28 GMT-0400 (Eastern Daylight Time)
         </footer>
     </div>
 </div>
