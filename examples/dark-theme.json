@@ -1,0 +1,29 @@
+{
+    "background-dark": "#202020",
+    "background": "#303030",
+    "background-light": "#393939",
+
+    "primary-lightest": "#FFD7AA",
+    "primary-light": "#D4A26A",
+    "primary": "#AA7539",
+    "primary-dark": "#804E16",
+    "primary-darkest": "#804E16",
+
+    "secondary-lightest": "#F2A2AD",
+    "secondary-light": "#CA6573",
+    "secondary": "#A23645",
+    "secondary-dark": "#7A1523",
+    "secondary-darkest": "#51000B",
+
+    "tertiary-lightest": "#A2D890",
+    "tertiary-light": "#70B45A",
+    "tertiary": "#479030",
+    "tertiary-dark": "#286C12",
+    "tertiary-darkest": "#124800",
+
+    "quaternary-lightest": "#6E91A1",
+    "quaternary-light": "#467386",
+    "quaternary": "#27566B",
+    "quaternary-dark": "#113D51",
+    "quaternary-darkest": "#032636"
+}

@@ -2899,6 +2899,8 @@ if ((typeof module) == 'object' && module.exports) {
  * various different distributions that can be used to create interesting
  * tile patterns when turned into a voronoi diagram. 
  * 
+ * @tutorial Point-Distributions
+ * 
  * @class PointDistribution
  */
 
@@ -3567,7 +3569,7 @@ module.exports = exports["default"];
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -3576,11 +3578,13 @@ var _Vector = require("./Vector");
 
 var _Vector2 = _interopRequireDefault(_Vector);
 
-var _Shape2 = require("./Shape");
+var _Shape = require("./Shape");
 
-var _Shape3 = _interopRequireDefault(_Shape2);
+var _Shape2 = _interopRequireDefault(_Shape);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -3588,83 +3592,117 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Polygon = function (_Shape) {
-  _inherits(Polygon, _Shape);
+function _extendableBuiltin(cls) {
+    function ExtendableBuiltin() {
+        var instance = Reflect.construct(cls, Array.from(arguments));
+        Object.setPrototypeOf(instance, Object.getPrototypeOf(this));
+        return instance;
+    }
 
-  /**
-   * @class Polygon
-   * @extends Shape
-   * 
-   * Class to store polygon information in an array format that also gives it
-   * extra functionality on top of it. This can also server as a base class
-   * for more specific geometric shapes.
-   * 
-   * @summary Creates an instance of Polygon.
-   * 
-   * @property {Vector} center The center of the polygon. If not otherwise
-   *  stated, the center defaults to the centriod. Any transformations on
-   *  the polygon are done about the center of the polygon.
-   * 
-   * @param {Vector[]} [verticies=null] The verticies of the polyon
-   * @param {Vector} [center=average(verticies)] The center of the polygon
-   */
-  function Polygon(verticies, center) {
-    _classCallCheck(this, Polygon);
+    ExtendableBuiltin.prototype = Object.create(cls.prototype, {
+        constructor: {
+            value: cls,
+            enumerable: false,
+            writable: true,
+            configurable: true
+        }
+    });
 
-    var _this = _possibleConstructorReturn(this, (Polygon.__proto__ || Object.getPrototypeOf(Polygon)).call(this, verticies));
+    if (Object.setPrototypeOf) {
+        Object.setPrototypeOf(ExtendableBuiltin, cls);
+    } else {
+        ExtendableBuiltin.__proto__ = cls;
+    }
 
-    _this.center = center ? center : _this.centroid();
-    return _this;
-  }
+    return ExtendableBuiltin;
+}
 
-  /**
-   * Get the centroid of the polygon. This is the vector average of all the
-   * points that make up the polygon.
-   * 
-   * @returns {Vector} The centroid of the polygon
-   * 
-   * @memberOf Polygon
-   */
+var Polygon = function (_extendableBuiltin2) {
+    _inherits(Polygon, _extendableBuiltin2);
 
+    /**
+     * @class Polygon
+     * @extends Array
+     * 
+     * Class to store polygon information in an array format that also gives it
+     * extra functionality on top of it. This can also server as a base class
+     * for more specific geometric shapes.
+     * 
+     * @summary Creates an instance of Polygon.
+     * 
+     * @property {Vector} center The center of the polygon. If not otherwise
+     *  stated, the center defaults to the centriod. Any transformations on
+     *  the polygon are done about the center of the polygon.
+     * 
+     * @param {Vector} [center=average(verticies)] The center of the polygon.
+     *  If a value is not provided the default value becomes the centroid of
+     *  the verticies.
+     */
+    function Polygon() {
+        var verticies = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+        var center = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
 
-  _createClass(Polygon, [{
-    key: "centroid",
-    value: function centroid() {
-      return _Vector2.default.avg(this);
+        _classCallCheck(this, Polygon);
+
+        if (verticies) {
+            var _ref;
+
+            var _this = _possibleConstructorReturn(this, (_ref = Polygon.__proto__ || Object.getPrototypeOf(Polygon)).call.apply(_ref, [this].concat(_toConsumableArray(verticies))));
+        } else {
+            var _this = _possibleConstructorReturn(this, (Polygon.__proto__ || Object.getPrototypeOf(Polygon)).call(this));
+        }
+        _this.center = center ? center : _this.centroid();
+        return _possibleConstructorReturn(_this);
     }
 
     /**
-     * Get the polygon inset of the current polygon by the input ammount
+     * Get the centroid of the polygon. This is the vector average of all the
+     * points that make up the polygon.
      * 
-     * @param ammount
-     * @returns {Polygon} The inset of the current polygon by
+     * @returns {Vector} The centroid of the polygon
+     * 
      * @memberOf Polygon
      */
 
-  }, {
-    key: "inset",
-    value: function inset(ammount) {
-      return ammount;
-    }
 
-    /**
-     * Returns wheither or not this polygon is a convex polygon. If this is
-     * not true then the polygon is convace or more complex.
-     * 
-     * @returns {boolean} If the polygon is convex
-     * @memberOf Polygon
-     */
+    _createClass(Polygon, [{
+        key: "centroid",
+        value: function centroid() {
+            return _Vector2.default.avg(this);
+        }
 
-  }, {
-    key: "isConvex",
-    value: function isConvex() {}
-  }, {
-    key: "rotate",
-    value: function rotate() {}
-  }]);
+        /**
+         * Get the polygon inset of the current polygon by the input ammount
+         * 
+         * @param ammount
+         * @returns {Polygon} The inset of the current polygon by
+         * @memberOf Polygon
+         */
 
-  return Polygon;
-}(_Shape3.default);
+    }, {
+        key: "inset",
+        value: function inset(ammount) {
+            return ammount;
+        }
+
+        /**
+         * Returns wheither or not this polygon is a convex polygon. If this is
+         * not true then the polygon is convace or more complex.
+         * 
+         * @returns {boolean} If the polygon is convex
+         * @memberOf Polygon
+         */
+
+    }, {
+        key: "isConvex",
+        value: function isConvex() {}
+    }, {
+        key: "rotate",
+        value: function rotate() {}
+    }]);
+
+    return Polygon;
+}(_extendableBuiltin(Array));
 
 exports.default = Polygon;
 module.exports = exports["default"];
@@ -4534,23 +4572,39 @@ var Center = function (_Vector) {
      * @property {Line[]} borders Set of bordering edges
      * @property {Polygon} corners Set of polygon corners
      * @property {boolean} border Is this polygon touching the border edge
+     * @property {object} data The data stored by the center object. This is the
+     *  data that is to be changed by the user
+     * @property {Center} parent The parent object to the current object. The
+     *  default is null, there is no parent.
+     * @property {Center[]} children The children objects to the current object.
+     *  The default is an empty list
      * 
+     * @param {Vector} position The location of the Center object
      * 
      * @class Center
      * @extends {Vector}
      */
     function Center(position) {
+        var parent = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+        var children = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
         _classCallCheck(this, Center);
 
+        // Diagram Properties
         var _this = _possibleConstructorReturn(this, (Center.__proto__ || Object.getPrototypeOf(Center)).call(this, position));
 
         _this.id = -1;
-        // this.neighbors = [];
-        _this.neighbors = new _Polygon2.default();
-        _this.borders = [];
-        // this.corners = [];
+        _this.neighbors = new _Polygon2.default(); // Centers
+        _this.borders = []; // Edges
         _this.corners = new _Polygon2.default();
         _this.border = false;
+
+        // Higher Level Properties
+        _this.data = {};
+
+        // Recursive Parameters
+        _this.parent = parent;
+        _this.children = children ? children : [];
         return _this;
     }
 
@@ -4603,11 +4657,9 @@ var Corner = function (_Vector) {
         var _this = _possibleConstructorReturn(this, (Corner.__proto__ || Object.getPrototypeOf(Corner)).call(this, position));
 
         _this.id = -1;
-        // this.touches = [];
-        _this.touches = new _Polygon2.default();
-        _this.protrudes = [];
-        _this.adjacent = new _Polygon2.default();
-        // this.adjacent = [];
+        _this.touches = new _Polygon2.default(); // Centers
+        _this.protrudes = []; // Edges
+        _this.adjacent = new _Polygon2.default(); // Corners
         return _this;
     }
 
@@ -4682,7 +4734,7 @@ var Diagram = function () {
      *  corners by setting them to the average of their neighbors. This breaks
      *  the voronoi properties of the diagram.
      * 
-     * @memberOf Diagram
+     * @class Diagram
      */
     function Diagram(points, bbox) {
         var relaxations = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
@@ -5135,7 +5187,7 @@ var Diagram = function () {
 exports.default = Diagram;
 module.exports = exports["default"];
 
-},{"../geometry/Vector":19,"../utilities/Util":27,"./Center":20,"./Corner":21,"./Edge":23,"Voronoi":1}],23:[function(require,module,exports){
+},{"../geometry/Vector":19,"../utilities/Util":28,"./Center":20,"./Corner":21,"./Edge":23,"Voronoi":1}],23:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5204,6 +5256,145 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _Diagram2 = require("./Diagram");
+
+var _Diagram3 = _interopRequireDefault(_Diagram2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Map = function (_Diagram) {
+    _inherits(Map, _Diagram);
+
+    /**
+     * Creates an instance of Map.
+     * 
+     * @param {any} points 
+     * @param {any} bbox 
+     * @param {number} [relaxations=0] 
+     * @param {boolean} [improveCorners=false] 
+     * 
+     * @class Map
+     * @extends Diagram
+     */
+    function Map(points, bbox) {
+        var relaxations = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+        var improveCorners = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
+        _classCallCheck(this, Map);
+
+        return _possibleConstructorReturn(this, (Map.__proto__ || Object.getPrototypeOf(Map)).call(this, points, bbox, relaxations = 0, improveCorners = false));
+    }
+
+    /**
+     * This function is used to call cellular automita on the graph object.
+     * The ruleset function should follow the following properties so that
+     * the automation can run properly. See the example for the details
+     * 
+     * @summary Run a generation of cellular automation according to a user
+     *  specified rule set
+     * 
+     * @param {function} ruleset The
+     * 
+     * @example
+     * 
+     * var gameOfLife = function(center) {
+     *   var n = center.neighbors.length;
+     *   return { 
+     *     alive: center.data.alive && (n === 2 || n === 3) ||
+     *           !center.data.alive && n === 3
+     *   };
+     * }
+     * 
+     * @todo Find a New Name
+     * @memberOf Map
+     */
+
+
+    _createClass(Map, [{
+        key: "generate",
+        value: function generate(ruleset) {
+            // Run cellular automita
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = this.centers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var center = _step.value;
+
+                    center._data = ruleset(center);
+                }
+
+                // Update automita actions
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            var _iteratorNormalCompletion2 = true;
+            var _didIteratorError2 = false;
+            var _iteratorError2 = undefined;
+
+            try {
+                for (var _iterator2 = this.centers[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                    var _center = _step2.value;
+
+                    // Update only the new data that has changed
+                    for (var key in _center._data) {
+                        if (_center._data.hasOwnProperty(key)) {
+                            _center.data[key] = _center._data[key];
+                        }
+                    }
+                    delete _center._data;
+                }
+            } catch (err) {
+                _didIteratorError2 = true;
+                _iteratorError2 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
+                    }
+                } finally {
+                    if (_didIteratorError2) {
+                        throw _iteratorError2;
+                    }
+                }
+            }
+        }
+    }]);
+
+    return Map;
+}(_Diagram3.default);
+
+exports.default = Map;
+module.exports = exports["default"];
+
+},{"./Diagram":22}],25:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _Vector = require("./geometry/Vector");
 
 var _Vector2 = _interopRequireDefault(_Vector);
@@ -5244,6 +5435,10 @@ var _Diagram = require("./graph/Diagram");
 
 var _Diagram2 = _interopRequireDefault(_Diagram);
 
+var _Map = require("./graph/Map");
+
+var _Map2 = _interopRequireDefault(_Map);
+
 var _PointDistribution = require("./Utilities/PointDistribution");
 
 var PointDistribution = _interopRequireWildcard(_PointDistribution);
@@ -5280,7 +5475,8 @@ var Atum = {
         Center: _Center2.default,
         Corner: _Corner2.default,
         Edge: _Edge2.default,
-        Diagram: _Diagram2.default
+        Diagram: _Diagram2.default,
+        Map: _Map2.default
     },
     Utility: {
         PointDistribution: PointDistribution,
@@ -5292,9 +5488,9 @@ var Atum = {
 exports.default = Atum;
 module.exports = exports["default"];
 
-},{"./Utilities/PointDistribution":12,"./geometry/Line":14,"./geometry/Polygon":15,"./geometry/Rectangle":16,"./geometry/Shape":17,"./geometry/Triangle":18,"./geometry/Vector":19,"./graph/Center":20,"./graph/Corner":21,"./graph/Diagram":22,"./graph/Edge":23,"./utilities/Rand":25,"./utilities/Redist":26}],25:[function(require,module,exports){
+},{"./Utilities/PointDistribution":12,"./geometry/Line":14,"./geometry/Polygon":15,"./geometry/Rectangle":16,"./geometry/Shape":17,"./geometry/Triangle":18,"./geometry/Vector":19,"./graph/Center":20,"./graph/Corner":21,"./graph/Diagram":22,"./graph/Edge":23,"./graph/Map":24,"./utilities/Rand":26,"./utilities/Redist":27}],26:[function(require,module,exports){
 arguments[4][13][0].apply(exports,arguments)
-},{"../geometry/Vector":19,"dup":13,"seedRandom":4}],26:[function(require,module,exports){
+},{"../geometry/Vector":19,"dup":13,"seedRandom":4}],27:[function(require,module,exports){
 /**
  * Theses function are used to redistribute data located in the range 0-1
  * They take all the data and rearrange them and purturbe them slightly so that
@@ -5433,7 +5629,7 @@ function step(x) {
     return Math.floor(bins * x) / bins;
 }
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 /**
  * A utility file with helper functions that can be used to aid in the
  * development of the package.
@@ -5450,5 +5646,5 @@ var has = exports.has = function has(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 };
 
-},{}]},{},[24])(24)
+},{}]},{},[25])(25)
 });

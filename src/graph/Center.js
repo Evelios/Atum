@@ -10,20 +10,34 @@ class Center extends Vector {
      * @property {Line[]} borders Set of bordering edges
      * @property {Polygon} corners Set of polygon corners
      * @property {boolean} border Is this polygon touching the border edge
+     * @property {object} data The data stored by the center object. This is the
+     *  data that is to be changed by the user
+     * @property {Center} parent The parent object to the current object. The
+     *  default is null, there is no parent.
+     * @property {Center[]} children The children objects to the current object.
+     *  The default is an empty list
      * 
+     * @param {Vector} position The location of the Center object
      * 
      * @class Center
      * @extends {Vector}
      */
-    constructor(position) {
+    constructor(position, parent = null, children = null) {
         super(position);
+
+        // Diagram Properties
         this.id = -1;
-        // this.neighbors = [];
-        this.neighbors = new Polygon();
-        this.borders = [];
-        // this.corners = [];
+        this.neighbors = new Polygon(); // Centers
+        this.borders = []; // Edges
         this.corners = new Polygon();
         this.border = false;
+
+        // Higher Level Properties
+        this.data = {};
+
+        // Recursive Parameters
+        this.parent = parent;
+        this.children = children ? children : [];
     }
 }
 

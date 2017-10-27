@@ -78,13 +78,17 @@ module.exports = function(grunt) {
             dist: {
                 src: ["src/**/*.js"],
                 options: {
+                    title: "Atum",
                     verbose: true,
-                    readme: "./README.md",
-                    // tutorials: "examples",
+                    // package: "package.json", // Use to track documentation changes
+                    // configure: "jsdoc.json",
+                    readme: "README.md",
+                    // tutorials: "examples", // Not currently working with jaguarjs
                     destination: "docs",
                     // There is the option of using jaguarjs-jsdoc-patched-2
                     template: "./node_modules/jaguarjs-jsdoc-patched",
                     // template: "node_modules/tui-jsdoc-template/", // This is the goal
+                    recurse: true,
                 }
             }
         },

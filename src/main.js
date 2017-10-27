@@ -8,6 +8,7 @@ import Center from "./graph/Center";
 import Corner from "./graph/Corner";
 import Edge from "./graph/Edge";
 import Diagram from "./graph/Diagram";
+import Map from "./graph/Map";
 import * as PointDistribution from "./Utilities/PointDistribution";
 import * as Redist from "./utilities/Redist";
 import Rand from "./utilities/Rand";
@@ -32,7 +33,8 @@ const Atum = {
         Center,
         Corner,
         Edge,
-        Diagram
+        Diagram,
+        Map
     },
     Utility: {
         PointDistribution,
