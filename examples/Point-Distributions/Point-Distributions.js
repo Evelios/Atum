@@ -48,6 +48,7 @@ var params = {
 };
 
 //---- Main Setup Function ----
+
 function setup() {
     width = document.body.clientWidth || window.innerWidth;
     height = document.body.clientHeight || window.innerHeight;
@@ -60,17 +61,11 @@ function setup() {
     cornerColor = color("#479030");
     voronoiColor = color("#27566B");
 
-    setUpGui();
-
     createCanvas(width, height);
 
+    setUpGui();
+
     createAndRender();
-}
-
-//---- Main Draw Function ----
-
-function draw() {
-
 }
 
 //---- Secondary Setup Functions ----
@@ -97,9 +92,11 @@ function setUpGui() {
 //---- Other Functions
 
 function createAndRender() {
+    // Create
     Rand.setSeed(params.seed);
-
     createGraph();
+
+    // Render
     drawGrid(params.density);
     drawGraph();
 }
