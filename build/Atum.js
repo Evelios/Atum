@@ -1727,6 +1727,222 @@ if ( typeof module !== 'undefined' ) {
 },{}],2:[function(require,module,exports){
 
 },{}],3:[function(require,module,exports){
+/*
+poisson-disk-sample
+
+https://github.com/jeffrey-hearn/poisson-disk-sample
+
+MIT License
+*/
+
+function PoissonDiskSampler(width, height, minDistance, sampleFrequency) {
+    this.width = width;
+    this.height = height;
+    this.minDistance = minDistance;
+    this.sampleFrequency = sampleFrequency;
+    this.reset();
+}
+
+PoissonDiskSampler.prototype.reset = function() {
+    this.grid = new Grid(this.width, this.height, this.minDistance);
+    this.outputList = new Array();
+    this.processingQueue = new RandomQueue();
+}
+
+PoissonDiskSampler.prototype.sampleUntilSolution = function() {
+    while (this.sample()) {};
+    return this.outputList;
+}
+
+PoissonDiskSampler.prototype.sample = function() {
+
+    // If this is the first sample
+    if (0 == this.outputList.length) {
+        // Generate first point
+        this.queueToAll(this.grid.randomPoint());
+        return true;
+    }
+
+    var processPoint = this.processingQueue.pop();
+
+    // Processing queue is empty, return failure
+    if (processPoint == null)
+        return false;
+
+    // Generate sample points around the processing point
+    // And check if they have any neighbors on the grid
+    // If not, add them to the queues
+    for (var i = 0; i < this.sampleFrequency; i++) {
+        samplePoint = this.grid.randomPointAround(processPoint);
+        if (!this.grid.inNeighborhood(samplePoint)) {
+            // No on in neighborhood, welcome to the club
+            this.queueToAll(samplePoint);
+        }
+    }
+    // Sample successful since the processing queue isn't empty
+    return true;
+}
+
+PoissonDiskSampler.prototype.queueToAll = function(point) {
+    var valid = this.grid.addPointToGrid(point, this.grid.pixelsToGridCoords(point));
+    if (!valid)
+        return;
+    this.processingQueue.push(point);
+    this.outputList.push(point);
+}
+
+
+
+function Grid(width, height, minDistance) {
+    this.width = width;
+    this.height = height;
+    this.minDistance = minDistance;
+    this.cellSize = this.minDistance / Math.SQRT2;
+    //console.log( this.cellSize );
+    this.pointSize = 2;
+
+    this.cellsWide = Math.ceil(this.width / this.cellSize);
+    this.cellsHigh = Math.ceil(this.height / this.cellSize);
+
+    // Initialize grid
+    this.grid = [];
+    for (var x = 0; x < this.cellsWide; x++) {
+        this.grid[x] = [];
+        for (var y = 0; y < this.cellsHigh; y++) {
+            this.grid[x][y] = null;
+        }
+    }
+}
+
+Grid.prototype.pixelsToGridCoords = function(point) {
+    var gridX = Math.floor(point.x / this.cellSize);
+    var gridY = Math.floor(point.y / this.cellSize);
+    return { x: gridX, y: gridY };
+}
+
+Grid.prototype.addPointToGrid = function(pointCoords, gridCoords) {
+    // Check that the coordinate makes sense
+    if (gridCoords.x < 0 || gridCoords.x > this.grid.length - 1)
+        return false;
+    if (gridCoords.y < 0 || gridCoords.y > this.grid[gridCoords.x].length - 1)
+        return false;
+    this.grid[gridCoords.x][gridCoords.y] = pointCoords;
+    //console.log( "Adding ("+pointCoords.x+","+pointCoords.y+" to grid ["+gridCoords.x+","+gridCoords.y+"]" );
+    return true;
+}
+
+Grid.prototype.randomPoint = function() {
+    return { x: getRandomArbitrary(0, this.width), y: getRandomArbitrary(0, this.height) };
+}
+
+Grid.prototype.randomPointAround = function(point) {
+    var r1 = Math.random();
+    var r2 = Math.random();
+    // get a random radius between the min distance and 2 X mindist
+    var radius = this.minDistance * (r1 + 1);
+    // get random angle around the circle
+    var angle = 2 * Math.PI * r2;
+    // get x and y coords based on angle and radius
+    var x = point.x + radius * Math.cos(angle);
+    var y = point.y + radius * Math.sin(angle);
+    return { x: x, y: y };
+}
+
+Grid.prototype.inNeighborhood = function(point) {
+    var gridPoint = this.pixelsToGridCoords(point);
+
+    var cellsAroundPoint = this.cellsAroundPoint(point);
+
+    for (var i = 0; i < cellsAroundPoint.length; i++) {
+        if (cellsAroundPoint[i] != null) {
+            if (this.calcDistance(cellsAroundPoint[i], point) < this.minDistance) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+Grid.prototype.cellsAroundPoint = function(point) {
+    var gridCoords = this.pixelsToGridCoords(point);
+    var neighbors = new Array();
+
+    for (var x = -2; x < 3; x++) {
+        var targetX = gridCoords.x + x;
+        // make sure lowerbound and upperbound make sense
+        if (targetX < 0)
+            targetX = 0;
+        if (targetX > this.grid.length - 1)
+            targetX = this.grid.length - 1;
+
+        for (var y = -2; y < 3; y++) {
+            var targetY = gridCoords.y + y;
+            // make sure lowerbound and upperbound make sense
+            if (targetY < 0)
+                targetY = 0;
+            if (targetY > this.grid[targetX].length - 1)
+                targetY = this.grid[targetX].length - 1;
+            neighbors.push(this.grid[targetX][targetY])
+        }
+    }
+    return neighbors;
+}
+
+Grid.prototype.calcDistance = function(pointInCell, point) {
+    return Math.sqrt((point.x - pointInCell.x) * (point.x - pointInCell.x) +
+        (point.y - pointInCell.y) * (point.y - pointInCell.y));
+}
+
+
+function RandomQueue(a) {
+    this.queue = a || new Array();
+}
+
+RandomQueue.prototype.push = function(element) {
+    this.queue.push(element);
+}
+
+RandomQueue.prototype.pop = function() {
+
+    randomIndex = getRandomInt(0, this.queue.length);
+    while (this.queue[randomIndex] === undefined) {
+
+        // Check if the queue is empty
+        var empty = true;
+        for (var i = 0; i < this.queue.length; i++) {
+            if (this.queue[i] !== undefined)
+                empty = false;
+        }
+        if (empty)
+            return null;
+
+        randomIndex = getRandomInt(0, this.queue.length);
+    }
+
+    element = this.queue[randomIndex];
+    this.queue.remove(randomIndex);
+    return element;
+}
+
+// Array Remove - By John Resig (MIT Licensed)
+Array.prototype.remove = function(from, to) {
+    var rest = this.slice((to || from) + 1 || this.length);
+    this.length = from < 0 ? this.length + from : from;
+    return this.push.apply(this, rest);
+};
+
+// MDN Random Number Functions
+// https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Math/random
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+module.exports = PoissonDiskSampler;
+},{}],4:[function(require,module,exports){
 // A library of seedable RNGs implemented in Javascript.
 //
 // Usage:
@@ -1788,7 +2004,7 @@ sr.tychei = tychei;
 
 module.exports = sr;
 
-},{"./lib/alea":4,"./lib/tychei":5,"./lib/xor128":6,"./lib/xor4096":7,"./lib/xorshift7":8,"./lib/xorwow":9,"./seedrandom":10}],4:[function(require,module,exports){
+},{"./lib/alea":5,"./lib/tychei":6,"./lib/xor128":7,"./lib/xor4096":8,"./lib/xorshift7":9,"./lib/xorwow":10,"./seedrandom":11}],5:[function(require,module,exports){
 // A port of an algorithm by Johannes Baagøe <baagoe@baagoe.com>, 2010
 // http://baagoe.com/en/RandomMusings/javascript/
 // https://github.com/nquinlan/better-random-numbers-for-javascript-mirror
@@ -1904,7 +2120,7 @@ if (module && module.exports) {
 
 
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 // A Javascript implementaion of the "Tyche-i" prng algorithm by
 // Samuel Neves and Filipe Araujo.
 // See https://eden.dei.uc.pt/~sneves/pubs/2011-snfa2.pdf
@@ -2009,7 +2225,7 @@ if (module && module.exports) {
 
 
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 // A Javascript implementaion of the "xor128" prng algorithm by
 // George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
 
@@ -2092,7 +2308,7 @@ if (module && module.exports) {
 
 
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 // A Javascript implementaion of Richard Brent's Xorgens xor4096 algorithm.
 //
 // This fast non-cryptographic random number generator is designed for
@@ -2240,7 +2456,7 @@ if (module && module.exports) {
   (typeof define) == 'function' && define   // present with an AMD loader
 );
 
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 // A Javascript implementaion of the "xorshift7" algorithm by
 // François Panneton and Pierre L'ecuyer:
 // "On the Xorgshift Random Number Generators"
@@ -2339,7 +2555,7 @@ if (module && module.exports) {
 );
 
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 // A Javascript implementaion of the "xorwow" prng algorithm by
 // George Marsaglia.  See http://www.jstatsoft.org/v08/i14/paper
 
@@ -2427,7 +2643,7 @@ if (module && module.exports) {
 
 
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /*
 Copyright 2014 David Bau.
 
@@ -2676,7 +2892,7 @@ if ((typeof module) == 'object' && module.exports) {
   Math    // math: package containing random, pow, and seedrandom
 );
 
-},{"crypto":2}],11:[function(require,module,exports){
+},{"crypto":2}],12:[function(require,module,exports){
 /**
  * This module is used to create different point distributions that can be
  * turned into different tile sets when made into a graph format. There are
@@ -2692,12 +2908,16 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.random = random;
-exports.blueNoise = blueNoise;
-exports.poisson = poisson;
-exports.recursiveWang = recursiveWang;
 exports.square = square;
 exports.hexagon = hexagon;
+exports.jitteredGrid = jitteredGrid;
+exports.poisson = poisson;
+exports.recursiveWang = recursiveWang;
 exports.circular = circular;
+
+var _poissonDiskSample = require("poisson-disk-sample");
+
+var _poissonDiskSample2 = _interopRequireDefault(_poissonDiskSample);
 
 var _Vector = require("../geometry/Vector");
 
@@ -2720,79 +2940,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @export
  * @param {Rectangle} bbox The bounding box to create the points in
  * @param {number} d Average distance between points
+ * @param {number} [seed=null] If specified use a local seed for creating the point
+ *  distribution. Otherwise, use the current global seed for generation
  * @returns {Vector[]} The list of randomly distributed points
  * @memberof PointDistribution
  */
 function random(bbox, d) {
-    var points = [];
+    var seed = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
+    var rng = seed ? new _Rand2.default(seed) : _Rand2.default;
     var nPoints = bbox.area / (d * d);
+
+    var points = [];
     for (var i = 0; i < nPoints; i++) {
-        points.push(_Rand2.default.vector(bbox));
+        points.push(rng.vector(bbox));
     }
 
     return points;
-}
-
-/**
- * Creates a blue noise distribution of points in a particular bounding box
- * with a particular average distance between points. This is done by
- * creating a grid system and picking a random point in each grid. This has
- * the effect of creating a less random distribution of points. The second
- * parameter m determins the spacing between points in the grid. This ensures
- * that no two points are in the same grid.
- * 
- * @summary Create a grid based random blue noise point distribution.
- * 
- * @export
- * @param {Rectangle} bbox The bounding box to create the points in
- * @param {number} d Average distance between points
- * @param {number} m Maximum distance away from the center of the grid that a
- *  point can be placed. This acts to increase the padding between points. 
- *  This makes the noise less random. This number must be smaller than d.
- * @returns {Vector[]} The list of randomly distributed points
- * @memberof PointDistribution
- */
-function blueNoise(bbox, d) {
-    throw "Error: Not Implemented";
-}
-
-/**
- * Creates a poisson or blue noise distribution of points in a particular
- * bounding box with a particular average distance between points. This is
- * done by using poisson disk sampling which tries to create points so that the
- * distance between neighbors is as close to a fixed number (the distance d)
- * as possible.
- * 
- * @summary Create a blue noise distribution of points using poisson disk
- *  sampling.
- * 
- * @export
- * @param {Rectangle} bbox The bounding box to create the points in
- * @param {number} d Average distance between points
- * @returns {Vector[]} The list of randomly distributed points
- * 
- * @memberof PointDistribution
- */
-function poisson(bbox, d) {
-    throw "Error: Not Implemented";
-}
-
-/**
- * Creates a blue noise distribution of points in a particular bounding box
- * with a particular average distance between points. This is done by using
- * recursive wang tiles to create this distribution of points.
- * 
- * @summary Not Implemented Yet
- * 
- * @export
- * @param {Rectangle} bbox The bounding box to create the points in
- * @param {number} d Average distance between points
- * @returns {Vector[]} The list of randomly distributed points
- * @memberof PointDistribution
- */
-function recursiveWang(bbox, d) {
-    throw "Error: Not Implemented";
 }
 
 /**
@@ -2860,6 +3024,94 @@ function hexagon(bbox, d) {
 }
 
 /**
+ * Creates a blue noise distribution of points in a particular bounding box
+ * with a particular average distance between points. This is done by
+ * creating a grid system and picking a random point in each grid. This has
+ * the effect of creating a less random distribution of points. The second
+ * parameter m determins the spacing between points in the grid. This ensures
+ * that no two points are in the same grid.
+ * 
+ * @summary Create a jittered grid based random blue noise point distribution.
+ * 
+ * @export
+ * @param {Rectangle} bbox The bounding box to create the points in
+ * @param {number} d Average distance between points
+ * @param {number} [seed=null] If specified use a local seed for creating the point
+ *  distribution. Otherwise, use the current global seed for generation
+ * @param {number} [m=0] Maximum distance away from the edge of the grid that a
+ *  point can be placed. This acts to increase the padding between points. 
+ *  This makes the noise less random. This number must be smaller than d.
+ * @returns {Vector[]} The list of randomly distributed points
+ * @memberof PointDistribution
+ */
+function jitteredGrid(bbox, d) {
+    var seed = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+    var m = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+
+    var rng = seed ? new _Rand2.default(seed) : _Rand2.default;
+
+    var points = [];
+    var pointBox = void 0;
+    for (var y = 0; y < bbox.height - d; y += d) {
+        for (var x = 0; x < bbox.width - d; x += d) {
+            // Local bbox for the point to generate in
+            var boxPos = new _Vector2.default(x - d + m, y - d + m);
+            pointBox = new _Rectangle2.default(boxPos, x - m, y - m);
+            points.push(rng.vector(pointBox));
+        }
+    }
+
+    return points;
+}
+
+/**
+ * Creates a poisson, or blue noise distribution of points in a particular
+ * bounding box with a particular average distance between points. This is
+ * done by using poisson disk sampling which tries to create points so that the
+ * distance between neighbors is as close to a fixed number (the distance d)
+ * as possible. This algorithm is implemented using the poisson dart throwing
+ * algorithm.
+ *  
+ * @summary Create a blue noise distribution of points using poisson disk
+ *  sampling.
+ * 
+ * @export
+ * @param {Rectangle} bbox The bounding box to create the points in
+ * @param {number} d Average distance between points
+ * @returns {Vector[]} The list of randomly distributed points
+ * 
+ * @see {@link https://www.jasondavies.com/poisson-disc/}
+ * @see {@link https://github.com/jeffrey-hearn/poisson-disk-sample}
+ * @memberof PointDistribution
+ */
+function poisson(bbox, d) {
+    var sampler = new _poissonDiskSample2.default(bbox.width, bbox.height, d, d);
+    var solution = sampler.sampleUntilSolution();
+    var points = solution.map(function (point) {
+        return new _Vector2.default(point);
+    });
+
+    return points;
+}
+
+/**
+ * Creates a blue noise distribution of points in a particular bounding box
+ * with a particular average distance between points. This is done by using
+ * recursive wang tiles to create this distribution of points.
+ * 
+ * @summary Not Implemented Yet
+ * 
+ * @export
+ * @param {Rectangle} bbox The bounding box to create the points in
+ * @param {number} d Average distance between points
+ * @returns {Vector[]} The list of randomly distributed points
+ * @memberof PointDistribution
+ */
+function recursiveWang(bbox, d) {
+    throw "Error: Not Implemented";
+}
+
+/**
  * Creates a circular distribution of points in a particular bounding box
  * with a particular average distance between points.
  * 
@@ -2875,7 +3127,7 @@ function circular(bbox, d) {
     throw "Error: Not Implemented";
 }
 
-},{"../geometry/Rectangle":15,"../geometry/Vector":18,"./Rand":12}],12:[function(require,module,exports){
+},{"../geometry/Rectangle":16,"../geometry/Vector":19,"./Rand":13,"poisson-disk-sample":3}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3265,7 +3517,7 @@ var Rand = function () {
 exports.default = Rand;
 module.exports = exports["default"];
 
-},{"../geometry/Vector":18,"seedRandom":3}],13:[function(require,module,exports){
+},{"../geometry/Vector":19,"seedRandom":4}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3311,7 +3563,7 @@ var Line = function (_Shape) {
 exports.default = Line;
 module.exports = exports["default"];
 
-},{"./Shape":16}],14:[function(require,module,exports){
+},{"./Shape":17}],15:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3417,7 +3669,7 @@ var Polygon = function (_Shape) {
 exports.default = Polygon;
 module.exports = exports["default"];
 
-},{"./Shape":16,"./Vector":18}],15:[function(require,module,exports){
+},{"./Shape":17,"./Vector":19}],16:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3491,7 +3743,7 @@ var Rectangle = function (_Polygon) {
 exports.default = Rectangle;
 module.exports = exports["default"];
 
-},{"./Polygon":14,"./Vector":18}],16:[function(require,module,exports){
+},{"./Polygon":15,"./Vector":19}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3570,7 +3822,7 @@ var Shape = function (_extendableBuiltin2) {
 exports.default = Shape;
 module.exports = exports["default"];
 
-},{"./Vector":18}],17:[function(require,module,exports){
+},{"./Vector":19}],18:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3628,7 +3880,7 @@ var Triangle = function (_Polygon) {
 exports.default = Triangle;
 module.exports = exports["default"];
 
-},{"./Polygon":14,"./Vector":18}],18:[function(require,module,exports){
+},{"./Polygon":15,"./Vector":19}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3667,7 +3919,7 @@ var Vector = function () {
     function Vector(x, y) {
         _classCallCheck(this, Vector);
 
-        if (x instanceof Vector && !y) {
+        if (x instanceof Vector || x.x && x.y && !y) {
             this._set(x.x, x.y);
         } else {
             this._set(x, y);
@@ -4248,7 +4500,7 @@ var Vector = function () {
 exports.default = Vector;
 module.exports = exports["default"];
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4308,7 +4560,7 @@ var Center = function (_Vector) {
 exports.default = Center;
 module.exports = exports["default"];
 
-},{"../geometry/Polygon":14,"../geometry/Vector":18}],20:[function(require,module,exports){
+},{"../geometry/Polygon":15,"../geometry/Vector":19}],21:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4365,7 +4617,7 @@ var Corner = function (_Vector) {
 exports.default = Corner;
 module.exports = exports["default"];
 
-},{"../geometry/Polygon":14,"../geometry/Vector":18}],21:[function(require,module,exports){
+},{"../geometry/Polygon":15,"../geometry/Vector":19}],22:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4883,7 +5135,7 @@ var Diagram = function () {
 exports.default = Diagram;
 module.exports = exports["default"];
 
-},{"../geometry/Vector":18,"../utilities/Util":26,"./Center":19,"./Corner":20,"./Edge":22,"Voronoi":1}],22:[function(require,module,exports){
+},{"../geometry/Vector":19,"../utilities/Util":27,"./Center":20,"./Corner":21,"./Edge":23,"Voronoi":1}],23:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4945,7 +5197,7 @@ var Edge = function (_Line) {
 exports.default = Edge;
 module.exports = exports["default"];
 
-},{"../geometry/Line":13,"../geometry/Vector":18}],23:[function(require,module,exports){
+},{"../geometry/Line":14,"../geometry/Vector":19}],24:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5040,9 +5292,9 @@ var Atum = {
 exports.default = Atum;
 module.exports = exports["default"];
 
-},{"./Utilities/PointDistribution":11,"./geometry/Line":13,"./geometry/Polygon":14,"./geometry/Rectangle":15,"./geometry/Shape":16,"./geometry/Triangle":17,"./geometry/Vector":18,"./graph/Center":19,"./graph/Corner":20,"./graph/Diagram":21,"./graph/Edge":22,"./utilities/Rand":24,"./utilities/Redist":25}],24:[function(require,module,exports){
-arguments[4][12][0].apply(exports,arguments)
-},{"../geometry/Vector":18,"dup":12,"seedRandom":3}],25:[function(require,module,exports){
+},{"./Utilities/PointDistribution":12,"./geometry/Line":14,"./geometry/Polygon":15,"./geometry/Rectangle":16,"./geometry/Shape":17,"./geometry/Triangle":18,"./geometry/Vector":19,"./graph/Center":20,"./graph/Corner":21,"./graph/Diagram":22,"./graph/Edge":23,"./utilities/Rand":25,"./utilities/Redist":26}],25:[function(require,module,exports){
+arguments[4][13][0].apply(exports,arguments)
+},{"../geometry/Vector":19,"dup":13,"seedRandom":4}],26:[function(require,module,exports){
 /**
  * Theses function are used to redistribute data located in the range 0-1
  * They take all the data and rearrange them and purturbe them slightly so that
@@ -5181,7 +5433,7 @@ function step(x) {
     return Math.floor(bins * x) / bins;
 }
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 /**
  * A utility file with helper functions that can be used to aid in the
  * development of the package.
@@ -5198,5 +5450,5 @@ var has = exports.has = function has(obj, prop) {
   return Object.prototype.hasOwnProperty.call(obj, prop);
 };
 
-},{}]},{},[23])(23)
+},{}]},{},[24])(24)
 });

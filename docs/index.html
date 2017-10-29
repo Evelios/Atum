@@ -128,9 +128,9 @@
             </ul>
         </li>
     
-        <li class="item" data-name="Diagram.Diagram">
+        <li class="item" data-name="Diagram">
             <span class="title">
-                <a href="Diagram.Diagram.html">Diagram.Diagram</a>
+                <a href="Diagram.html">Diagram</a>
                 
             </span>
             <ul class="members itemMembers">
@@ -200,11 +200,11 @@
             
             <span class="subtitle">Methods</span>
             
-                <li data-name="PointDistribution.exports.blueNoise"><a href="PointDistribution.html#.exports.blueNoise">exports.blueNoise</a></li>
-            
                 <li data-name="PointDistribution.exports.circular"><a href="PointDistribution.html#.exports.circular">exports.circular</a></li>
             
                 <li data-name="PointDistribution.exports.hexagon"><a href="PointDistribution.html#.exports.hexagon">exports.hexagon</a></li>
+            
+                <li data-name="PointDistribution.exports.jitteredGrid"><a href="PointDistribution.html#.exports.jitteredGrid">exports.jitteredGrid</a></li>
             
                 <li data-name="PointDistribution.exports.poisson"><a href="PointDistribution.html#.exports.poisson">exports.poisson</a></li>
             
@@ -530,7 +530,7 @@
 
     <section>
         <article class="readme"><h1>Atum Procedural Generation Library</h1><p>Atum is a graph based procedural generation library build for Javascript. I started the library as an extension to a map generator that I was developing. All the core functionality was to better create and document those common processies. This library is tailored in that direction. I do intend to expand into other useful procedural generation techniques but everything takes time. This library is intended to make getting into procedural generation as easy as possible. Due to the generic graph structure implemented this library is not as efficient as a specifically grid or square based approach. </p>
-<h2>Getting Started With Atum Development / Build</h2><h3>Documentation</h3><p>The documentation for the Atum library is listed <a target="_blank" href="https://evelios.github.io/Atum/"><strong>here</strong></a>. This is where you find out all the nitty-gritty details of what the methods do and where this library can take you. I plan to have examples on how this code can be used to at least spark some ideas and allow the library to get used to its full potential.</p>
+<h2>Getting Started With Atum Development / Build</h2><h3>Documentation</h3><p>The documentation for the Atum library is listed <a target="_blank" href="https://evelios.github.io/Atum/index.html"><strong>here</strong></a>. This is where you find out all the nitty-gritty details of what the methods do and where this library can take you. I plan to have examples on how this code can be used to at least spark some ideas and allow the library to get used to its full potential.</p>
 <h3>Dependencies and Tools</h3><p>Atum uses <a target="_blank" href="https://nodejs.org/en/download/"><strong>Node's npm</strong></a> for package management and <a target="_blank" href="https://gruntjs.com/"><strong>Grunt</strong></a> as a task runner. These are required in order to get started with development. They are quite usefull tools if you don't have them already.</p>
 <pre class="prettyprint source lang-bash"><code># Install Node and npm and get the most recent version of npm
 # Get the latest version of npm and ensure node was installed
@@ -579,7 +579,35 @@ var corners = graph.corners;</code></pre><p>Here you can see the contents of the
 <p><img src="./Voronoi.png" alt="Voronoi diagram generated from the graph" width="600"></p>
 <p>The Generated Delaunay Diagram Showing Connected Center Points</p>
 <p><img src="./Delaunay.png" alt="Delaunay diagram generated from the graph" width="600"></p>
-<h2>Attributions</h2><p>Without the support of these other projects I would be writting a lot more code than I would like to be. This project is built off of their hard work.</p>
+<h2>Change Log</h2><h3>Release V 1.0.0</h3><ul>
+<li>Redistribution Functions<ul>
+<li>identity, inverse, exp (exponential), pow (power), step</li>
+</ul>
+</li>
+<li>Seeded Random Number Generator<ul>
+<li>Global and Local Seeded Rng's</li>
+<li>Rand function for 0-1</li>
+<li>Random range</li>
+<li>Random integer range</li>
+<li>Random hex and hex colors</li>
+<li>Random vector creation</li>
+</ul>
+</li>
+<li>Point Distributions<ul>
+<li>Square</li>
+<li>Hexagon (Partially functional due to library issue)</li>
+<li>Random</li>
+<li>Jittered Grid</li>
+<li>Poisson</li>
+</ul>
+</li>
+<li>Voronoi Graph Creation<ul>
+<li>Geometry: Vector, Shape (Abstract), Polygon, Rectangle, Line</li>
+<li>Graph: Voronoi Diagram Object, Corners, Centers, Edges<h2>Attributions</h2></li>
+</ul>
+</li>
+</ul>
+<p>Without the support of these other projects I would be writting a lot more code than I would like to be. This project is built off of their hard work.</p>
 <ul>
 <li>Raymond Hill's <a target="_blank" href="https://github.com/gorhill/Javascript-Voronoi">Javscript Vornoi Library</a></li>
 <li>Seph Gentle's <a target="_blank" href="https://github.com/davidbau/seedrandom">Javascript Seeded Random Generator</a></li>
@@ -598,7 +626,7 @@ This project is released under the <a href="LICENSE.md">MIT License</a> to furth
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Oct 16 2017 15:58:21 GMT-0400 (Eastern Daylight Time)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Oct 25 2017 13:05:36 GMT-0400 (Eastern Daylight Time)
         </footer>
     </div>
 </div>

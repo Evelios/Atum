@@ -24,7 +24,7 @@ class Vector {
      * @param {number} [y] The y component
      */
     constructor(x, y) {
-        if (x instanceof Vector && !y) {
+        if (x instanceof Vector || (x.x && x.y) && !y) {
             this._set(x.x, x.y);
         } else {
             this._set(x, y);

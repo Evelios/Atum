@@ -37,7 +37,7 @@ class Diagram {
      *  corners by setting them to the average of their neighbors. This breaks
      *  the voronoi properties of the diagram.
      * 
-     * @memberOf Diagram
+     * @class Diagram
      */
     constructor(points, bbox, relaxations = 0, improveCorners = false) {
         this.bbox = bbox;

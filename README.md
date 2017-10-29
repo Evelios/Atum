@@ -99,6 +99,27 @@ The Generated Delaunay Diagram Showing Connected Center Points
 
 <img src="./Delaunay.png" alt="Delaunay diagram generated from the graph" width="600">
 
+## Change Log
+
+### Release V 1.0.0
++ Redistribution Functions
+    * identity, inverse, exp (exponential), pow (power), step
++ Seeded Random Number Generator
+    * Global and Local Seeded Rng's
+    * Rand function for 0-1
+    * Random range
+    * Random integer range
+    * Random hex and hex colors
+    * Random vector creation
++ Point Distributions
+    * Square
+    * Hexagon (Partially functional due to library issue)
+    * Random
+    * Jittered Grid
+    * Poisson
++ Voronoi Graph Creation
+    * Geometry: Vector, Shape (Abstract), Polygon, Rectangle, Line
+    * Graph: Voronoi Diagram Object, Corners, Centers, Edges
 ## Attributions
 
 Without the support of these other projects I would be writting a lot more code than I would like to be. This project is built off of their hard work.
