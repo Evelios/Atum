@@ -10,6 +10,7 @@
     "noisejs": "^2.1.0",
     "poisson-disk-sample": "git+https://github.com/Evelios/poisson-disk-sample.git",
     "seedrandom": "^2.4.3",
+    "tinyqueue": "^1.2.3",
     "voronoi": "git+https://github.com/gorhill/Javascript-Voronoi.git"
   },
   "devDependencies": {
@@ -29,12 +30,10 @@
     "jaguarjs-jsdoc-patched-2": "0.0.6",
     "load-grunt-config": "^0.19.2",
     "load-grunt-tasks": "^3.5.2",
-    "napa": "^3.0.0",
     "tape": "^4.8.0",
     "tui-jsdoc-template": "^1.2.2"
   },
   "scripts": {
-    "install": "napa jeffrey-hearn/poisson-disk-sample",
     "init": "if not exist \"build\" mkdir build",
     "clean": "if exist \"build\" rd /s /q \"build\"",
     "prebuild": "npm run clean && npm run init",

@@ -1,6 +1,6 @@
 import Shape from "./Shape";
 
-class Line extends Shape {
+class Line  {
     /**
      * @class Line
      * @extends Shape
@@ -11,10 +11,12 @@ class Line extends Shape {
      * @property {vector} p2
      * 
      * @summary Creates an instance of Polygon.
-     * @param {Vector|Vector[]} args
+     * @param {Vector} p1 The first point
+     * @param {Vector} p2 The second point
      */
     constructor(p1, p2) {
-        super([p1, p2]);
+        this.p1 = p1;
+        this.p2 = p2;
     }
 }
 

@@ -14,7 +14,10 @@ class Diagram {
      * diagram into a more useable format where centers, edges, and corners are
      * better connected. This allows for many different types of traversal over
      * the graph. This class uses the rhill-voronoi library for building the
-     * voronoi graph.
+     * voronoi graph. This is termed a PAN connected graph. This class can also be
+     * relaxed more by using lloyd relaxation which reruns the graph simulation
+     * process with a less packed point set to gradually create a more "blue" noise
+     * effect.
      *
      * @summary Creates a voronoi diagram of a given point set that is created
      *  inside a partiuclar bounding box. The set of points can also be relaxed
