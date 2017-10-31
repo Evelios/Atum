@@ -7,7 +7,12 @@
     "primary-light": "#D4A26A",
     "primary": "#AA7539",
     "primary-dark": "#804E16",
-    "primary-darkest": "#804E16",
+    "primary-darkest": "#552D00",
+
+    // These are a mix of the primary and the normal background color
+    "primary-desaturate-1": "#8C6437",
+    "primary-desaturate-2": "#6D5335",
+    "primary-desaturate-3": "#4F4132",
 
     "secondary-lightest": "#F2A2AD",
     "secondary-light": "#CA6573",
@@ -15,15 +20,24 @@
     "secondary-dark": "#7A1523",
     "secondary-darkest": "#51000B",
 
-    "tertiary-lightest": "#A2D890",
-    "tertiary-light": "#70B45A",
-    "tertiary": "#479030",
-    "tertiary-dark": "#286C12",
-    "tertiary-darkest": "#124800",
+    "tertiary-lightest": "#6E91A1",
+    "tertiary-light": "#467386",
+    "tertiary": "#27566B",
+    "tertiary-dark": "#113D51",
+    "tertiary-darkest": "#032636",
 
-    "quaternary-lightest": "#6E91A1",
-    "quaternary-light": "#467386",
-    "quaternary": "#27566B",
-    "quaternary-dark": "#113D51",
-    "quaternary-darkest": "#032636"
+    "quaternary-lightest": "#A2D890",
+    "quaternary-light": "#70B45A",
+    "quaternary": "#479030",
+    "quaternary-dark": "#286C12",
+    "quaternary-darkest": "#124800",
+
+    "first": "#AA7539",
+    "second": "#A23645",
+    "third": "#27566B",
+    "fourth": "#479030",
+    "fifth": "#AA9339",
+    "sixth": "#3C3176",
+    "seventh": "#9BA638",
+    "eigth": "#632770"
 }
