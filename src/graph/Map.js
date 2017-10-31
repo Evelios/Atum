@@ -40,7 +40,7 @@ class Map extends Diagram {
      * @todo Find a New Name
      * @memberOf Map
      */
-    generate(ruleset) {
+    _generate(ruleset) {
         // Run cellular automita
         for (let center of this.centers) {
             center._data = ruleset(center);
@@ -56,7 +56,14 @@ class Map extends Diagram {
             }
             delete center._data;
         }
+    }
 
+    initialize(ruleset) {
+        this._generate(ruleset);
+    }
+
+    iterate(ruleset) {
+        this._generate(ruleset);
     }
 }
 
