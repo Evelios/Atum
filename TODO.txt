@@ -1,24 +1,20 @@
-Complete the following to Finish Version 1.0:
-  - Basics
-  - Automating Tools
-  - Shapes Libraries
-  - Point Generation
-  - Random Library
-  - Basic Diagram with PAN connection
+Short Term ToDo:
+  - Graph Seach (Basic building block)
+  - Graph Search Testing
+  - Cellular Automata Example (Simple)
+  - Basics Tutorial
+  - Dark Theme Modification
+  - Grunt npm prepublish
+  - dat-gui cdn without npm which you need to git clone ...; npm install
+  - Center vs Centroid of a polygon
+  - Examples working on the documentation page
+  - Rename Diagram to Graph
+  - Rename Map to Diagram
 
-Basics:
-  - Test pre written code
-    + Redist
-    + Rand
-
-Automating Tools and Library Pulling
-  - Grunt
-    + JS Minification (Build)
-    + Live Reload (Dev)
-    + Packaging external libaries
-    + npm or node package
-      > require("Atum")
-      > import Atum from "Atum"
+Longer Term ToDo:
+  - PCGComponent
+    + Abstract Base Class
+    + Holds data and can be manipiulated by feeding in object data
 
 Diagram
   - Use ES6 standards
@@ -31,16 +27,10 @@ Diagram
     + Dijkstra
 
 Utilities
-  - Clean up the Util File and put in ES6 capabilities
-  - Rand
-    + Have the Point Distributions key off of a local or global rng
   - Point Distributions
-    + Random
-    + poisson
-    + Box blue noise
-    + Square
     + Hexagonn
     + Circular
+    + Recursive Wang Tiles
 
 Shapes modules
   - Basic Classes
