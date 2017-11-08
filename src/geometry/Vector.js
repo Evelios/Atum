@@ -31,6 +31,23 @@ class Vector {
         }
     }
 
+    //---- Alternate Polar Constructor ----
+
+    /**
+     * Create a vector from polar coordinates
+     * 
+     * @static
+     * @param {number} r The radius of the vector
+     * @param {number} theta The angle of the vector in radians.
+     *  Should be between 0 and 2*PI
+     * @returns The rectangular vector produced from the polar coordinates
+     * 
+     * @memberOf Vector
+     */
+    static Polar(r, theta) {
+        return new Vector(r * Math.cos(theta), r * Math.sin(theta));
+    }
+
     //---- Helper Functions ----
 
     /**

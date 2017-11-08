@@ -347,6 +347,18 @@ class Rand {
     vector(bbox) {
         return Rand._vector(this, bbox);
     }
+
+    static _jitter(rng, v, max) {
+        return Vector.add(v, Vector.Polar(max, rng.randRange(0, 2 * Math.PI)));
+    }
+
+    static jitter(v, max) {
+        return Rand._jitter(Rand, v, max);
+    }
+
+    jitter(v, max) {
+        return Rand._jitter(this, v, max);
+    }
 }
 
 export default Rand;
