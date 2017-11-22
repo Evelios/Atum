@@ -62,6 +62,24 @@ export function square(bbox, d) {
     return points;
 }
 
+
+/**
+ * Creates a square grid like distribution of points in a particular bounding
+ * box with a particular distance between points. The grid has also been
+ * slightly purturbed or jittered so that the distribution is not completely
+ * even.
+ * 
+ * @export
+ * @param {Rectangle} bbox The bounding box to create the points in
+ * @param {number} d Average distance between points
+ * @param {number} amm The ammount of jitter that has been applied to the grid
+ * @returns {Vector[]} The list of randomly distributed points
+ * @memberof PointDistribution
+ */
+export function squareJitter(bbox, d, amm) {
+    return square(bbox, d).map(v => Rand.jitter(v, amm));
+}
+
 /**
  * Creates a uniform hexagonal distribution of points in a particular bounding
  * box with a particular distance between points. The hexagons can also be

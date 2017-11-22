@@ -1,9 +1,8 @@
 // To Do:
-// Break into GOL / Bacteria Modules for Gui and Calling Code
-// For Type Selection Have
-// initFn, rulesetFn, drawingFn
-// This can all be stored in the same object
-// This should then be good to push
+// Create parameter values specific to the different CA functions
+// tail for GOL
+// age of tile?
+// what parameters are there for Bacteria Growth?
 
 "use strict";
 
@@ -20,8 +19,6 @@ var width;
 var height;
 var diagram;
 
-var pointDensity = 40;
-
 // Dat Gui Parameters
 var playGui;
 var params = {
@@ -37,8 +34,18 @@ var params = {
         "Random"
     ],
     automataRules: {
-        "Game Of Life": gameOfLifeRules,
-        "Bacteria Growth": bacteriaGrowthRules
+        "Game Of Life": {
+            init: initGameOfLife,
+            clear: clearGameOfLife,
+            rules: gameOfLifeRules,
+            draw: drawGameOfLife
+        },
+        "Bacteria Growth": {
+            init: initBacteriaGrowth,
+            clear: clearBacteriaGrowth,
+            rules: bacteriaGrowthRules,
+            draw: drawBacteriaGrowth
+        }
     },
     automataOptions: [
         "Game Of Life",
@@ -55,6 +62,7 @@ var params = {
         "Poisson"
     ],
     pointDistribution: "Poisson",
+    pointDensity: 40,
     fps: 2,
     isOld: false,
     tail1: true,
@@ -93,6 +101,7 @@ function setUpGui() {
     gui.add(params, "automataChoice", params.automataOptions).name("Automata Rule").onChange(createAndRender);
     // point distribution choice
     gui.add(params, "pointDistribution", params.distributionOptions).name("Point Distribution").onChange(createAndRender);
+    gui.add(params, "pointDensity", 10, 100).name("Point Density").step(5).onChange(createAndRender);
     gui.add(params, "fps", 1, 10).name("Frames Per Sec").step(1).onChange(setFrameRate);
 
     // Rendering Choices
@@ -116,13 +125,14 @@ function playPause() {
 }
 
 //---- The Main Draw Function ----
-
 function draw() {
     if (params.play) {
         step();
+        params.automataRules[params.automataChoice].draw();
     }
 }
 
+//---- Iterate the Cellular Automata
 function step() {
     diagram.iterate(gameOfLifeRules);
     drawGameOfLife();
@@ -140,12 +150,7 @@ function createAndRender() {
 
     // Render
     background("#303030");
-    if (params.automataChoice === "Game Of Life") {
-        drawGameOfLife();
-    } else if (params.automataChoice === "Bacteria Growth") {
-        drawBacteriaGrowth();
-    }
-
+    params.automataRules[params.automataChoice].draw();
 }
 
 function clear() {
@@ -158,7 +163,7 @@ function clear() {
     }
 }
 
-//---- Creation Functions
+//---- Creation Functions ----
 
 function isRandomAlive(center) {
     // Change this density to a parameter
@@ -171,6 +176,15 @@ function isRandomAlive(center) {
 function initGameOfLife(center) {
     return {
         alive: params.initFunctions[params.initChoice](center)
+    };
+}
+
+function clearGameOfLife() {
+    return {
+        alive: false,
+        trail1: false,
+        trail2: false,
+        isOld: false
     };
 }
 
@@ -220,16 +234,48 @@ function drawGameOfLife() {
 //---- Bacterial Growth Module ----
 
 function initBacteriaGrowth() {
-    return {
+    var density = 0.025;
 
+    if (Rand.chance(density)) {
+        return {
+            colony: Rand.randInt(0, 3)
+        };
+    } else {
+        return {
+            colony: -1
+        };
+    }
+}
+
+function clearBacteriaGrowth() {
+    return {
+        colony: -1
     };
 }
 
 function bacteriaGrowthRules(center) {
+    var allies = [];
+    if (center.data.colony !== -1) {
+        allies = center.neighbors.filter(
+            el => el.data.colony === center.data.colony
+        );
+    }
 
-    return {
+    const competitors = center.neighbors.filter(
+        neighbor => neighbor.data.colony >= 0 &&
+        neighbor.data.colony !== center.data.colony
+    );
 
-    };
+    if (competitors.length !== 0 &&
+        (Rand.chance(0.1) || competitors.length > allies.length)) {
+
+        const victor = competitors[Rand.randInt(0, competitors.length - 1)];
+        return {
+            colony: victor.data.colony,
+        };
+    }
+
+    return {};
 }
 
 function drawBacteriaGrowth() {
@@ -237,7 +283,17 @@ function drawBacteriaGrowth() {
     noStroke();
     for (var center of diagram.centers) {
 
-        fill("#303030");
+        if (center.data.colony === 0) {
+            fill("#AA7539");
+        } else if (center.data.colony === 1) {
+            fill("#A23645");
+        } else if (center.data.colony === 2) {
+            fill("#27566B");
+        } else if (center.data.colony === 3) {
+            fill("#479030");
+        } else {
+            fill("#303030");
+        }
         polygon(center);
     }
 

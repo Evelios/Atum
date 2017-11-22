@@ -31,6 +31,23 @@ class Vector {
         }
     }
 
+    //---- Alternate Polar Constructor ----
+
+    /**
+     * Create a vector from polar coordinates
+     * 
+     * @static
+     * @param {number} r The radius of the vector
+     * @param {number} theta The angle of the vector in radians.
+     *  Should be between 0 and 2*PI
+     * @returns The rectangular vector produced from the polar coordinates
+     * 
+     * @memberOf Vector
+     */
+    static Polar(r, theta) {
+        return new Vector(r * Math.cos(theta), r * Math.sin(theta));
+    }
+
     //---- Helper Functions ----
 
     /**
@@ -91,13 +108,16 @@ class Vector {
     }
 
     /**
-     * Returns the vector as a string of (x, y)
+     * Returns true if the two vector positions are equal
      * 
-     * @returns {string} The string representation of a vector in (x, y) form
-     * @memberof Vector
+     * @static
+     * @param {Vector} v1 The first vector
+     * @param {Vector} v2 The second vector
+     * @returns {boolean} True if the vector positions are equal
+     * @memberOf Vector
      */
-    toString() {
-        return `(${this.x}, ${this.y})`;
+    static equals(v1, v2) {
+        return v1.x === v2.x && v1.y === v2.y;
     }
 
     //---- Basic Math Functions ----

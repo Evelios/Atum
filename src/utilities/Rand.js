@@ -91,14 +91,58 @@ class Rand {
     }
 
     /**
+     * Private helper function:
+     * 
+     * Roll for a boolean value that is true @percent ammount of the time.
+     * If the roll fails then return false. For example calling chance(0.3)
+     * will return true 30% of the time. The input range
+     * 
+     * @private
+     * @static
+     * @param {number} percent Percent chance to get True. Value is in the range
+     *  from 0 - 1. With 1 returning always true.
+     * @memberOf Rand
+     */
+    static _chance(rng, percent) {
+        return rng.rand() < percent;
+    }
+
+    /**
+     * Roll for a boolean value that is true @percent ammount of the time.
+     * If the roll fails then return false. For example calling chance(0.3)
+     * will return true 30% of the time. The input range
+     * 
+     * @static
+     * @param {number} percent Percent chance to get True. Value is in the range
+     *  from 0 - 1. With 1 returning always true.
+     * @memberOf Rand
+     */
+    static chance(percent) {
+        return Rand._chance(this, percent);
+    }
+
+    /**
+     * Roll for a boolean value that is true @percent ammount of the time.
+     * If the roll fails then return false. For example calling chance(0.3)
+     * will return true 30% of the time. The input range
+     * 
+     * @param {number} percent Percent chance to get True. Value is in the range
+     *  from 0 - 1. With 1 returning always true.
+     * @memberOf Rand
+     */
+    chance(percent) {
+        return Rand._chance(Rand, percent);
+    }
+
+    /**
      * Private Helper Function:
      * Get a random float value in a particular range
      * 
      * @private
      * @static
      * @param {any} rng The local or global rng to use (Rand or this)
-     * @param {any} min 
-     * @param {any} max 
+     * @param {number} min 
+     * @param {number} max 
      * 
      * @memberof Rand
      */
@@ -110,8 +154,8 @@ class Rand {
      * Get a random float value in a particular range
      * 
      * @static
-     * @param {any} min 
-     * @param {any} max 
+     * @param {number} min 
+     * @param {number} max 
      * @returns {number} Random float number from min (inclusive) 
      *  to max (exclusive)
      * 
@@ -124,8 +168,8 @@ class Rand {
     /**
      * Get a random float value in a particular range
      * 
-     * @param {any} min 
-     * @param {any} max 
+     * @param {number} min 
+     * @param {number} max 
      * @returns {number} Random float number from min (inclusive) 
      *  to max (exclusive)
      * 
@@ -142,8 +186,8 @@ class Rand {
      * @private
      * @static
      * @param {any} rng The local or global rng to use (Rand or this)
-     * @param {any} min 
-     * @param {any} max 
+     * @param {number} min 
+     * @param {number} max 
      * @returns {number} Random float number from min (inclusive) 
      *  to max (exclusive)
      * 
@@ -157,8 +201,8 @@ class Rand {
      * Get a random int in a particular range (min and max inclusive)
      * 
      * @static
-     * @param {any} min 
-     * @param {any} max 
+     * @param {number} min 
+     * @param {number} max 
      * @returns {number} Random float number from min (inclusive) 
      *  to max (exclusive)
      * 
@@ -171,8 +215,8 @@ class Rand {
     /**
      * Get a random int in a particular range (min and max inclusive)
      * 
-     * @param {any} min 
-     * @param {any} max 
+     * @param {number} min 
+     * @param {number} max 
      * @returns {number} Random float number from min (inclusive) 
      *  to max (exclusive)
      * 
@@ -273,8 +317,10 @@ class Rand {
      * @memberOf Rand
      */
     static _vector(rng, bbox) {
-        return new Vector(Rand.randRange(bbox.x, bbox.x + bbox.width),
-            Rand.randRange(bbox.y, bbox.y + bbox.height));
+        return new Vector(
+            Rand.randRange(bbox.x, bbox.x + bbox.width),
+            Rand.randRange(bbox.y, bbox.y + bbox.height)
+        );
     }
 
     /**
@@ -300,6 +346,18 @@ class Rand {
      */
     vector(bbox) {
         return Rand._vector(this, bbox);
+    }
+
+    static _jitter(rng, v, max) {
+        return Vector.add(v, Vector.Polar(max, rng.randRange(0, 2 * Math.PI)));
+    }
+
+    static jitter(v, max) {
+        return Rand._jitter(Rand, v, max);
+    }
+
+    jitter(v, max) {
+        return Rand._jitter(this, v, max);
     }
 }
 
