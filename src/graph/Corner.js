@@ -16,9 +16,9 @@ class Corner extends Vector {
     constructor(position) {
         super(position);
         this.id = -1;
-        this.touches = new Polygon(); // Centers
+        this.touches = []; // Centers
         this.protrudes = []; // Edges
-        this.adjacent = new Polygon(); // Corners
+        this.adjacent = []; // Corners
     }
 }
 

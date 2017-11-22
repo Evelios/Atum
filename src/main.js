@@ -1,5 +1,4 @@
 import Vector from "./geometry/Vector";
-import Shape from "./geometry/Shape";
 import Line from "./geometry/Line";
 import Polygon from "./geometry/Polygon";
 import Rectangle from "./geometry/Rectangle";
@@ -7,8 +6,8 @@ import Triangle from "./geometry/Triangle";
 import Center from "./graph/Center";
 import Corner from "./graph/Corner";
 import Edge from "./graph/Edge";
+import Graph from "./graph/Graph";
 import Diagram from "./graph/Diagram";
-import Map from "./graph/Map";
 import * as PointDistribution from "./Utilities/PointDistribution";
 import * as Redist from "./utilities/Redist";
 import Rand from "./utilities/Rand";
@@ -23,7 +22,6 @@ import Rand from "./utilities/Rand";
 const Atum = {
     Geometry: {
         Vector,
-        Shape,
         Line,
         Polygon,
         Rectangle,
@@ -33,8 +31,8 @@ const Atum = {
         Center,
         Corner,
         Edge,
-        Diagram,
-        Map
+        Graph,
+        Diagram
     },
     Utility: {
         PointDistribution,

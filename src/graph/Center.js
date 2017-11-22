@@ -27,17 +27,14 @@ class Center extends Vector {
 
         // Diagram Properties
         this.id = -1;
-        this.neighbors = new Polygon(); // Centers
+        this.neighbors = []; // Centers
         this.borders = []; // Edges
-        this.corners = new Polygon();
+        this.corners = [];
         this.border = false;
+        this.tile = null;
 
         // Higher Level Properties
         this.data = {};
-
-        // Recursive Parameters
-        this.parent = parent;
-        this.children = children ? children : [];
     }
 }
 

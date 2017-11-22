@@ -12,6 +12,7 @@ Short Term ToDo:
   - Rename Map to Diagram
 
 Longer Term ToDo:
+  - Profiling
   - PCGComponent
     + Abstract Base Class
     + Holds data and can be manipiulated by feeding in object data

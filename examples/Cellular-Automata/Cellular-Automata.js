@@ -12,13 +12,13 @@ var poisson = Atum.Utility.PointDistribution.poisson;
 var square = Atum.Utility.PointDistribution.square;
 var Rectangle = Atum.Geometry.Rectangle;
 var Vector = Atum.Geometry.Vector;
-var Map = Atum.Graph.Map;
+var Diagram = Atum.Graph.Diagram;
 var Rand = Atum.Utility.Rand;
 
 // Global Variables
 var width;
 var height;
-var graph;
+var diagram;
 
 var pointDensity = 40;
 
@@ -124,7 +124,7 @@ function draw() {
 }
 
 function step() {
-    graph.iterate(gameOfLifeRules);
+    diagram.iterate(gameOfLifeRules);
     drawGameOfLife();
 }
 
@@ -133,10 +133,10 @@ function createAndRender() {
     // Create
     var bbox = new Rectangle(Vector.zero(), width, height);
     var points = params.pointFunctions[params.pointDistribution](bbox, pointDensity);
-    graph = new Map(points, bbox);
+    diagram = new Diagram(points, bbox);
 
     clear();
-    graph.initialize(initGameOfLife);
+    diagram.initialize(initGameOfLife);
 
     // Render
     background("#303030");
@@ -149,7 +149,7 @@ function createAndRender() {
 }
 
 function clear() {
-    for (var center of graph.centers) {
+    for (var center of diagram.centers) {
         center.data.alive = false;
         center.data.trail1 = false;
         center.data.trail2 = false;
@@ -191,7 +191,7 @@ function gameOfLifeRules(center) {
 function drawGameOfLife() {
 
     noStroke();
-    for (var center of graph.centers) {
+    for (var center of diagram.centers) {
         if (center.data.alive) {
             if (!center.data.isOld && params.isOld) {
                 fill("#D4A26A");
@@ -211,7 +211,7 @@ function drawGameOfLife() {
 
     stroke("#393939");
     strokeWeight(2);
-    for (var edge of graph.edges) {
+    for (var edge of diagram.edges) {
         line(edge.v0.x, edge.v0.y, edge.v1.x, edge.v1.y);
     }
     strokeWeight(1);
@@ -235,7 +235,7 @@ function bacteriaGrowthRules(center) {
 function drawBacteriaGrowth() {
 
     noStroke();
-    for (var center of graph.centers) {
+    for (var center of diagram.centers) {
 
         fill("#303030");
         polygon(center);
@@ -243,7 +243,7 @@ function drawBacteriaGrowth() {
 
     stroke("#393939");
     strokeWeight(2);
-    for (var edge of graph.edges) {
+    for (var edge of diagram.edges) {
         line(edge.v0.x, edge.v0.y, edge.v1.x, edge.v1.y);
     }
     strokeWeight(1);

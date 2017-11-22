@@ -1,4 +1,4 @@
-export import Queue from "tinyqueue";
+import Queue from "tinyqueue";
 
 //------------------------------------------------------------------------------
 
