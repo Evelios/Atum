@@ -6,9 +6,9 @@ Atum is a graph based procedural generation library build for Javascript. I star
 
 ### Documentation
 
-The documentation for the Atum library is listed [**here**](https://evelios.github.io/Atum/index.html). This is where you find out all the nitty-gritty details of what the methods do and where this library can take you. I plan to have examples on how this code can be used to at least spark some ideas and allow the library to get used to its full potential.
+[**Here is the documentation for the Atum library**](https://evelios.github.io/Atum/index.html). This is where you find the tutorials and all the nitty-gritty details of what the methods do and where this library can take you. I plan to have examples on how this code can be used to at least spark some ideas and allow the library to get used to its full potential.
 
-### Dependencies and Tools
+### Development Dependencies and Tools
 
 Atum uses [**Node's npm**](https://nodejs.org/en/download/) for package management and [**Grunt**](https://gruntjs.com/) as a task runner. These are required in order to get started with development. They are quite usefull tools if you don't have them already.
 
@@ -16,6 +16,9 @@ Atum uses [**Node's npm**](https://nodejs.org/en/download/) for package manageme
 # Install Node and npm and get the most recent version of npm
 # Get the latest version of npm and ensure node was installed
 npm install npm
+
+# Install Atum through npm
+npm install atum
 
 # Get the Atum code from repository and download the dependencies
 npm install https://github.com/Evelios/Atum.git
@@ -40,6 +43,8 @@ grunt docs
 ```
 
 ## Basic Usage
+
+If you are using the library all you need is to have the Atum.js or Atum.min.js file to use in your project. This can be done in one of the several ways mentioned above.
 
 All the code is written to the new [ES6 Standards](http://es6-features.org). They are cool. Check them out. However there is not support for these yet so everything is transpiled down to ES5 standards. With this there is still support for AMD *require* tags. There is also support for globals by including in a script tag.
 
@@ -69,7 +74,7 @@ This example is all done within the .html document for simplicity. But once you 
 
 ## A Simple Example
 
-Lets create a basic voronoi graph. Let's assume you have done the above and have the Atum variable in scope. We want to create short handles for all the classes we are going to use so that our code is easier to use and we can see the dependencies in the beginning. Then lets greate a graph object!
+Lets create a basic voronoi graph. Let's assume you have done the above and have the Atum variable in scope. We want to create short handles for all the classes we are going to use so that our code is easier to use and we can see the dependencies in the beginning. Then lets create a graph object!
 
 ```js
 // First we declare the dependencies to shorten their names
@@ -93,11 +98,11 @@ Here you can see the contents of the graph object that we just created. All it t
 
 The Generated Voronoi Diagram Showing Connected Corners Points
 
-<img src="./Voronoi.png" alt="Voronoi diagram generated from the graph" width="600">
+<img src="./images/Voronoi.png" alt="Voronoi diagram generated from the graph" width="600">
 
 The Generated Delaunay Diagram Showing Connected Center Points
 
-<img src="./Delaunay.png" alt="Delaunay diagram generated from the graph" width="600">
+<img src="./images/Delaunay.png" alt="Delaunay diagram generated from the graph" width="600">
 
 ## Change Log
 
@@ -120,6 +125,7 @@ The Generated Delaunay Diagram Showing Connected Center Points
 + Voronoi Graph Creation
     * Geometry: Vector, Shape (Abstract), Polygon, Rectangle, Line
     * Graph: Voronoi Diagram Object, Corners, Centers, Edges
+
 ## Attributions
 
 Without the support of these other projects I would be writting a lot more code than I would like to be. This project is built off of their hard work.

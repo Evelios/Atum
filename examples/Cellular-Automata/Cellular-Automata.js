@@ -128,13 +128,13 @@ function playPause() {
 function draw() {
     if (params.play) {
         step();
-        params.automataRules[params.automataChoice].draw();
     }
 }
 
 //---- Iterate the Cellular Automata
 function step() {
     graph.iterate(params.automataRules[params.automataChoice].rules);
+    params.automataRules[params.automataChoice].draw();
 }
 
 //---- Clear the Graph ----
@@ -162,7 +162,7 @@ function createAndRender() {
 
 function isRandomAlive(center) {
     // Change this density to a parameter
-    var density = 0.4;
+    var density = 0.6;
     return Rand.rand() < density;
 }
 

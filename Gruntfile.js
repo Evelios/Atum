@@ -83,7 +83,7 @@ module.exports = function(grunt) {
                     // package: "package.json", // Use to track documentation changes
                     // configure: "jsdoc.json",
                     readme: "README.md",
-                    // tutorials: "examples", // Not currently working with jaguarjs
+                    // tutorials: "tutorials", // Not currently working with jaguarjs
                     destination: "docs",
                     // There is the option of using jaguarjs-jsdoc-patched-2
                     template: "./node_modules/jaguarjs-jsdoc-patched",
