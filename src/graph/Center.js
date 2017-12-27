@@ -31,13 +31,10 @@ class Center extends Vector {
         this.borders = []; // Edges
         this.corners = [];
         this.border = false;
+        this.tile = null;
 
         // Higher Level Properties
         this.data = {};
-
-        // Recursive Parameters
-        this.parent = parent;
-        this.children = children ? children : [];
     }
 }
 

@@ -1,0 +1,1000 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Source: graph/Graph.js</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jaguar.css">
+    
+    
+    <script>
+    var config = {"monospaceLinks":false,"cleverLinks":false,"default":{"outputSourceFiles":true}};
+    </script>
+    
+
+    
+</head>
+<body>
+<div id="wrap" class="clearfix">
+    
+<div class="navigation">
+    <h3 class="applicationName"><a href="index.html"></a></h3>
+
+    <div class="search">
+        <input id="search" type="text" class="form-control input-sm" placeholder="Search Documentations">
+    </div>
+    <ul class="list">
+    
+        <li class="item" data-name="Center">
+            <span class="title">
+                <a href="Center.html">Center</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Center#add"><a href="Center.html#add">add</a></li>
+            
+                <li data-name="Center#cross"><a href="Center.html#cross">cross</a></li>
+            
+                <li data-name="Center#divide"><a href="Center.html#divide">divide</a></li>
+            
+                <li data-name="Center#dot"><a href="Center.html#dot">dot</a></li>
+            
+                <li data-name="Center#key"><a href="Center.html#key">key</a></li>
+            
+                <li data-name="Center#list"><a href="Center.html#list">list</a></li>
+            
+                <li data-name="Center#magnitude"><a href="Center.html#magnitude">magnitude</a></li>
+            
+                <li data-name="Center#multiply"><a href="Center.html#multiply">multiply</a></li>
+            
+                <li data-name="Center#normalize"><a href="Center.html#normalize">normalize</a></li>
+            
+                <li data-name="Center#perpendiculars"><a href="Center.html#perpendiculars">perpendiculars</a></li>
+            
+                <li data-name="Center#rotate"><a href="Center.html#rotate">rotate</a></li>
+            
+                <li data-name="Center#subtract"><a href="Center.html#subtract">subtract</a></li>
+            
+                <li data-name="Center#toString"><a href="Center.html#toString">toString</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Corner">
+            <span class="title">
+                <a href="Corner.html">Corner</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Corner#add"><a href="Corner.html#add">add</a></li>
+            
+                <li data-name="Corner#cross"><a href="Corner.html#cross">cross</a></li>
+            
+                <li data-name="Corner#divide"><a href="Corner.html#divide">divide</a></li>
+            
+                <li data-name="Corner#dot"><a href="Corner.html#dot">dot</a></li>
+            
+                <li data-name="Corner#key"><a href="Corner.html#key">key</a></li>
+            
+                <li data-name="Corner#list"><a href="Corner.html#list">list</a></li>
+            
+                <li data-name="Corner#magnitude"><a href="Corner.html#magnitude">magnitude</a></li>
+            
+                <li data-name="Corner#multiply"><a href="Corner.html#multiply">multiply</a></li>
+            
+                <li data-name="Corner#normalize"><a href="Corner.html#normalize">normalize</a></li>
+            
+                <li data-name="Corner#perpendiculars"><a href="Corner.html#perpendiculars">perpendiculars</a></li>
+            
+                <li data-name="Corner#rotate"><a href="Corner.html#rotate">rotate</a></li>
+            
+                <li data-name="Corner#subtract"><a href="Corner.html#subtract">subtract</a></li>
+            
+                <li data-name="Corner#toString"><a href="Corner.html#toString">toString</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="DataStructures">
+            <span class="title">
+                <a href="DataStructures.html">DataStructures</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Diagram">
+            <span class="title">
+                <a href="Diagram.html">Diagram</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Diagram#_createTiles"><a href="Diagram.html#_createTiles">_createTiles</a></li>
+            
+                <li data-name="Diagram#_generate"><a href="Diagram.html#_generate">_generate</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Edge">
+            <span class="title">
+                <a href="Edge.html">Edge</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Graph">
+            <span class="title">
+                <a href="Graph.html">Graph</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Line">
+            <span class="title">
+                <a href="Line.html">Line</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Line.intersects"><a href="Line.html#.intersects">intersects</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Node">
+            <span class="title">
+                <a href="Node.html">Node</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Node#childNode"><a href="Node.html#childNode">childNode</a></li>
+            
+                <li data-name="Node#expand"><a href="Node.html#expand">expand</a></li>
+            
+                <li data-name="Node#path"><a href="Node.html#path">path</a></li>
+            
+                <li data-name="Node#solution"><a href="Node.html#solution">solution</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="PointDistribution">
+            <span class="title">
+                <a href="PointDistribution.html">PointDistribution</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="PointDistribution.exports.circular"><a href="PointDistribution.html#.exports.circular">exports.circular</a></li>
+            
+                <li data-name="PointDistribution.exports.hexagon"><a href="PointDistribution.html#.exports.hexagon">exports.hexagon</a></li>
+            
+                <li data-name="PointDistribution.exports.jitteredGrid"><a href="PointDistribution.html#.exports.jitteredGrid">exports.jitteredGrid</a></li>
+            
+                <li data-name="PointDistribution.exports.poisson"><a href="PointDistribution.html#.exports.poisson">exports.poisson</a></li>
+            
+                <li data-name="PointDistribution.exports.random"><a href="PointDistribution.html#.exports.random">exports.random</a></li>
+            
+                <li data-name="PointDistribution.exports.recursiveWang"><a href="PointDistribution.html#.exports.recursiveWang">exports.recursiveWang</a></li>
+            
+                <li data-name="PointDistribution.exports.square"><a href="PointDistribution.html#.exports.square">exports.square</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Polygon">
+            <span class="title">
+                <a href="Polygon.html">Polygon</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Polygon#bbox"><a href="Polygon.html#bbox">bbox</a></li>
+            
+                <li data-name="Polygon#centroid"><a href="Polygon.html#centroid">centroid</a></li>
+            
+                <li data-name="Polygon#inset"><a href="Polygon.html#inset">inset</a></li>
+            
+                <li data-name="Polygon#isConvex"><a href="Polygon.html#isConvex">isConvex</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Problem">
+            <span class="title">
+                <a href="Problem.html">Problem</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Problem#actions"><a href="Problem.html#actions">actions</a></li>
+            
+                <li data-name="Problem#goalTest"><a href="Problem.html#goalTest">goalTest</a></li>
+            
+                <li data-name="Problem#pathCost"><a href="Problem.html#pathCost">pathCost</a></li>
+            
+                <li data-name="Problem#result"><a href="Problem.html#result">result</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Rand">
+            <span class="title">
+                <a href="Rand.html">Rand</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Rand.rand"><a href="Rand.html#.rand">rand</a></li>
+            
+                <li data-name="Rand.randHex"><a href="Rand.html#.randHex">randHex</a></li>
+            
+                <li data-name="Rand.randHexColor"><a href="Rand.html#.randHexColor">randHexColor</a></li>
+            
+                <li data-name="Rand.randInt"><a href="Rand.html#.randInt">randInt</a></li>
+            
+                <li data-name="Rand.randRange"><a href="Rand.html#.randRange">randRange</a></li>
+            
+                <li data-name="Rand.setSeed"><a href="Rand.html#.setSeed">setSeed</a></li>
+            
+                <li data-name="Rand.vector"><a href="Rand.html#.vector">vector</a></li>
+            
+                <li data-name="Rand#rand"><a href="Rand.html#rand">rand</a></li>
+            
+                <li data-name="Rand#randHex"><a href="Rand.html#randHex">randHex</a></li>
+            
+                <li data-name="Rand#randHexColor"><a href="Rand.html#randHexColor">randHexColor</a></li>
+            
+                <li data-name="Rand#randInt"><a href="Rand.html#randInt">randInt</a></li>
+            
+                <li data-name="Rand#randRange"><a href="Rand.html#randRange">randRange</a></li>
+            
+                <li data-name="Rand#setSeed"><a href="Rand.html#setSeed">setSeed</a></li>
+            
+                <li data-name="Rand#vector"><a href="Rand.html#vector">vector</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Rectangle">
+            <span class="title">
+                <a href="Rectangle.html">Rectangle</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Rectangle.collides"><a href="Rectangle.html#.collides">collides</a></li>
+            
+                <li data-name="Rectangle.intersects"><a href="Rectangle.html#.intersects">intersects</a></li>
+            
+                <li data-name="Rectangle#bbox"><a href="Rectangle.html#bbox">bbox</a></li>
+            
+                <li data-name="Rectangle#centroid"><a href="Rectangle.html#centroid">centroid</a></li>
+            
+                <li data-name="Rectangle#collides"><a href="Rectangle.html#collides">collides</a></li>
+            
+                <li data-name="Rectangle#contains"><a href="Rectangle.html#contains">contains</a></li>
+            
+                <li data-name="Rectangle#inset"><a href="Rectangle.html#inset">inset</a></li>
+            
+                <li data-name="Rectangle#intersects"><a href="Rectangle.html#intersects">intersects</a></li>
+            
+                <li data-name="Rectangle#isConvex"><a href="Rectangle.html#isConvex">isConvex</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Redist">
+            <span class="title">
+                <a href="Redist.html">Redist</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Redist.exports.exp"><a href="Redist.html#.exports.exp">exports.exp</a></li>
+            
+                <li data-name="Redist.exports.identity"><a href="Redist.html#.exports.identity">exports.identity</a></li>
+            
+                <li data-name="Redist.exports.inverse"><a href="Redist.html#.exports.inverse">exports.inverse</a></li>
+            
+                <li data-name="Redist.exports.pow"><a href="Redist.html#.exports.pow">exports.pow</a></li>
+            
+                <li data-name="Redist.exports.step"><a href="Redist.html#.exports.step">exports.step</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Triangle">
+            <span class="title">
+                <a href="Triangle.html">Triangle</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Triangle#bbox"><a href="Triangle.html#bbox">bbox</a></li>
+            
+                <li data-name="Triangle#centroid"><a href="Triangle.html#centroid">centroid</a></li>
+            
+                <li data-name="Triangle#inset"><a href="Triangle.html#inset">inset</a></li>
+            
+                <li data-name="Triangle#isConvex"><a href="Triangle.html#isConvex">isConvex</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Vector">
+            <span class="title">
+                <a href="Vector.html">Vector</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Vector.add"><a href="Vector.html#.add">add</a></li>
+            
+                <li data-name="Vector.angle"><a href="Vector.html#.angle">angle</a></li>
+            
+                <li data-name="Vector.avg"><a href="Vector.html#.avg">avg</a></li>
+            
+                <li data-name="Vector.copy"><a href="Vector.html#.copy">copy</a></li>
+            
+                <li data-name="Vector.cross"><a href="Vector.html#.cross">cross</a></li>
+            
+                <li data-name="Vector.dist2"><a href="Vector.html#.dist2">dist2</a></li>
+            
+                <li data-name="Vector.distance"><a href="Vector.html#.distance">distance</a></li>
+            
+                <li data-name="Vector.distToSeg"><a href="Vector.html#.distToSeg">distToSeg</a></li>
+            
+                <li data-name="Vector.distToSegSquared"><a href="Vector.html#.distToSegSquared">distToSegSquared</a></li>
+            
+                <li data-name="Vector.dot"><a href="Vector.html#.dot">dot</a></li>
+            
+                <li data-name="Vector.down"><a href="Vector.html#.down">down</a></li>
+            
+                <li data-name="Vector.left"><a href="Vector.html#.left">left</a></li>
+            
+                <li data-name="Vector.midpoint"><a href="Vector.html#.midpoint">midpoint</a></li>
+            
+                <li data-name="Vector.proj"><a href="Vector.html#.proj">proj</a></li>
+            
+                <li data-name="Vector.right"><a href="Vector.html#.right">right</a></li>
+            
+                <li data-name="Vector.subtract"><a href="Vector.html#.subtract">subtract</a></li>
+            
+                <li data-name="Vector.up"><a href="Vector.html#.up">up</a></li>
+            
+                <li data-name="Vector.zero"><a href="Vector.html#.zero">zero</a></li>
+            
+                <li data-name="Vector#add"><a href="Vector.html#add">add</a></li>
+            
+                <li data-name="Vector#cross"><a href="Vector.html#cross">cross</a></li>
+            
+                <li data-name="Vector#divide"><a href="Vector.html#divide">divide</a></li>
+            
+                <li data-name="Vector#dot"><a href="Vector.html#dot">dot</a></li>
+            
+                <li data-name="Vector#key"><a href="Vector.html#key">key</a></li>
+            
+                <li data-name="Vector#list"><a href="Vector.html#list">list</a></li>
+            
+                <li data-name="Vector#magnitude"><a href="Vector.html#magnitude">magnitude</a></li>
+            
+                <li data-name="Vector#multiply"><a href="Vector.html#multiply">multiply</a></li>
+            
+                <li data-name="Vector#normalize"><a href="Vector.html#normalize">normalize</a></li>
+            
+                <li data-name="Vector#perpendiculars"><a href="Vector.html#perpendiculars">perpendiculars</a></li>
+            
+                <li data-name="Vector#rotate"><a href="Vector.html#rotate">rotate</a></li>
+            
+                <li data-name="Vector#subtract"><a href="Vector.html#subtract">subtract</a></li>
+            
+                <li data-name="Vector#toString"><a href="Vector.html#toString">toString</a></li>
+            
+                <li data-name="Vector#toString"><a href="Vector.html#toString">toString</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="module:Atum">
+            <span class="title">
+                <a href="module-Atum.html">module:Atum</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+    </ul>
+</div>
+    <div class="main">
+        <h1 class="page-title" data-filename="graph_Graph.js.html">Source: graph/Graph.js</h1>
+        
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source "><code>import Vector from "../geometry/Vector";
+import Center from "./Center";
+import Corner from "./Corner";
+import Edge from "./Edge";
+import { has } from "../utilities/Util";
+import Voronoi from "Voronoi";
+
+"use strict";
+
+// Need to ES6ify
+class Graph {
+    /**
+     * The Graph class is an extenstion of the voronoi diagram. It turns the
+     * diagram into a more useable format where centers, edges, and corners are
+     * better connected. This allows for many different types of traversal over
+     * the graph. This class uses the rhill-voronoi library for building the
+     * voronoi graph. This is termed a PAN connected graph. This class can also be
+     * relaxed more by using lloyd relaxation which reruns the graph simulation
+     * process with a less packed point set to gradually create a more "blue" noise
+     * effect.
+     *
+     * @summary Creates a voronoi diagram of a given point set that is created
+     *  inside a partiuclar bounding box. The set of points can also be relaxed
+     *  creating a more "blue" noise effect using loyd relaxation.
+     * 
+     * @property {Rectangle} bbox The input bounding box
+     * @property {Center[]} centers All the center objects of the graph
+     * @property {Corner[]} corners All the corner objects of the graph
+     * @property {Edges[]} edges All the edge objects of the graph
+     * 
+     * @param {Vector[]} points The vector location to create the voronoi diagram with
+     * @param {Rectangle} bbox The bounding box for the creation of the voronoi diagram
+     * @param {integer} [relaxations=0] The number of lloyd relaxations to do.
+     *  This turns a noisy graph into a more uniform graph iteration by iteration.
+     *  This helps to improve the spacing between points in the graph.
+     * @param {bool} [improveCorners=false] This improves uniformity among the
+     *  corners by setting them to the average of their neighbors. This breaks
+     *  the voronoi properties of the graph.
+     * 
+     * @class Graph
+     */
+    constructor(points, bbox, relaxations = 0, improveCorners = false) {
+        this.bbox = bbox;
+        this._rhillbbox = {
+            xl: this.bbox.x,
+            xr: this.bbox.x + this.bbox.width,
+            yt: this.bbox.y,
+            yb: this.bbox.y + this.bbox.height
+        };
+
+        // Compute Voronoi from initial points
+        const rhillVoronoi = new Voronoi();
+        this._voronoi = rhillVoronoi.compute(points, this._rhillbbox);
+
+        // Lloyds Relaxations
+        while (relaxations--) {
+            const sites = this.relaxSites(this._voronoi);
+            rhillVoronoi.recycle(this._voronoi);
+            this._voronoi = rhillVoronoi.compute(sites, this._rhillbbox);
+        }
+
+        this.convertDiagram(this._voronoi);
+
+        if (improveCorners) {
+            this.improveCorners();
+        }
+        this.sortCorners();
+
+    }
+
+    relaxSites(voronoi) {
+        const cells = voronoi.cells;
+        let iCell = cells.length;
+        let cell;
+        let site;
+        const sites = [];
+
+        while (iCell--) {
+            cell = cells[iCell];
+            site = this.cellCentroid(cell);
+            sites.push(new Vector(site.x, site.y));
+        }
+        return sites;
+    }
+
+    cellArea(cell) {
+        let area = 0;
+        const halfedges = cell.halfedges;
+        let iHalfedge = halfedges.length;
+        let halfedge, p1, p2;
+        while (iHalfedge--) {
+            halfedge = halfedges[iHalfedge];
+            p1 = halfedge.getStartpoint();
+            p2 = halfedge.getEndpoint();
+            area += p1.x * p2.y;
+            area -= p1.y * p2.x;
+        }
+        area /= 2;
+        return area;
+    }
+
+    cellCentroid(cell) {
+        let x = 0,
+            y = 0;
+        const halfedges = cell.halfedges;
+        let iHalfedge = halfedges.length;
+        let halfedge;
+        let v, p1, p2;
+
+        while (iHalfedge--) {
+            halfedge = halfedges[iHalfedge];
+
+            p1 = halfedge.getStartpoint();
+            p2 = halfedge.getEndpoint();
+
+            v = p1.x * p2.y - p2.x * p1.y;
+
+            x += (p1.x + p2.x) * v;
+            y += (p1.y + p2.y) * v;
+        }
+
+        v = this.cellArea(cell) * 6;
+
+        return { x: x / v, y: y / v };
+    }
+
+    convertDiagram(voronoi) {
+        const centerLookup = {};
+        const cornerLookup = {};
+        this.centers = [];
+        this.corners = [];
+        this.edges = [];
+
+        let cornerId = 0;
+        let edgeId = 0;
+
+        // Copy over all the center nodes
+        for (const cell of voronoi.cells) {
+            const site = cell.site;
+            const pos = new Vector(site.x, site.y);
+            const center = new Center(pos);
+            center.id = site.voronoiId;
+            centerLookup[pos.key()] = center;
+            this.centers.push(center);
+        }
+
+        // Create and copy over the edges and corners
+        // This portion also creates the connections between all the nodes
+        for (let edge of voronoi.edges) {
+
+            // Convert voronoi edge to a useable form
+            // Corner positions
+            const va = new Vector(Math.round(edge.va.x), Math.round(edge.va.y));
+            const vb = new Vector(Math.round(edge.vb.x), Math.round(edge.vb.y));
+            // Center positions
+            const site1 = new Vector(edge.lSite.x, edge.lSite.y);
+            const site2 = edge.rSite ? new Vector(edge.rSite.x, edge.rSite.y) : null;
+
+            // Lookup the two center objects
+            const center1 = centerLookup[site1.key()];
+            const center2 = site2 ? centerLookup[site2.key()] : null;
+
+            // Lookup the corner objects and if one isn't created
+            // create one and add it to corners set
+            let corner1;
+            let corner2;
+
+            const isBorder = (point, bbox) => point.x &lt;= bbox.xl || point.x >= bbox.xr ||
+                point.y &lt;= bbox.yt || point.y >= bbox.yb;
+
+            if (!has(cornerLookup, va.key())) {
+                corner1 = new Corner(va);
+                corner1.id = cornerId++;
+                corner1.border = isBorder(va, this.bbox);
+                cornerLookup[va.key()] = corner1;
+                this.corners.push(corner1);
+            } else {
+                corner1 = cornerLookup[va.key()];
+            }
+            if (!has(cornerLookup, vb.key())) {
+                corner2 = new Corner(vb);
+                corner2.id = cornerId++;
+                corner2.border = isBorder(vb, this.bbox);
+                cornerLookup[vb.key()] = corner2;
+                this.corners.push(corner2);
+            } else {
+                corner2 = cornerLookup[vb.key()];
+            }
+
+            // Update the edge objects
+            const newEdge = new Edge();
+            newEdge.id = edgeId++;
+            newEdge.d0 = center1;
+            newEdge.d1 = center2;
+            newEdge.v0 = corner1;
+            newEdge.v1 = corner2;
+            newEdge.midpoint = Vector.midpoint(corner1, corner2);
+
+            // Update the corner objects
+            corner1.protrudes.push(newEdge);
+            corner2.protrudes.push(newEdge);
+
+            if (!corner1.touches.includes(center1)) {
+                corner1.touches.push(center1);
+            }
+            if (center2 &amp;&amp; !corner1.touches.includes(center2)) {
+                corner1.touches.push(center2);
+            }
+            if (!corner2.touches.includes(center1)) {
+                corner2.touches.push(center1);
+            }
+            if (center2 &amp;&amp; !corner2.touches.includes(center2)) {
+                corner2.touches.push(center2);
+            }
+
+            corner1.adjacent.push(corner2);
+            corner2.adjacent.push(corner1);
+
+            // Update the center objects
+            center1.borders.push(newEdge);
+            if (center2) {
+                center2.borders.push(newEdge);
+            }
+
+            if (!center1.corners.includes(corner1)) {
+                center1.corners.push(corner1);
+            }
+            if (!center1.corners.includes(corner2)) {
+                center1.corners.push(corner2);
+            }
+            if (center2 &amp;&amp; !center2.corners.includes(corner1)) {
+                center2.corners.push(corner1);
+            }
+            if (center2 &amp;&amp; !center2.corners.includes(corner2)) {
+                center2.corners.push(corner2);
+            }
+
+            if (center2) {
+                center1.neighbors.push(center2);
+                center2.neighbors.push(center1);
+            }
+
+            // If either corner is a border, both centers are borders
+            center1.border = center1.border || corner1.border || corner2.border;
+            if (center2) {
+                center2.border = center2.border || corner1.border || corner2.border;
+            }
+
+            this.edges.push(newEdge);
+        }
+    }
+
+    //------------------------------------------------------------------------------
+    // Helper function to create graph
+    //
+    // Lloyd relaxation helped to create uniformity among polygon corners,
+    // This function creates uniformity among polygon corners by setting the corners
+    // to the average of their neighbors
+    // This breakes the voronoi diagram properties
+    improveCorners() {
+        const newCorners = [];
+
+        // Calculate new corner positions
+        for (let i = 0; i &lt; this.corners.length; i++) {
+            let corner = this.corners[i];
+
+            if (corner.border) {
+                newCorners[i] = corner;
+            } else {
+                let newPos = Vector.zero();
+
+                for (const neighbor of corner.touches) {
+                    newPos = Vector.add(newPos, neighbor);
+                }
+
+                newPos = newPos.divide(corner.touches.length);
+                newCorners[i] = newPos;
+            }
+        }
+
+        // Assign new corner positions
+        for (let i = 0; i &lt; this.corners.length; i++) {
+            let corner = this.corners[i];
+            corner = newCorners[i];
+        }
+
+        // Recompute edge midpoints
+        for (const edge of this.edges) {
+            if (edge.v0 &amp;&amp; edge.v1) {
+                edge.midpoint = Vector.midpoint(edge.v0, edge.v1);
+            }
+        }
+    }
+
+    //------------------------------------------------------------------------------
+    // Sorts the corners in clockwise order so that they can be printed properly
+    // using a standard polygon drawing method
+
+    sortCorners() {
+        for (const center of this.centers) {
+            const comp = this.comparePolyPoints(center);
+            center.corners.sort(comp);
+        }
+    }
+
+    //------------------------------------------------------------------------------
+    // Comparison function for sorting polygon points in clockwise order
+    // assuming a convex polygon
+    // http://stackoverflow.com/questions/6989100/sort-points-in-clockwise-order
+    comparePolyPoints(c) {
+        const center = c;
+        return (p1, p2) => {
+            const a = p1,
+                b = p2;
+
+            if (a.x - center.x >= 0 &amp;&amp; b.x - center.x &lt; 0) {
+                return -1;
+            }
+            if (a.x - center.x &lt; 0 &amp;&amp; b.x - center.x >= 0) {
+                return 1;
+            }
+            if (a.x - center.x === 0 &amp;&amp; b.x - center.x === 0) {
+                if (a.y - center.y >= 0 || b.y - center.y >= 0) {
+                    if (a.y > b.y) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                }
+                if (b.y > a.y) {
+                    return -1;
+                } else {
+                    return 1;
+                }
+            }
+
+            // compute the cross product of vectors (center -> a) x (center -> b)
+            const det = (a.x - center.x) * (b.y - center.y) - (b.x - center.x) * (a.y - center.y);
+            if (det &lt; 0) {
+                return -1;
+            }
+            if (det > 0) {
+                return 1;
+            }
+
+            // points a and b are on the same line from the center
+            // check which point is closer to the center
+            const d1 = (a.x - center.x) * (a.x - center.x) + (a.y - center.y) * (a.y - center.y);
+            const d2 = (b.x - center.x) * (b.x - center.x) + (b.y - center.y) * (b.y - center.y);
+            if (d1 > d2) {
+                return -1;
+            } else {
+                return 1;
+            }
+
+        };
+    }
+
+}
+
+export default Graph;</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+
+        
+
+        <footer>
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Wed Nov 22 2017 13:08:21 GMT-0500 (Eastern Standard Time)
+        </footer>
+    </div>
+</div>
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>

@@ -18,7 +18,7 @@ var centroidColor;
 
 var width;
 var height;
-var graph;
+var diagram;
 
 var params = {
     // Parameters
@@ -107,7 +107,7 @@ function createGraph() {
     var bbox = new Rectangle(Vector.zero(), width, height);
     var pointFunction = params.pointFunctions[params.pointDistribution];
     var points = pointFunction(bbox, params.density, 25);
-    graph = new Diagram(points, bbox, params.relaxations);
+    diagram = new Diagram(points, bbox, params.relaxations);
 }
 
 function drawGrid(d) {
@@ -123,7 +123,7 @@ function drawGrid(d) {
 
 function drawGraph() {
     if (params.voronoi || params.delaunay) {
-        for (var edge of graph.edges) {
+        for (var edge of diagram.edges) {
             if (params.voronoi) {
                 stroke(voronoiColor);
                 line(edge.v0.x, edge.v0.y, edge.v1.x, edge.v1.y);
@@ -138,7 +138,7 @@ function drawGraph() {
     noStroke();
     if (params.corners) {
         fill(cornerColor);
-        for (var corner of graph.corners) {
+        for (var corner of diagram.corners) {
             if (params.corners) {
                 ellipse(corner.x, corner.y, 6);
             }
@@ -146,7 +146,7 @@ function drawGraph() {
     }
 
     if (params.centers || params.centroids) {
-        for (var center of graph.centers) {
+        for (var center of diagram.centers) {
             if (params.centroids) {
                 var centroid = center.corners.centroid();
                 fill(centroidColor);
