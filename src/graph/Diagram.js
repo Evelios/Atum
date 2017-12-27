@@ -68,6 +68,17 @@ class Diagram {
 
     }
 
+    /**
+     * Look up the center object that is closet to the the input vector.
+     * 
+     * @param {Vector} vector The input vector
+     * @returns {Center} The center object that is closet to the input vector
+     * @memberOf Diagram
+     */
+    centerLookup(vector) {
+        return null;
+    }
+
     relaxSites(voronoi) {
         const cells = voronoi.cells;
         let iCell = cells.length;

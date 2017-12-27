@@ -1,4 +1,9 @@
-export import Queue from "tinyqueue";
+import PriorityQueue from "tinyqueue";
+
+/**
+ * Create a Priority Queue
+ */
+export default PriorityQueue;
 
 //------------------------------------------------------------------------------
 
@@ -38,13 +43,15 @@ http://creativecommons.org/publicdomain/zero/1.0/legalcode
 
 */
 
-/* Creates a new queue. A queue is a first-in-first-out (FIFO) data structure -
- * items are added to the end of the queue and removed from the front.
+/** Creates a new queue. A queue is a first-in-first-out (FIFO) data structure -
+ *  items are added to the end of the queue and removed from the front.
+ * 
+ * @class Stack
  */
-export class Stack {    
-      // initialise the queue and offset
+export class Stack {
+    // initialise the queue and offset
     constructor() {
-        var queue  = [];
+        var queue = [];
         var offset = 0;
     }
 
@@ -59,16 +66,16 @@ export class Stack {
     }
 
     /* Enqueues the specified item. The parameter is:
-    *
-    * item - the item to enqueue
-    */
+     *
+     * item - the item to enqueue
+     */
     enqueue(item) {
         queue.push(item);
     }
 
     /* Dequeues an item and returns it. If the queue is empty, the value
-    * 'undefined' is returned.
-    */
+     * 'undefined' is returned.
+     */
     dequeue() {
         // if the queue is empty, return immediately
         if (queue.length == 0) return undefined;
@@ -77,8 +84,8 @@ export class Stack {
         var item = queue[offset];
 
         // increment the offset and remove the free space if necessary
-        if (++ offset * 2 >= queue.length){
-            queue  = queue.slice(offset);
+        if (++offset * 2 >= queue.length) {
+            queue = queue.slice(offset);
             offset = 0;
         }
 
@@ -87,10 +94,10 @@ export class Stack {
     }
 
     /* Returns the item at the front of the queue (without dequeuing it). If the
-    * queue is empty then undefined is returned.
-    */
+     * queue is empty then undefined is returned.
+     */
     peek() {
         return (queue.length > 0 ? queue[offset] : undefined);
     }
-    
+
 }

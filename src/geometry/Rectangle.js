@@ -35,6 +35,13 @@ class Rectangle extends Polygon {
         this.area = width * height;
     }
 
+    copy() {
+        return Rectangle.copy(this);
+    }
+
+    static copy() {
+        return new Rectangle(this.position, this.width, this.height);
+    }
     contains(vector) {
         return vector.x > this.position.x &&
             vector.x < this.position.x + this.width &&

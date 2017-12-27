@@ -1,11 +1,13 @@
 "use strict";
 
+// Atum Globals
 var PointDistribution = Atum.Utility.PointDistribution;
 var Rectangle = Atum.Geometry.Rectangle;
 var Vector = Atum.Geometry.Vector;
 var Diagram = Atum.Graph.Diagram;
 var Rand = Atum.Utility.Rand;
 
+// Colors
 var bgColor;
 var bgAccent;
 var centerColor;

@@ -1,30 +1,30 @@
 class Vector {
     /**
      * @class Vector
-     * 
+     *
      * This is a basic vector class that is used for geometry, position inforamtion,
      * movement infomation, and more complex structures.
      * The vector class follows a immutable paradigm where changes are not made to the
      * vectors themselves. Any change to a vector is returned as a new vector that
-     * must be captured. 
-     * 
+     * must be captured.
+     *
      * @description This vector class was constructed so that it can mirror two types of common
      * point/vector type objects. This is having object properties stored as object
      * properties (eg. vector.x, vector.y) or as list properties, [x, y] which can
      * be accessed by vector[0], or vector[1].
-     * 
+     *
      * @summary Create a 2D Vector object
-     * 
+     *
      * @property {number} x The x vector component
      * @property {number} y The y vector component
      * @property {number} 0 The x vector component
      * @property {number} 1 The y vector component
-     * 
+     *
      * @param {number|Vector} x The x component or another vector
      * @param {number} [y] The y component
      */
     constructor(x, y) {
-        if (x instanceof Vector || (x.x && x.y) && !y) {
+        if (x instanceof Vector || (x.x && x.y && !y)) {
             this._set(x.x, x.y);
         } else {
             this._set(x, y);
@@ -35,13 +35,13 @@ class Vector {
 
     /**
      * Create a vector from polar coordinates
-     * 
+     *
      * @static
      * @param {number} r The radius of the vector
      * @param {number} theta The angle of the vector in radians.
      *  Should be between 0 and 2*PI
      * @returns The rectangular vector produced from the polar coordinates
-     * 
+     *
      * @memberOf Vector
      */
     static Polar(r, theta) {
@@ -52,7 +52,7 @@ class Vector {
 
     /**
      * Internal Helper Function for setting variable properties
-     * 
+     *
      * @private
      * @param {number} x The x component
      * @param {number} y The y component
@@ -67,7 +67,7 @@ class Vector {
 
     /**
      * Get the vector key:Symbol representation
-     * 
+     *
      * @returns {Symbol} The vector key element
      * @memberof Vector
      */
@@ -78,7 +78,7 @@ class Vector {
 
     /**
      * Get the vector in list form
-     * 
+     *
      * @returns {number[]} List representation of the vector of length 2
      * @memberof Vector
      */
@@ -88,7 +88,7 @@ class Vector {
 
     /**
      * Returns the vector as a string of (x, y)
-     * 
+     *
      * @returns {string} The string representation of a vector in (x, y) form
      * @memberof Vector
      */
@@ -98,7 +98,19 @@ class Vector {
 
     /**
      * Get a copy of the input vector
-     * 
+     *
+     * @param {Vector} v the vector to be coppied
+     * @returns {Vector} The vector copy
+     * @memberof Vector
+     */
+    copy() {
+        return Vector.copy(this);
+    }
+
+    /**
+     * Get a copy of the input vector
+     *
+     * @static
      * @param {Vector} v the vector to be coppied
      * @returns {Vector} The vector copy
      * @memberof Vector
@@ -109,7 +121,7 @@ class Vector {
 
     /**
      * Returns true if the two vector positions are equal
-     * 
+     *
      * @static
      * @param {Vector} v1 The first vector
      * @param {Vector} v2 The second vector
@@ -124,7 +136,7 @@ class Vector {
 
     /**
      * Add two vectors element wise
-     * 
+     *
      * @static
      * @param {Vector} a The first vector
      * @param {Vector} b The second vector
@@ -137,7 +149,7 @@ class Vector {
 
     /**
      * Add this vector with another vector element wise
-     * 
+     *
      * @param {Vector} other The other vector
      * @returns {Vector} The vector result of adding the two vectors
      * @memberof Vector
@@ -148,7 +160,7 @@ class Vector {
 
     /**
      * Subtract two vectors element wise
-     * 
+     *
      * @static
      * @param {Vector} a The first vector
      * @param {Vector} b The second Vector
@@ -161,7 +173,7 @@ class Vector {
 
     /**
      * Subtract this vector with another vector element wise
-     * 
+     *
      * @param {Vector} other The other vector
      * @returns {Vector} The vector result of subtracting the two vectors
      * @memberof Vector
@@ -172,7 +184,7 @@ class Vector {
 
     /**
      * Multiply the vector by a scalar value
-     * 
+     *
      * @param {number} scalar The number to multiply the vector by
      * @returns {Vector} The result of multiplying the vector by a scalar
      *  element wise
@@ -184,8 +196,8 @@ class Vector {
 
     /**
      * Divide the vector by a scalar value
-     * 
-     * @param {number} scalar 
+     *
+     * @param {number} scalar
      * @returns {Vector} The result of multiplying the vector by a scalar
      * @memberof Vector
      */
@@ -197,7 +209,7 @@ class Vector {
 
     /**
      * Get the magnitude of the vector
-     * 
+     *
      * @returns {number} The magniture of the vector
      * @memberof Vector
      */
@@ -208,7 +220,7 @@ class Vector {
     // Get the unit vector
     /**
      * Get the normal vector of the current vector.
-     * 
+     *
      * @returns {Vector} A vector that is the normal compenent of the vector
      * @memberof Vector
      */
@@ -218,8 +230,8 @@ class Vector {
 
     /**
      * Get the get the current vector rotated by a certain ammount
-     * 
-     * @param {number} radians 
+     *
+     * @param {number} radians
      * @returns {Vector} The vector that results from rotating the current
      *  vector by a particular ammount
      * @memberof Vector
@@ -232,7 +244,7 @@ class Vector {
 
     /**
      * Get the dot product of two vectors
-     * 
+     *
      * @static
      * @param {Vector} a The first vector
      * @param {Vector} b The second vector
@@ -245,7 +257,7 @@ class Vector {
 
     /**
      * Get the average location between several vectors
-     * 
+     *
      * @param {Vector[]} vectors The list of vectors to average
      * @memberof Vector
      */
@@ -260,7 +272,7 @@ class Vector {
 
     /**
      * Get the dot product of this vector and another vector
-     * 
+     *
      * @param {Vector} other The other vector
      * @returns {number} The dot product of this and the other vector
      * @memberof Vector
@@ -271,7 +283,7 @@ class Vector {
 
     /**
      * Get the cross product of two vectors
-     * 
+     *
      * @static
      * @param {Vector} a The first vector
      * @param {Vector} b The second vector
@@ -284,7 +296,7 @@ class Vector {
 
     /**
      * Get the cross product of this and the other vector
-     * 
+     *
      * @param {Vector} other The other vector
      * @returns {number} The cross product of this and the other vector
      * @memberof Vector
@@ -293,12 +305,11 @@ class Vector {
         return Vector.cross(this, other);
     }
 
-
     //---- Purely Static Vector Functions ----
 
     /**
      * Get the midpoint between two vectors
-     * 
+     *
      * @static
      * @param {Vector} a The first vector
      * @param {Vector} b The second vector
@@ -311,26 +322,25 @@ class Vector {
 
     /**
      * Get the projection of vector a onto vector b
-     * 
+     *
      * @static
      * @param {Vector} a The first vector
      * @param {Vector} b The second vector
      * @returns The projection vector of a onto b
      * @memberof Vector
-     * 
+     *
      * @todo Add assertion for non-zero length b vector
      */
     static proj(a, b) {
-
         return b.multiply(Vector.dot(a, b) / Math.pow(b.magnitude(), 2));
     }
 
     /**
      * Get the angle between two vectors
-     * 
+     *
      * @static
-     * @param {Vector} a The frist vector 
-     * @param {Vector} b The second vector 
+     * @param {Vector} a The frist vector
+     * @param {Vector} b The second vector
      * @returns The angle between vector a and vector b
      * @memberof Vector
      */
@@ -340,7 +350,7 @@ class Vector {
 
     /**
      * Get the euclidean distance between two vectors
-     * 
+     *
      * @static
      * @param {Vector} a The first vector
      * @param {Vector} b The second vector
@@ -356,7 +366,7 @@ class Vector {
      * Get the euclidean distnace squared between two vectors.
      * This is used as a helper for the distnace function but can be used
      * to save on speed by not doing the square root operation.
-     * 
+     *
      * @static
      * @param {Vector} a The first vector
      * @param {Vector} b The second vector
@@ -373,7 +383,7 @@ class Vector {
     /**
      * Get the shortest distance between the point p and the line
      * segment v to w.
-     * 
+     *
      * @static
      * @param {Vector} p The vector point
      * @param {Vector} v The first line segment endpoint
@@ -390,7 +400,7 @@ class Vector {
     /**
      * Get the shortest distance squared between the point p and the line
      * segment v to w.
-     * 
+     *
      * @static
      * @param {Vector} p The vector point
      * @param {Vector} v The first line segment endpoint
@@ -402,16 +412,20 @@ class Vector {
      */
     static distToSegSquared(p, v, w) {
         const l = Vector.dist2(v, w);
-        if (l === 0) { return Vector.dist2(p, v); }
+        if (l === 0) {
+            return Vector.dist2(p, v);
+        }
         let t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l;
         t = Math.max(0, Math.min(1, t));
-        return Vector.dist2(p, new Vector(v.x + t * (w.x - v.x),
-            v.y + t * (w.y - v.y)));
+        return Vector.dist2(
+            p,
+            new Vector(v.x + t * (w.x - v.x), v.y + t * (w.y - v.y))
+        );
     }
 
     /**
      * Get the two normal vectors that are perpendicular to the current vector
-     * 
+     *
      * @returns {Vector[]} The two normal vectors that are perpendicular
      *  to the vector. The first vector is the normal vector that is +90 deg or
      *  +PI/2 rad. The second vector is the noraml vector that is -90 deg or
@@ -428,7 +442,7 @@ class Vector {
 
     /**
      * Get a vector of no magnitude and no direction
-     * 
+     *
      * @static
      * @function
      * @returns {Vector} Vector of magnitude zero
@@ -441,7 +455,7 @@ class Vector {
 
     /**
      * Get the unit vector pointing in the positive y direction
-     * 
+     *
      * @static
      * @function
      * @returns {Vector} Unit vector pointing up
@@ -454,7 +468,7 @@ class Vector {
 
     /**
      * Get the unit vector pointing in the negative y direction
-     * 
+     *
      * @static
      * @function
      * @returns {Vector} Unit vector pointing down
@@ -467,7 +481,7 @@ class Vector {
 
     /**
      * Get the unit vector pointing in the negative x direction
-     * 
+     *
      * @static
      * @function
      * @returns {Vector} Unit vector pointing right
@@ -480,7 +494,7 @@ class Vector {
 
     /**
      * Get the unit vector pointing in the positive x direction
-     * 
+     *
      * @static
      * @function
      * @returns {Vector} Unit vector pointing right
