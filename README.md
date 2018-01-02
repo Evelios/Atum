@@ -2,6 +2,13 @@
 
 Atum is a graph based procedural generation library build for Javascript. I started the library as an extension to a map generator that I was developing. All the core functionality was to better create and document those common processies. This library is tailored in that direction. I do intend to expand into other useful procedural generation techniques but everything takes time. This library is intended to make getting into procedural generation as easy as possible. Due to the generic graph structure implemented this library is not as efficient as a specifically grid or square based approach. 
 
+### Examples
+
+To see examples of this library in action you can check out the following demo's that I have put together. These can be found in the examples folder if you want to check out the source code.
++ [Point Distributions](https://evelios.github.io/Atum/examples/Point_Distributions/Point_Distributions.html)
++ [Cellular Automata](https://evelios.github.io/Atum/examples/Cellular_Automata/Cellular_Automata.html)
++ [Binary Space Partitioning](https://evelios.github.io/Atum/examples/Binary_Space_Partition/Binary_Space_Partition.html)
+
 ## Getting Started With Atum Development / Build
 
 ### Documentation

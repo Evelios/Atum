@@ -1,7 +1,8 @@
 Issues:
   - There is a Diagram bug where center.neighbors are getting created with
     x:NA, y:NA values and are being added to teh neighbors list
-
+  - Build System For Examples
+  
 Short Term ToDo:
   - Graph Seach (Basic building block)
   - Graph Search Testing
