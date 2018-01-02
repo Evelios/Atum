@@ -18,7 +18,7 @@ class Diagram extends Graph {
         super(points, bbox, relaxations = 0, improveCorners = false);
 
         this.tiles = [];
-        _createTiles();
+        // this._createTiles();
     }
 
     /**
@@ -28,7 +28,7 @@ class Diagram extends Graph {
      */
     _createTiles() {
         for (const center of this.centers) {
-            const tile = new tile(center, center.corners, center.borders);
+            const tile = new Tile(center, center.corners, center.borders);
             this.centers.tile = tile;
             this.tiles.push(tile);
         }
@@ -91,4 +91,4 @@ class Diagram extends Graph {
     }
 }
 
-export default Map;
+export default Diagram;

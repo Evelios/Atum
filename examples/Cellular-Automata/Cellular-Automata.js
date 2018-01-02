@@ -133,24 +133,24 @@ function draw() {
 
 //---- Iterate the Cellular Automata
 function step() {
-    graph.iterate(params.automataRules[params.automataChoice].rules);
+    diagram.iterate(params.automataRules[params.automataChoice].rules);
     params.automataRules[params.automataChoice].draw();
 }
 
 //---- Clear the Graph ----
 function clear() {
-    graph.initialize(params.automataRules[params.automataChoice].clear);
+    diagram.initialize(params.automataRules[params.automataChoice].clear);
 }
 
 //---- Create and Initilize the Graph ----
 function createAndRender() {
     // Create
     var bbox = new Rectangle(Vector.zero(), width, height);
-    var points = params.pointFunctions[params.pointDistribution](bbox, pointDensity);
+    var points = params.pointFunctions[params.pointDistribution](bbox, params.pointDensity);
     diagram = new Diagram(points, bbox);
 
     clear();
-    diagram.initialize(initGameOfLife);
+    diagram.initialize(params.automataRules[params.automataChoice].init);
 
     // Render
     background("#303030");
@@ -258,6 +258,7 @@ function clearBacteriaGrowth() {
 }
 
 function bacteriaGrowthRules(center) {
+
     var allies = [];
     if (center.data.colony !== -1) {
         allies = center.neighbors.filter(
