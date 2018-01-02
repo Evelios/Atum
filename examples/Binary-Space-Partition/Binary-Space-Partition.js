@@ -3,22 +3,28 @@
 var Vector = Atum.Geometry.Vector;
 var Rectangle = Atum.Geometry.Rectangle;
 var binarySpacePartition = Atum.Algorithm.binarySpacePartition;
+var Rand = Atum.Utility.Rand;
 
 var bgColor;
 var rectColor;
-var depth = 2;
 var width;
 var height;
 var bbox;
 var bspTree;
 var rectList;
 
+var params = {
+    seed : 1,
+    depth : 3,
+    splitRange: 0.5,
+};
+
+//---- Main Setup Functions ----
 function setup() {
     width = document.body.clientWidth || window.innerWidth;
     height = document.body.clientHeight || window.innerHeight;
     bbox = new Rectangle(Vector.zero(), width, height);
-    bspTree = binarySpacePartition(bbox, 3);
-    rectList = treeToList(bspTree);
+    
 
     bgColor = color("#303030");
     // bgAccent = color("#393939");
@@ -26,19 +32,34 @@ function setup() {
     // color("#27566B");
 
     createCanvas(width, height);
+
+    setUpGui();
+
+    createAndRender();
 }
 
-function draw() {
-    background(bgColor);
+//---- Secondary Setup Functions ----
 
-    strokeWeight(4);
-    stroke(rectColor);
-    noFill();
-    for (var r of rectList) {
-        rect(r.x, r.y, r.width, r.height);
-    }
+function setUpGui() {
+    var gui = new dat.GUI();
+
+    gui.add(params, "seed", 1, 5).step(1).name("Seed").onChange(createAndRender);
+    gui.add(params, "depth", 1, 10).step(1).name("Depth").onChange(createAndRender);
+    gui.add(params, "splitRange", 0, 1).name("Split Range").onChange(createAndRender);
 }
 
+//---- Other Functions
+
+function createAndRender() {
+    createGraph();
+    drawGraph();
+}
+
+function createGraph() {
+    Rand.setSeed(params.seed);
+    bspTree = binarySpacePartition(bbox, params.depth, params.splitRange);
+    rectList = treeToList(bspTree);
+}
 
 function treeToList(bspTree) {
     var frontier = [bspTree];
@@ -56,4 +77,15 @@ function treeToList(bspTree) {
     }
 
     return leafs;
+}
+
+function drawGraph() {
+    background(bgColor);
+
+    strokeWeight(4);
+    stroke(rectColor);
+    noFill();
+    for (var r of rectList) {
+        rect(r.x, r.y, r.width, r.height);
+    }
 }

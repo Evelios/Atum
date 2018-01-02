@@ -6,6 +6,7 @@
 import Vector from "../geometry/Vector";
 import Rectangle from "../geometry/Rectangle";
 import Rand from "../utilities/Rand";
+import { exp } from "../utilities/Redist";
 
 /**
  * Create a Binary Space Partition Tree of a particular depth
@@ -13,14 +14,21 @@ import Rand from "../utilities/Rand";
  * @export
  * @param {Rectangle} bbox The rectangle that the BSP tree is created within
  * @param {number} depth The depth that the BSP tree is created down to
+ * @param {number} splitRange 0-1, The ammount of deviation from the center
+ *  that the binary split is allowed to take. 0 Means that the split always
+ *  happens in the middle and 1 means that the split can happen at the edge of
+ *  the rectangle.
+ * 
  * @returns 
  */
-export default function binarySpacePartition(bbox, depth) {
+export default function binarySpacePartition(bbox, depth, splitRange) {
     "use strict";
     // Move back to bbox.copy()
     let root = bbox;
     root.depth = 0;
     let frontier = [root];
+    const splitDenom = exp(splitRange, 7, false).map(0, 1, 2, 100);
+    console.log(splitDenom);
 
     while (frontier.length > 0) {
         let node = frontier.pop();
@@ -41,7 +49,7 @@ export default function binarySpacePartition(bbox, depth) {
         if (splitVertical) { // Split vertical
 
             const splitY = node.height / 2 +
-                Rand.randRange(-node.height / 4, node.height / 4);
+                Rand.randRange(-node.height / splitDenom, node.height / splitDenom);
 
             leftNode = new Rectangle(new Vector(node.x, node.y),
                 node.width, splitY);
@@ -51,7 +59,7 @@ export default function binarySpacePartition(bbox, depth) {
         } else { // Split Horizontal
 
             const splitX = node.width / 2 +
-                Rand.randRange(-node.width / 4, node.width / 4);
+                Rand.randRange(-node.width / splitDenom, node.width / splitDenom);
 
             leftNode = new Rectangle(new Vector(node.x, node.y),
                 splitX, node.height);
