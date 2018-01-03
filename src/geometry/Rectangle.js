@@ -1,7 +1,6 @@
 import Vector from "./Vector";
-import Polygon from "./Polygon";
 
-class Rectangle extends Polygon {
+class Rectangle {
     /** 
      * @class Rectangle
      * @extends Polygon
@@ -20,16 +19,14 @@ class Rectangle extends Polygon {
      */
 
     constructor(position, width, height) {
-        const points = [position,
-            Vector.add(position, new Vector(width, 0)),
-            Vector.add(position, new Vector(width, height)),
-            Vector.add(position, new Vector(0, height))
-        ];
-        super(points);
 
         this.position = position;
         this.x = position.x;
         this.y = position.y;
+        this.br = position;
+        this.bl = Vector.add(position, new Vector(width, 0));
+        this.tr = Vector.add(position, new Vector(width, height));
+        this.tl = Vector.add(position, new Vector(0, height));
         this.width = width;
         this.height = height;
         this.area = width * height;
@@ -107,14 +104,15 @@ class Rectangle extends Polygon {
      * Determine if a point is contained within the rectangle.
      * 
      * @param {Vector} vector The point to be tested
-     * @returns {boolean} True if the point is contained within 
+     * 
+     * @returns {boolean} True if the point is contained within the rectangle
      * @memberof Rectangle
      */
     contains(vector) {
         return vector.x > this.position.x &&
             vector.x < this.position.x + this.width &&
             vector.y > this.position.y &&
-            vector.y < this.positoin.y + this.height;
+            vector.y < this.position.y + this.height;
     }
 }
 

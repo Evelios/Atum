@@ -1,4 +1,5 @@
 import Vector from "./Vector";
+import Rectangle from "./Rectangle";
 
 class Polygon {
     /**
@@ -16,13 +17,13 @@ class Polygon {
      *  the polygon are done about the center of the polygon.
      * @property {Vector[]} corners The corner vectors of the polygon
      * 
-     * @param {Vector[]} [verticies=[]] The corner verticies of the polygon
+     * @param {Vector[]} [corners=[]] The corner verticies of the polygon
      * @param {Vector} [center=average(verticies)] The center of the polygon.
      *  If a value is not provided the default value becomes the centroid of
      *  the verticies.
      */
-    constructor(verticies = null, center = null) {
-        this.corners = verticies ? verticies : [];
+    constructor(corners = null, center = null) {
+        this.corners = corners ? corners : [];
         this.center = center ? center : this.centroid();
         this._bbox = null;
     }
@@ -59,11 +60,11 @@ class Polygon {
         for (const corner of this.corners) {
             minX = Math.min(corner.x, minX);
             maxX = Math.max(corner.x, maxX);
-            minY = Math.min(corner.y, miny);
-            maxY = Math.max(corner.y, maxy);
+            minY = Math.min(corner.y, minY);
+            maxY = Math.max(corner.y, maxY);
         }
 
-        this._bbox = new Rectangle(minx, miny, maxX - minX, maxY, minY);
+        this._bbox = new Rectangle(new Vector(minX, minY), maxX - minX, maxY - minY);
 
         return this._bbox;
     }
@@ -92,6 +93,37 @@ class Polygon {
 
     rotate() {
 
+    }
+
+    /**
+     * Determine if the point is contained within the polygon
+     * 
+     * @param {Vector} vector
+     * 
+     * @see {@link https://github.com/substack/point-in-polygon/blob/master/index.js}
+     * @memberOf Polygon
+     */
+    contains(vector) {
+        if (!this.bbox().contains(vector)) {
+            return false;
+        }
+
+        const len = this.corners.length;
+        const x = vector.x;
+        const y = vector.y;
+        let inside = false;
+        for (let i = 0, j = len - 1; i < len; j = i++) {
+            let xi = this.corners[i].x, yi = this.corners[i].y;
+            let xj = this.corners[j].x, yj = this.corners[j].y;
+            
+            let intersect = ((yi > y) !== (yj > y)) &&
+             (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+            if (intersect)  {
+                inside = !inside;
+            }
+        }
+        
+        return inside;
     }
 }
 
