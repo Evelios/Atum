@@ -1,6 +1,5 @@
 // Tuneable Parameters
 // 1.25 guarentee split horiz or vert
-// Range to split on
 // Redistribute the range to split
 
 import Vector from "../geometry/Vector";
