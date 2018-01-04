@@ -9,7 +9,7 @@ const Rectangle = Atum.Geometry.Rectangle;
 const Diagram = Atum.Graph.Diagram;
 
 const bbox = new Rectangle(Vector.zero(), 10, 10);
-const randPoints = PointDistribution.random(bbox, 20);
+const randPoints = PointDistribution.random(bbox, 5);
 
 const graph = new Diagram(randPoints, bbox);
 
@@ -30,6 +30,13 @@ test("Corners Exist", function(t) {
 test("Edges Exist", function(t) {
     for (let edge of graph.edges) {
         t.notEqual(edge, undefined);
+    }
+    t.end();
+});
+
+test("Tiles Exist", function(t) {
+    for (let tile of graph.tiles) {
+        t.notEqual(tile, undefined);
     }
     t.end();
 });

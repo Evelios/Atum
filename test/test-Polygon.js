@@ -74,7 +74,7 @@ test("Rectangle Polygon Contains Point", function(t) {
     const poly = new Polygon(points);
 
     const inside = new Vector(5, 5);
-    const outside = new Vector(5, 5);
+    const outside = new Vector(5, 10);
 
     t.ok(poly.contains(inside));
     t.notok(poly.contains(outside));

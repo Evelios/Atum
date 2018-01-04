@@ -19,6 +19,7 @@ import Rand from "./utilities/Rand";
 
 // Algorithms
 import binarySpacePartition from "./algorithms/BinarySpacePartition";
+import recursiveVoronoi from "./algorithms/RecursiveVoronoi";
 
 /**
  * The Atum procedural graph based library
@@ -48,7 +49,8 @@ const Atum = {
         Rand
     },
     Algorithm: {
-        binarySpacePartition
+        binarySpacePartition,
+        recursiveVoronoi
     }
 };
 

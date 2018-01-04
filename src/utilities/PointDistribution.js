@@ -178,7 +178,7 @@ export function jitteredGrid(bbox, d, seed = null, m = 0) {
 export function poisson(bbox, d) {
     var sampler = new Poisson(bbox.width, bbox.height, d, d);
     var solution = sampler.sampleUntilSolution();
-    var points = solution.map(point => new Vector(point));
+    var points = solution.map(point => Vector.add(new Vector(point), bbox.position));
 
     return points;
 }

@@ -15,10 +15,10 @@ class Diagram extends Graph {
      * @extends Graph
      */
     constructor(points, bbox, relaxations = 0, improveCorners = false) {
-        super(points, bbox, relaxations = 0, improveCorners = false);
+        super(points, bbox, relaxations, improveCorners);
 
         this.tiles = [];
-        // this._createTiles();
+        this._createTiles();
     }
 
     /**
@@ -27,15 +27,15 @@ class Diagram extends Graph {
      * @memberof Diagram
      */
     _createTiles() {
-        for (const center of this.centers) {
+        for (let center of this.centers) {
             const tile = new Tile(center, center.corners, center.borders);
-            this.centers.tile = tile;
+            center.tile = tile;
             this.tiles.push(tile);
         }
 
         // Connect together the tile objects as neighbors
-        for (const tile of this.tiles) {
-            this.tile.neighbors = tile.center.neighbors.map(
+        for (let tile of this.tiles) {
+            tile.neighbors = tile.center.neighbors.map(
                 center => center.tile
             );
         }
