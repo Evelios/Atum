@@ -4,11 +4,11 @@
   "description": "A Procedural Graph Based Javascript Library",
   "main": "./src/main.js",
   "dependencies": {
-    "grunt": "^1.0.1",
     "js-noise": "^0.1.3",
     "noisejs": "^2.1.0",
     "poisson-disk-sample": "git+https://github.com/Evelios/poisson-disk-sample.git",
     "seedrandom": "^2.4.3",
+    "static-kdtree": "^1.0.2",
     "tinyqueue": "^1.2.3",
     "voronoi": "git+https://github.com/gorhill/Javascript-Voronoi.git"
   },

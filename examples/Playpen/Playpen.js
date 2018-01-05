@@ -20,6 +20,12 @@ var width;
 var height;
 var diagram;
 
+// Play Variables
+var hoverTile;
+var selectedTile;
+var selectedTile2;
+var tilePath = [];
+
 var params = {
     // Parameters
     pointFunctions: {
@@ -40,10 +46,11 @@ var params = {
     seed: 0,
     density: 50,
     relaxations: 0,
+    improvedCorners: false,
 
     // Rendering
-    centers: true,
-    corners: true,
+    centers: false,
+    corners: false,
     voronoi: true,
     delaunay: false,
     centroids: false
@@ -81,6 +88,7 @@ function setUpGui() {
     paramsFolder.add(params, "seed", 0, 100).name("Seed").onChange(createAndRender);
     paramsFolder.add(params, "density", 25, 100).step(5).name("Point Density").onChange(createAndRender);
     paramsFolder.add(params, "relaxations", 0, 10).step(1).name("Lloyd Relaxations").onChange(createAndRender);
+    paramsFolder.add(params, "improvedCorners").name("Improve Corners").onChange(createAndRender);
 
     var renderFolder = gui.addFolder("Rendering");
 
@@ -91,8 +99,52 @@ function setUpGui() {
     renderFolder.add(params, "centroids").name("Centroids").onChange(createAndRender);
 }
 
-//---- Other Functions
+//---- Experimental Functions
 
+function mousePressed() {
+    if (!selectedTile) {
+        selectedTile = hoverTile;
+    } else if (!selectedTile2) {
+        selectedTile2 = hoverTile;
+        tilePath = diagram.getPath(selectedTile, selectedTile2);
+    } else {
+        selectedTile = null;
+        selectedTile2 = null;
+    }
+}
+
+function draw() {
+    var mousePos = new Vector(mouseX, mouseY);
+
+    drawGrid(params.density);
+
+    // Hover Tile
+    hoverTile = diagram.getTile(mousePos);
+    if (hoverTile) {
+        fill(bgAccent);
+        polygon(hoverTile.center);
+    }
+
+    if (selectedTile) {
+        if (selectedTile2) {
+
+            for (let tile of tilePath) {
+                fill(voronoiColor);
+                polygon(tile.center);    
+            }
+
+            fill(cornerColor);
+            polygon(selectedTile2.center);
+        }
+
+        fill(centerColor);
+        polygon(selectedTile.center);
+    }
+
+    drawGraph();
+}
+
+//---- Other Functions
 function createAndRender() {
     // Create
     Rand.setSeed(params.seed);
@@ -107,7 +159,7 @@ function createGraph() {
     var bbox = new Rectangle(Vector.zero(), width, height);
     var pointFunction = params.pointFunctions[params.pointDistribution];
     var points = pointFunction(bbox, params.density, 25);
-    diagram = new Diagram(points, bbox, params.relaxations);
+    diagram = new Diagram(points, bbox, params.relaxations, params.improvedCorners);
 }
 
 function drawGrid(d) {
@@ -158,5 +210,18 @@ function drawGraph() {
                 ellipse(center.x, center.y, 6);
             }
         }
+    }
+}
+
+//---- Helper Functions ----
+
+// Draw polygon from triangles
+function polygon(center) {
+    noStroke();
+    var corners = center.corners;
+    for (var i = 0; i < corners.length; i++) {
+        var c1 = corners[i];
+        var c2 = corners[(i + 1) % corners.length];
+        triangle(c1.x, c1.y, c2.x, c2.y, center.x, center.y);
     }
 }

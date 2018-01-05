@@ -66,8 +66,8 @@ class Vector {
     }
 
     /**
-     * Get the vector key:Symbol representation
-     *
+     * Get the vector key:Symbol representation [x, y]
+     * Currently has the same behavior as list()
      * @returns {Symbol} The vector key element
      * @memberof Vector
      */
@@ -77,7 +77,7 @@ class Vector {
     }
 
     /**
-     * Get the vector in list form
+     * Get the vector in list form as [x, y]
      *
      * @returns {number[]} List representation of the vector of length 2
      * @memberof Vector

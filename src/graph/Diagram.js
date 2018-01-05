@@ -1,5 +1,9 @@
+// Find a way to implement kdtrees to speed up tile selection from a point
+// import KDTree from "static-kdtree";
+
 import Graph from "./Graph";
 import Tile from "./Tile";
+import Vector from "../geometry/Vector";
 
 class Diagram extends Graph {
 
@@ -89,6 +93,82 @@ class Diagram extends Graph {
     iterate(ruleset) {
         this._generate(ruleset);
     }
+
+    /**
+     * Get the tile that contains the specific location
+     * 
+     * @param {Vector} position The position which contains the desired tile 
+     * 
+     * @return {Tile} The tile at the position
+     * 
+     * @memberOf Diagram
+     */
+    getTile(position) {
+        if (!this.bbox.contains(position)) {
+            return null;
+        }
+
+        let minDist = Infinity;
+        let closest = this.tiles[0];
+        let dist;
+
+        for (const tile of this.tiles) {
+            dist = Vector.dist2(tile.center, position);
+
+            if (dist < minDist) {
+                minDist = dist;
+                closest = tile;
+            }
+        }
+
+        return closest;
+    }
+
+
+    /**
+     * Get the path between two tiles on the diagram. This path includes both
+     * the start tile and the end tile on the graph.
+     * 
+     * @param {Tile} start The starting tile to search from
+     * @param {Tile} end The ending tile to search to
+     * @param {Number} [Iterations=0]
+     * @return {Tile[]} A resulting path between two tiles
+     *  Returned of the form [start, ..., end]
+     * 
+     * @memberOf Diagram
+     */
+    getPath(start, end, iterations = 100) {
+        let curTile = start;
+        let path = [start];
+        let direction;
+
+        while (!Vector.equals(curTile.center, end.center)) {
+            direction = Vector.subtract(end.center, curTile.center);
+            
+            console.log("Current   " + curTile.center.x + " " + curTile.center.y);
+            console.log("End       " + end.center.x + " " + end.center.y);
+            console.log("Direction " + direction.x + " " + direction.y)
+            curTile = curTile.getNeighbor(direction);
+            path.push(curTile);
+
+            if (iterations < 0) {
+                break;
+            }
+            iterations--;
+        }
+
+        return path;
+    }
 }
+
+// neighborTiles = [];
+//             var neighbor = selectedTile;
+//             for (var i = 0; i < numNeighbors; i++) {
+//                 neighbor = neighbor.getNeighbor(
+//                     Vector.subtract(mousePos, neighbor.center));
+//                 if (neighbor) {
+//                     neighborTiles.push(neighbor);
+//                 }
+//             }
 
 export default Diagram;
