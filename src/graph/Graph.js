@@ -1,11 +1,11 @@
+"use strict";
+
 import Vector from "../geometry/Vector";
 import Center from "./Center";
 import Corner from "./Corner";
 import Edge from "./Edge";
 import { has } from "../utilities/Util";
 import Voronoi from "Voronoi";
-
-"use strict";
 
 // Need to ES6ify
 class Graph {
@@ -53,16 +53,20 @@ class Graph {
         this._voronoi = rhillVoronoi.compute(points, this._rhillbbox);
 
         // Lloyds Relaxations
-        while (relaxations--) {
+        while (relaxations > 0) {
+            console.log(relaxations);
             const sites = this.relaxSites(this._voronoi);
             rhillVoronoi.recycle(this._voronoi);
             this._voronoi = rhillVoronoi.compute(sites, this._rhillbbox);
+            relaxations--;
         }
 
         this.convertDiagram(this._voronoi);
 
         if (improveCorners) {
+            console.log(this.corners);
             this.improveCorners();
+            console.log(this.corners);
         }
         this.sortCorners();
 
@@ -278,14 +282,16 @@ class Graph {
             }
         }
 
+        console.log(newCorners);
+
         // Assign new corner positions
         for (let i = 0; i < this.corners.length; i++) {
-            let corner = this.corners[i];
-            corner = newCorners[i];
+            this.corners[i].x = newCorners[i].x;
+            this.corners[i].y = newCorners[i].y;
         }
 
         // Recompute edge midpoints
-        for (const edge of this.edges) {
+        for (let edge of this.edges) {
             if (edge.v0 && edge.v1) {
                 edge.midpoint = Vector.midpoint(edge.v0, edge.v1);
             }
