@@ -1,13 +1,18 @@
-Issues:
-  - There is a Diagram bug where center.neighbors are getting created with
-    x:NA, y:NA values and are being added to the neighbors list
-  
 Short Term ToDo:
-  - Graph Seach (Basic building block)
-  - Graph Search Testing
-  - Dark Theme Modification
   - Grunt npm prepublish
   - Center vs Centroid of a polygon
+  - Voronoi Recursion
+    + Polygon Clipping Algorithm
+
+Graph Search:
+  - Graph Seach (Basic building block)
+  - Graph Search Testing
+  - How is this going to be useable and general
+  - Efficient Graph Search
+
+Geometry:
+  - Simple Subdivisions
+  - L-System divisions
 
 Longer Term ToDo:
   - Profiling
@@ -15,26 +20,14 @@ Longer Term ToDo:
     + Abstract Base Class
     + Holds data and can be manipiulated by feeding in object data
 
-Diagram
-  - Use ES6 standards
-  - Recursive divisions
-    + Voronoi recursion
-    + Simple subdivisions
-    + L-Systems divisions
-  - Diagram traversal
-    + A-star
-    + Dijkstra
-
 Utilities
   - Point Distributions
-    + Hexagonn
+    + Hexagonn (Library Bug)
     + Circular
     + Recursive Wang Tiles
 
 Shapes modules
   - Basic Classes
-    + Polygon
-    + Square
     + Circle
     + Triangle
 
@@ -42,7 +35,9 @@ Shapes modules
     + Inset
     + Outset
     + Perturb
-  
+
+** External But PGG Related **
+
 Town Generation
   - Roads
   - Town Shape

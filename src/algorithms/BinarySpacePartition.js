@@ -17,20 +17,26 @@ import { exp } from "../utilities/Redist";
  *  that the binary split is allowed to take. 0 Means that the split always
  *  happens in the middle and 1 means that the split can happen at the edge of
  *  the rectangle.
+ * @param {number} dropoutRate 0-1, the percent chance that when dividing a
+ *  cell that it will not divide anymore
  * 
  * @returns 
  */
-export default function binarySpacePartition(bbox, depth, splitRange) {
+export default function binarySpacePartition(bbox, depth, splitRange, dropoutRate) {
     "use strict";
     // Move back to bbox.copy()
     let root = bbox;
     root.depth = 0;
-    let frontier = [root];
+    let frontier =  [root];
     const splitDenom = exp(splitRange, 7, false).map(0, 1, 2, 100);
-    console.log(splitDenom);
 
     while (frontier.length > 0) {
         let node = frontier.pop();
+
+        if (node !== root && Rand.chance(dropoutRate)) {
+            continue;
+        }
+
         let leftNode;
         let rightNode;
 
