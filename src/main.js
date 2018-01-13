@@ -16,6 +16,7 @@ import Diagram from "./graph/Diagram";
 import * as PointDistribution from "./Utilities/PointDistribution";
 import * as Redist from "./utilities/Redist";
 import Rand from "./utilities/Rand";
+import * as Helpers from "./utilities/Util";
 
 // Algorithms
 import binarySpacePartition from "./algorithms/BinarySpacePartition";
@@ -46,7 +47,8 @@ const Atum = {
     Utility: {
         PointDistribution,
         Redist,
-        Rand
+        Rand,
+        Helpers
     },
     Algorithm: {
         binarySpacePartition,
