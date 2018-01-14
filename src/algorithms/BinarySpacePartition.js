@@ -6,34 +6,63 @@ import Vector from "../geometry/Vector";
 import Rectangle from "../geometry/Rectangle";
 import Rand from "../utilities/Rand";
 import { exp } from "../utilities/Redist";
+import { setOptions } from "../utilities/Util";
 
 /**
  * Create a Binary Space Partition Tree of a particular depth
  * 
  * @export
  * @param {Rectangle} bbox The rectangle that the BSP tree is created within
- * @param {number} depth The depth that the BSP tree is created down to
- * @param {number} splitRange 0-1, The ammount of deviation from the center
- *  that the binary split is allowed to take. 0 Means that the split always
- *  happens in the middle and 1 means that the split can happen at the edge of
- *  the rectangle.
- * @param {number} dropoutRate 0-1, the percent chance that when dividing a
- *  cell that it will not divide anymore
+ * @param {object} options The options that can be set to change the properties
+ *  of the Binsary Space Partition generation
  * 
+ *  options = {
+ *    depth {number} : The depth that the BSP tree is created down to,
+ *    splitRange {number} : 0-1 The ammount of deviation from the center
+ *      that the binary split is allowed to take. 0 Means that the split always,
+ *      happens in the middle and 1 means that the split can happen at the edge of
+ *      the rectangle.
+ *    dropoutRate {number} : 0-1, the percent chance that when dividing a
+ *      cell that it will not divide anymore
+ *    minArea {number} : the minimum area that a rectangle can become. If the rect is
+ *      not at the max depth the subdivision will still stop
+ *    minSideLength {number}
+ *  }
+ * 
+ *  defaults = {
+ *      depth: 3,
+ *      splitRange: 0.5,
+ *      dropoutRate: 0.0,
+ *      minArea: 0.0,
+ *      minSideLength: 0.0,
+ *  }
  * @returns 
  */
-export default function binarySpacePartition(bbox, depth, splitRange, dropoutRate) {
+export default function binarySpacePartition(bbox, options) {
     "use strict";
+
+    const defaults = {
+        depth: 3,
+        splitRange: 0.5,
+        dropoutRate: 0.0,
+        minArea: 0.0,
+        minSideLength: 0.0,
+    };
+
+    const params = setOptions(options, defaults);
+
     // Move back to bbox.copy()
     let root = bbox;
     root.depth = 0;
     let frontier =  [root];
-    const splitDenom = exp(splitRange, 7, false).map(0, 1, 2, 100);
+    // This is a way of redistributing 2 > infinity (aka 100) where the useable
+    // range stays together. Most of the interesting behavior is near 2 - 4
+    const splitDenom = exp(params.splitRange, 7, false).map(0, 1, 2, 100);
 
     while (frontier.length > 0) {
         let node = frontier.pop();
 
-        if (node !== root && Rand.chance(dropoutRate)) {
+        if (node !== root && Rand.chance(params.dropoutRate)) {
             continue;
         }
 
@@ -78,7 +107,7 @@ export default function binarySpacePartition(bbox, depth, splitRange, dropoutRat
         node.leftNode = leftNode;
         node.rightNode = rightNode;
 
-        if (node.depth !== depth) {
+        if (node.depth !== params.depth) {
             frontier.push(leftNode);
             frontier.push(rightNode);
         }

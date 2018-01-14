@@ -59,7 +59,11 @@ function createAndRender() {
 
 function createGraph() {
     Rand.setSeed(params.seed);
-    bspTree = binarySpacePartition(bbox, params.depth, params.splitRange, params.dropoutRate);
+    bspTree = binarySpacePartition(bbox, {
+        depth: params.depth,
+        splitRange: params.splitRange,
+        dropoutRate: params.dropoutRate
+    });// params.depth, params.splitRange, params.dropoutRate);
     rectList = treeToList(bspTree);
 }
 
