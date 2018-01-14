@@ -144,10 +144,6 @@ class Diagram extends Graph {
 
         while (!Vector.equals(curTile.center, end.center)) {
             direction = Vector.subtract(end.center, curTile.center);
-            
-            console.log("Current   " + curTile.center.x + " " + curTile.center.y);
-            console.log("End       " + end.center.x + " " + end.center.y);
-            console.log("Direction " + direction.x + " " + direction.y)
             curTile = curTile.getNeighbor(direction);
             path.push(curTile);
 
@@ -160,15 +156,5 @@ class Diagram extends Graph {
         return path;
     }
 }
-
-// neighborTiles = [];
-//             var neighbor = selectedTile;
-//             for (var i = 0; i < numNeighbors; i++) {
-//                 neighbor = neighbor.getNeighbor(
-//                     Vector.subtract(mousePos, neighbor.center));
-//                 if (neighbor) {
-//                     neighborTiles.push(neighbor);
-//                 }
-//             }
 
 export default Diagram;
