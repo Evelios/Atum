@@ -8,6 +8,7 @@ class Rectangle {
      * Class to store array information about a rectangle
      * 
      * @property {Vector} position
+     * @property {Vector} center
      * @property {number} x
      * @property {number} y
      * @property {number} width
@@ -30,6 +31,7 @@ class Rectangle {
         this.width = width;
         this.height = height;
         this.area = width * height;
+        this.center = Vector.add(position, new Vector(width / 2, height / 2));
     }
 
     copy() {

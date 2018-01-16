@@ -1,7 +1,8 @@
 {
     "background-dark": "#202020",
     "background": "#303030",
-    "background-light": "#393939",
+    "background-accent": "#393939",
+    "background-light": "#828282",
 
     "primary-lightest": "#FFD7AA",
     "primary-light": "#D4A26A",

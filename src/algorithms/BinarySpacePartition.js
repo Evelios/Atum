@@ -36,7 +36,11 @@ import { setOptions } from "../utilities/Util";
  *      minArea: 0.0,
  *      minSideLength: 0.0,
  *  }
- * @returns 
+ * @returns {Rect} The root node of the BSP Tree. The node has the properties
+ *  {  
+ *      leftNode: the left rect node in the tree
+ *      rightNode: the right rect node in the tree
+ *  }
  */
 export default function binarySpacePartition(bbox, options) {
     "use strict";
