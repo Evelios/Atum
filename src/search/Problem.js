@@ -23,7 +23,7 @@ class Problem {
      * 
      * @param {any} state
      * @returns {List} 
-     * @memberOf Problem
+     * @memberof Problem
      */
     actions(state) {
         throw "Not Implemented Error";
@@ -36,7 +36,7 @@ class Problem {
      * @param {any} state 
      * @param {any} action 
      * 
-     * @memberOf Problem
+     * @memberof Problem
      */
     result(state, action) {
         throw "Not Implemented Error";
@@ -50,7 +50,7 @@ class Problem {
      * 
      * @param {any} state 
      * 
-     * @memberOf Problem
+     * @memberof Problem
      */
     goalTest(state) {
         return state == this.goal;
@@ -67,7 +67,7 @@ class Problem {
      * @param {any} action The action taken to get to the new state
      * @param {any} newState The new state that is to be arrived at
      * 
-     * @memberOf Problem
+     * @memberof Problem
      */
     pathCost(prevCost, oldState, action, newState) {
         return prevCost + 1;

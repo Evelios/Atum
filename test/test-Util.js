@@ -30,3 +30,16 @@ test("Options Setting With Defaults", function(t) {
     t.deepEqual(options, expected);
     t.end();
 });
+
+test("Floating point equality", function(t) {
+    const x = 0.1;
+    const y = 0.1;
+    const z = 0.100000000001;
+
+    t.ok(Util.fequals(0.1, 0.1), "Two Literals")
+    t.ok(Util.fequals(x, 0.1), "Variable and Literal");
+    t.ok(Util.fequals(x, y), "Two Variables");
+    t.notok(Util.fequals(x, z), "Close But Not Close Enough");
+    t.end();
+
+});

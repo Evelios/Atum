@@ -101,7 +101,7 @@ class Rand {
      * @static
      * @param {number} percent Percent chance to get True. Value is in the range
      *  from 0 - 1. With 1 returning always true.
-     * @memberOf Rand
+     * @memberof Rand
      */
     static _chance(rng, percent) {
         return rng.rand() < percent;
@@ -115,7 +115,7 @@ class Rand {
      * @static
      * @param {number} percent Percent chance to get True. Value is in the range
      *  from 0 - 1. With 1 returning always true.
-     * @memberOf Rand
+     * @memberof Rand
      */
     static chance(percent) {
         return Rand._chance(this, percent);
@@ -128,7 +128,7 @@ class Rand {
      * 
      * @param {number} percent Percent chance to get True. Value is in the range
      *  from 0 - 1. With 1 returning always true.
-     * @memberOf Rand
+     * @memberof Rand
      */
     chance(percent) {
         return Rand._chance(Rand, percent);
@@ -191,7 +191,7 @@ class Rand {
      * @returns {number} Random float number from min (inclusive) 
      *  to max (exclusive)
      * 
-     * @memberOf Rand
+     * @memberof Rand
      */
     static _randInt(rng, min, max) {
         return Math.floor(rng.rand() * (max - min + 1)) + min;
@@ -206,7 +206,7 @@ class Rand {
      * @returns {number} Random float number from min (inclusive) 
      *  to max (exclusive)
      * 
-     * @memberOf Rand
+     * @memberof Rand
      */
     static randInt(min, max) {
         return Rand._randInt(Rand, min, max);
@@ -220,7 +220,7 @@ class Rand {
      * @returns {number} Random float number from min (inclusive) 
      *  to max (exclusive)
      * 
-     * @memberOf Rand
+     * @memberof Rand
      */
     randInt(min, max) {
         return Rand._randInt(this, min, max);
@@ -235,7 +235,7 @@ class Rand {
      * @param {any} rng The local or global rng to use (Rand or this)
      * @returns {hex} The random hex value in the color spectrum
      * 
-     * @memberOf Rand
+     * @memberof Rand
      */
     static _randHex(rng) {
         return rng.randInt(0, 16777215);
@@ -247,7 +247,7 @@ class Rand {
      * @static
      * @returns {hex} 
      * 
-     * @memberOf Rand
+     * @memberof Rand
      */
     static randHex() {
         return Rand._randHex(Rand);
@@ -258,7 +258,7 @@ class Rand {
      * 
      * @returns {hex} 
      * 
-     * @memberOf Rand
+     * @memberof Rand
      */
     randHex() {
         return Rand._randHex(this);
@@ -273,7 +273,7 @@ class Rand {
      * @param {any} rng The local or global rng to use (Rand or this)
      * @returns {string}
      * 
-     * @memberOf Rand
+     * @memberof Rand
      */
     static _randHexColor(rng) {
         return "#" + rng.randHex().toString(16);
@@ -285,7 +285,7 @@ class Rand {
      * @static
      * @returns {string}
      * 
-     * @memberOf Rand
+     * @memberof Rand
      */
     static randHexColor() {
         return Rand._randHexColor(Rand);
@@ -297,7 +297,7 @@ class Rand {
      * @static
      * @returns {string}
      * 
-     * @memberOf Rand
+     * @memberof Rand
      */
     randHexColor() {
         return Rand._randHexColor(this);
@@ -314,7 +314,7 @@ class Rand {
      * @param {Rectangle} bbox The bounding box of the random vector
      * @returns {Vector} A random vector
      * 
-     * @memberOf Rand
+     * @memberof Rand
      */
     static _vector(rng, bbox) {
         return new Vector(
@@ -330,7 +330,7 @@ class Rand {
      * @param {Rectangle} bbox The bounding box of the random vector
      * @returns {Vector} A random vector
      * 
-     * @memberOf Rand
+     * @memberof Rand
      */
     static vector(bbox) {
         return Rand._vector(Rand, bbox);
@@ -342,7 +342,7 @@ class Rand {
      * @param {Rectangle} bbox The bounding box of the random vector
      * @returns {Vector} A random vector
      * 
-     * @memberOf Rand
+     * @memberof Rand
      */
     vector(bbox) {
         return Rand._vector(this, bbox);

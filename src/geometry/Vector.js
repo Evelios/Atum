@@ -1,3 +1,5 @@
+import { fequals } from "../utilities/Util";
+
 class Vector {
     /**
      * @class Vector
@@ -42,7 +44,7 @@ class Vector {
      *  Should be between 0 and 2*PI
      * @returns The rectangular vector produced from the polar coordinates
      *
-     * @memberOf Vector
+     * @memberof Vector
      */
     static Polar(r, theta) {
         return new Vector(r * Math.cos(theta), r * Math.sin(theta));
@@ -126,10 +128,21 @@ class Vector {
      * @param {Vector} v1 The first vector
      * @param {Vector} v2 The second vector
      * @returns {boolean} True if the vector positions are equal
-     * @memberOf Vector
+     * @memberof Vector
      */
     static equals(v1, v2) {
-        return v1.x === v2.x && v1.y === v2.y;
+        return fequals(v1.x, v2.x) && fequals(v1.y, v2.y);
+    }
+
+    /**
+     * Returns true if this vectors position is equal to the other vector
+     *
+     * @param {Vector} other The other vector to compare to
+     * @returns {boolean} True if the vector positions are equal
+     * @memberof Vector
+     */
+    equals(other) {
+        return Vector.equals(this, other);
     }
 
     //---- Basic Math Functions ----

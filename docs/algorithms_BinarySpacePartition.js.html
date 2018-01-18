@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Source: algorithms/BinarySpacePartition.js</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="scripts/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/jaguar.css">
+    
+    
+    <script>
+    var config = {"monospaceLinks":false,"cleverLinks":false,"default":{"outputSourceFiles":true}};
+    </script>
+    
+
+    
+</head>
+<body>
+<div id="wrap" class="clearfix">
+    
+<div class="navigation">
+    <h3 class="applicationName"><a href="index.html"></a></h3>
+
+    <div class="search">
+        <input id="search" type="text" class="form-control input-sm" placeholder="Search Documentations">
+    </div>
+    <ul class="list">
+    
+        <li class="item" data-name="Center">
+            <span class="title">
+                <a href="Center.html">Center</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Center#add"><a href="Center.html#add">add</a></li>
+            
+                <li data-name="Center#copy"><a href="Center.html#copy">copy</a></li>
+            
+                <li data-name="Center#cross"><a href="Center.html#cross">cross</a></li>
+            
+                <li data-name="Center#divide"><a href="Center.html#divide">divide</a></li>
+            
+                <li data-name="Center#dot"><a href="Center.html#dot">dot</a></li>
+            
+                <li data-name="Center#equals"><a href="Center.html#equals">equals</a></li>
+            
+                <li data-name="Center#key"><a href="Center.html#key">key</a></li>
+            
+                <li data-name="Center#list"><a href="Center.html#list">list</a></li>
+            
+                <li data-name="Center#magnitude"><a href="Center.html#magnitude">magnitude</a></li>
+            
+                <li data-name="Center#multiply"><a href="Center.html#multiply">multiply</a></li>
+            
+                <li data-name="Center#normalize"><a href="Center.html#normalize">normalize</a></li>
+            
+                <li data-name="Center#perpendiculars"><a href="Center.html#perpendiculars">perpendiculars</a></li>
+            
+                <li data-name="Center#rotate"><a href="Center.html#rotate">rotate</a></li>
+            
+                <li data-name="Center#subtract"><a href="Center.html#subtract">subtract</a></li>
+            
+                <li data-name="Center#toString"><a href="Center.html#toString">toString</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Corner">
+            <span class="title">
+                <a href="Corner.html">Corner</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Corner#add"><a href="Corner.html#add">add</a></li>
+            
+                <li data-name="Corner#copy"><a href="Corner.html#copy">copy</a></li>
+            
+                <li data-name="Corner#cross"><a href="Corner.html#cross">cross</a></li>
+            
+                <li data-name="Corner#divide"><a href="Corner.html#divide">divide</a></li>
+            
+                <li data-name="Corner#dot"><a href="Corner.html#dot">dot</a></li>
+            
+                <li data-name="Corner#equals"><a href="Corner.html#equals">equals</a></li>
+            
+                <li data-name="Corner#key"><a href="Corner.html#key">key</a></li>
+            
+                <li data-name="Corner#list"><a href="Corner.html#list">list</a></li>
+            
+                <li data-name="Corner#magnitude"><a href="Corner.html#magnitude">magnitude</a></li>
+            
+                <li data-name="Corner#multiply"><a href="Corner.html#multiply">multiply</a></li>
+            
+                <li data-name="Corner#normalize"><a href="Corner.html#normalize">normalize</a></li>
+            
+                <li data-name="Corner#perpendiculars"><a href="Corner.html#perpendiculars">perpendiculars</a></li>
+            
+                <li data-name="Corner#rotate"><a href="Corner.html#rotate">rotate</a></li>
+            
+                <li data-name="Corner#subtract"><a href="Corner.html#subtract">subtract</a></li>
+            
+                <li data-name="Corner#toString"><a href="Corner.html#toString">toString</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="DataStructures">
+            <span class="title">
+                <a href="DataStructures.html">DataStructures</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Diagram">
+            <span class="title">
+                <a href="Diagram.html">Diagram</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Diagram#_createTiles"><a href="Diagram.html#_createTiles">_createTiles</a></li>
+            
+                <li data-name="Diagram#_generate"><a href="Diagram.html#_generate">_generate</a></li>
+            
+                <li data-name="Diagram#getPath"><a href="Diagram.html#getPath">getPath</a></li>
+            
+                <li data-name="Diagram#getTile"><a href="Diagram.html#getTile">getTile</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Edge">
+            <span class="title">
+                <a href="Edge.html">Edge</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Edge#intersection"><a href="Edge.html#intersection">intersection</a></li>
+            
+                <li data-name="Edge#intersects"><a href="Edge.html#intersects">intersects</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Graph">
+            <span class="title">
+                <a href="Graph.html">Graph</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Heap">
+            <span class="title">
+                <a href="Heap.html">Heap</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Line">
+            <span class="title">
+                <a href="Line.html">Line</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Line.intersection"><a href="Line.html#.intersection">intersection</a></li>
+            
+                <li data-name="Line.intersects"><a href="Line.html#.intersects">intersects</a></li>
+            
+                <li data-name="Line#intersection"><a href="Line.html#intersection">intersection</a></li>
+            
+                <li data-name="Line#intersects"><a href="Line.html#intersects">intersects</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Node">
+            <span class="title">
+                <a href="Node.html">Node</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Node#childNode"><a href="Node.html#childNode">childNode</a></li>
+            
+                <li data-name="Node#expand"><a href="Node.html#expand">expand</a></li>
+            
+                <li data-name="Node#path"><a href="Node.html#path">path</a></li>
+            
+                <li data-name="Node#solution"><a href="Node.html#solution">solution</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="PCGComponent">
+            <span class="title">
+                <a href="PCGComponent.html">PCGComponent</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="PointDistribution">
+            <span class="title">
+                <a href="PointDistribution.html">PointDistribution</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="PointDistribution.exports.circular"><a href="PointDistribution.html#.exports.circular">exports.circular</a></li>
+            
+                <li data-name="PointDistribution.exports.hexagon"><a href="PointDistribution.html#.exports.hexagon">exports.hexagon</a></li>
+            
+                <li data-name="PointDistribution.exports.jitteredGrid"><a href="PointDistribution.html#.exports.jitteredGrid">exports.jitteredGrid</a></li>
+            
+                <li data-name="PointDistribution.exports.poisson"><a href="PointDistribution.html#.exports.poisson">exports.poisson</a></li>
+            
+                <li data-name="PointDistribution.exports.random"><a href="PointDistribution.html#.exports.random">exports.random</a></li>
+            
+                <li data-name="PointDistribution.exports.recursiveWang"><a href="PointDistribution.html#.exports.recursiveWang">exports.recursiveWang</a></li>
+            
+                <li data-name="PointDistribution.exports.square"><a href="PointDistribution.html#.exports.square">exports.square</a></li>
+            
+                <li data-name="PointDistribution.exports.squareJitter"><a href="PointDistribution.html#.exports.squareJitter">exports.squareJitter</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Polygon">
+            <span class="title">
+                <a href="Polygon.html">Polygon</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Polygon.intersection"><a href="Polygon.html#.intersection">intersection</a></li>
+            
+                <li data-name="Polygon#bbox"><a href="Polygon.html#bbox">bbox</a></li>
+            
+                <li data-name="Polygon#centroid"><a href="Polygon.html#centroid">centroid</a></li>
+            
+                <li data-name="Polygon#contains"><a href="Polygon.html#contains">contains</a></li>
+            
+                <li data-name="Polygon#inset"><a href="Polygon.html#inset">inset</a></li>
+            
+                <li data-name="Polygon#intersection"><a href="Polygon.html#intersection">intersection</a></li>
+            
+                <li data-name="Polygon#isConvex"><a href="Polygon.html#isConvex">isConvex</a></li>
+            
+                <li data-name="Polygon#lineIntersection"><a href="Polygon.html#lineIntersection">lineIntersection</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Problem">
+            <span class="title">
+                <a href="Problem.html">Problem</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Problem#actions"><a href="Problem.html#actions">actions</a></li>
+            
+                <li data-name="Problem#goalTest"><a href="Problem.html#goalTest">goalTest</a></li>
+            
+                <li data-name="Problem#pathCost"><a href="Problem.html#pathCost">pathCost</a></li>
+            
+                <li data-name="Problem#result"><a href="Problem.html#result">result</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Rand">
+            <span class="title">
+                <a href="Rand.html">Rand</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Rand.chance"><a href="Rand.html#.chance">chance</a></li>
+            
+                <li data-name="Rand.rand"><a href="Rand.html#.rand">rand</a></li>
+            
+                <li data-name="Rand.randHex"><a href="Rand.html#.randHex">randHex</a></li>
+            
+                <li data-name="Rand.randHexColor"><a href="Rand.html#.randHexColor">randHexColor</a></li>
+            
+                <li data-name="Rand.randInt"><a href="Rand.html#.randInt">randInt</a></li>
+            
+                <li data-name="Rand.randRange"><a href="Rand.html#.randRange">randRange</a></li>
+            
+                <li data-name="Rand.setSeed"><a href="Rand.html#.setSeed">setSeed</a></li>
+            
+                <li data-name="Rand.vector"><a href="Rand.html#.vector">vector</a></li>
+            
+                <li data-name="Rand#chance"><a href="Rand.html#chance">chance</a></li>
+            
+                <li data-name="Rand#rand"><a href="Rand.html#rand">rand</a></li>
+            
+                <li data-name="Rand#randHex"><a href="Rand.html#randHex">randHex</a></li>
+            
+                <li data-name="Rand#randHexColor"><a href="Rand.html#randHexColor">randHexColor</a></li>
+            
+                <li data-name="Rand#randInt"><a href="Rand.html#randInt">randInt</a></li>
+            
+                <li data-name="Rand#randRange"><a href="Rand.html#randRange">randRange</a></li>
+            
+                <li data-name="Rand#setSeed"><a href="Rand.html#setSeed">setSeed</a></li>
+            
+                <li data-name="Rand#vector"><a href="Rand.html#vector">vector</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Rectangle">
+            <span class="title">
+                <a href="Rectangle.html">Rectangle</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Rectangle.collides"><a href="Rectangle.html#.collides">collides</a></li>
+            
+                <li data-name="Rectangle.intersects"><a href="Rectangle.html#.intersects">intersects</a></li>
+            
+                <li data-name="Rectangle#bbox"><a href="Rectangle.html#bbox">bbox</a></li>
+            
+                <li data-name="Rectangle#centroid"><a href="Rectangle.html#centroid">centroid</a></li>
+            
+                <li data-name="Rectangle#collides"><a href="Rectangle.html#collides">collides</a></li>
+            
+                <li data-name="Rectangle#contains"><a href="Rectangle.html#contains">contains</a></li>
+            
+                <li data-name="Rectangle#inset"><a href="Rectangle.html#inset">inset</a></li>
+            
+                <li data-name="Rectangle#intersection"><a href="Rectangle.html#intersection">intersection</a></li>
+            
+                <li data-name="Rectangle#intersects"><a href="Rectangle.html#intersects">intersects</a></li>
+            
+                <li data-name="Rectangle#isConvex"><a href="Rectangle.html#isConvex">isConvex</a></li>
+            
+                <li data-name="Rectangle#lineIntersection"><a href="Rectangle.html#lineIntersection">lineIntersection</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Redist">
+            <span class="title">
+                <a href="Redist.html">Redist</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Redist.exports.exp"><a href="Redist.html#.exports.exp">exports.exp</a></li>
+            
+                <li data-name="Redist.exports.identity"><a href="Redist.html#.exports.identity">exports.identity</a></li>
+            
+                <li data-name="Redist.exports.inverse"><a href="Redist.html#.exports.inverse">exports.inverse</a></li>
+            
+                <li data-name="Redist.exports.pow"><a href="Redist.html#.exports.pow">exports.pow</a></li>
+            
+                <li data-name="Redist.exports.step"><a href="Redist.html#.exports.step">exports.step</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Stack">
+            <span class="title">
+                <a href="Stack.html">Stack</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Triangle">
+            <span class="title">
+                <a href="Triangle.html">Triangle</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Triangle#bbox"><a href="Triangle.html#bbox">bbox</a></li>
+            
+                <li data-name="Triangle#centroid"><a href="Triangle.html#centroid">centroid</a></li>
+            
+                <li data-name="Triangle#contains"><a href="Triangle.html#contains">contains</a></li>
+            
+                <li data-name="Triangle#inset"><a href="Triangle.html#inset">inset</a></li>
+            
+                <li data-name="Triangle#intersection"><a href="Triangle.html#intersection">intersection</a></li>
+            
+                <li data-name="Triangle#isConvex"><a href="Triangle.html#isConvex">isConvex</a></li>
+            
+                <li data-name="Triangle#lineIntersection"><a href="Triangle.html#lineIntersection">lineIntersection</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="Vector">
+            <span class="title">
+                <a href="Vector.html">Vector</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            <span class="subtitle">Methods</span>
+            
+                <li data-name="Vector.add"><a href="Vector.html#.add">add</a></li>
+            
+                <li data-name="Vector.angle"><a href="Vector.html#.angle">angle</a></li>
+            
+                <li data-name="Vector.avg"><a href="Vector.html#.avg">avg</a></li>
+            
+                <li data-name="Vector.copy"><a href="Vector.html#.copy">copy</a></li>
+            
+                <li data-name="Vector.cross"><a href="Vector.html#.cross">cross</a></li>
+            
+                <li data-name="Vector.dist2"><a href="Vector.html#.dist2">dist2</a></li>
+            
+                <li data-name="Vector.distance"><a href="Vector.html#.distance">distance</a></li>
+            
+                <li data-name="Vector.distToSeg"><a href="Vector.html#.distToSeg">distToSeg</a></li>
+            
+                <li data-name="Vector.distToSegSquared"><a href="Vector.html#.distToSegSquared">distToSegSquared</a></li>
+            
+                <li data-name="Vector.dot"><a href="Vector.html#.dot">dot</a></li>
+            
+                <li data-name="Vector.down"><a href="Vector.html#.down">down</a></li>
+            
+                <li data-name="Vector.equals"><a href="Vector.html#.equals">equals</a></li>
+            
+                <li data-name="Vector.left"><a href="Vector.html#.left">left</a></li>
+            
+                <li data-name="Vector.midpoint"><a href="Vector.html#.midpoint">midpoint</a></li>
+            
+                <li data-name="Vector.Polar"><a href="Vector.html#.Polar">Polar</a></li>
+            
+                <li data-name="Vector.proj"><a href="Vector.html#.proj">proj</a></li>
+            
+                <li data-name="Vector.right"><a href="Vector.html#.right">right</a></li>
+            
+                <li data-name="Vector.subtract"><a href="Vector.html#.subtract">subtract</a></li>
+            
+                <li data-name="Vector.up"><a href="Vector.html#.up">up</a></li>
+            
+                <li data-name="Vector.zero"><a href="Vector.html#.zero">zero</a></li>
+            
+                <li data-name="Vector#add"><a href="Vector.html#add">add</a></li>
+            
+                <li data-name="Vector#copy"><a href="Vector.html#copy">copy</a></li>
+            
+                <li data-name="Vector#cross"><a href="Vector.html#cross">cross</a></li>
+            
+                <li data-name="Vector#divide"><a href="Vector.html#divide">divide</a></li>
+            
+                <li data-name="Vector#dot"><a href="Vector.html#dot">dot</a></li>
+            
+                <li data-name="Vector#equals"><a href="Vector.html#equals">equals</a></li>
+            
+                <li data-name="Vector#key"><a href="Vector.html#key">key</a></li>
+            
+                <li data-name="Vector#list"><a href="Vector.html#list">list</a></li>
+            
+                <li data-name="Vector#magnitude"><a href="Vector.html#magnitude">magnitude</a></li>
+            
+                <li data-name="Vector#multiply"><a href="Vector.html#multiply">multiply</a></li>
+            
+                <li data-name="Vector#normalize"><a href="Vector.html#normalize">normalize</a></li>
+            
+                <li data-name="Vector#perpendiculars"><a href="Vector.html#perpendiculars">perpendiculars</a></li>
+            
+                <li data-name="Vector#rotate"><a href="Vector.html#rotate">rotate</a></li>
+            
+                <li data-name="Vector#subtract"><a href="Vector.html#subtract">subtract</a></li>
+            
+                <li data-name="Vector#toString"><a href="Vector.html#toString">toString</a></li>
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+        <li class="item" data-name="module:Atum">
+            <span class="title">
+                <a href="module-Atum.html">module:Atum</a>
+                
+            </span>
+            <ul class="members itemMembers">
+            
+            </ul>
+            <ul class="typedefs itemMembers">
+            
+            </ul>
+            <ul class="methods itemMembers">
+            
+            </ul>
+            <ul class="events itemMembers">
+            
+            </ul>
+        </li>
+    
+    </ul>
+</div>
+    <div class="main">
+        <h1 class="page-title" data-filename="algorithms_BinarySpacePartition.js.html">Source: algorithms/BinarySpacePartition.js</h1>
+        
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source "><code>// Tuneable Parameters
+// 1.25 guarentee split horiz or vert
+// Redistribute the range to split
+
+import Vector from "../geometry/Vector";
+import Rectangle from "../geometry/Rectangle";
+import Rand from "../utilities/Rand";
+import { exp } from "../utilities/Redist";
+import { setOptions } from "../utilities/Util";
+
+/**
+ * Create a Binary Space Partition Tree of a particular depth
+ * 
+ * @export
+ * @param {Rectangle} bbox The rectangle that the BSP tree is created within
+ * @param {object} options The options that can be set to change the properties
+ *  of the Binsary Space Partition generation
+ * 
+ *  options = {
+ *    depth {number} : The depth that the BSP tree is created down to,
+ *    splitRange {number} : 0-1 The ammount of deviation from the center
+ *      that the binary split is allowed to take. 0 Means that the split always,
+ *      happens in the middle and 1 means that the split can happen at the edge of
+ *      the rectangle.
+ *    dropoutRate {number} : 0-1, the percent chance that when dividing a
+ *      cell that it will not divide anymore
+ *    minArea {number} : the minimum area that a rectangle can become. If the rect is
+ *      not at the max depth the subdivision will still stop
+ *    minSideLength {number}
+ *  }
+ * 
+ *  defaults = {
+ *      depth: 3,
+ *      splitRange: 0.5,
+ *      dropoutRate: 0.0,
+ *      minArea: 0.0,
+ *      minSideLength: 0.0,
+ *  }
+ * @returns {Rect} The root node of the BSP Tree. The node has the properties
+ *  {  
+ *      leftNode: the left rect node in the tree
+ *      rightNode: the right rect node in the tree
+ *  }
+ */
+export default function binarySpacePartition(bbox, options) {
+    "use strict";
+
+    const defaults = {
+        depth: 3,
+        splitRange: 0.5,
+        dropoutRate: 0.0,
+        minArea: 0.0,
+        minSideLength: 0.0,
+    };
+
+    const params = setOptions(options, defaults);
+
+    // Move back to bbox.copy()
+    let root = bbox;
+    root.depth = 0;
+    let frontier =  [root];
+    // This is a way of redistributing 2 > infinity (aka 100) where the useable
+    // range stays together. Most of the interesting behavior is near 2 - 4
+    const splitDenom = exp(params.splitRange, 7, false).map(0, 1, 2, 100);
+
+    while (frontier.length > 0) {
+        let node = frontier.pop();
+
+        if (node !== root &amp;&amp; Rand.chance(params.dropoutRate)) {
+            continue;
+        }
+
+        let leftNode;
+        let rightNode;
+
+        const isWide = node.width / node.height > 1.25;
+        const isTall = node.height / node.width > 1.25;
+        const splitRand = !isWide &amp;&amp; !isTall;
+
+        let splitVertical;
+        if (splitRand) {
+            splitVertical = Rand.chance(0.5);
+        } else {
+            splitVertical = isTall;
+        }
+
+        if (splitVertical) { // Split vertical
+
+            const splitY = node.height / 2 +
+                Rand.randRange(-node.height / splitDenom, node.height / splitDenom);
+
+            leftNode = new Rectangle(new Vector(node.x, node.y),
+                node.width, splitY);
+            rightNode = new Rectangle(new Vector(node.x, node.y + splitY),
+                node.width, node.height - splitY);
+
+        } else { // Split Horizontal
+
+            const splitX = node.width / 2 +
+                Rand.randRange(-node.width / splitDenom, node.width / splitDenom);
+
+            leftNode = new Rectangle(new Vector(node.x, node.y),
+                splitX, node.height);
+            rightNode = new Rectangle(new Vector(node.x + splitX, node.y),
+                node.width - splitX, node.height);
+        }
+
+        leftNode.depth = node.depth + 1;
+        rightNode.depth = node.depth + 1;
+
+        node.leftNode = leftNode;
+        node.rightNode = rightNode;
+
+        if (node.depth !== params.depth) {
+            frontier.push(leftNode);
+            frontier.push(rightNode);
+        }
+    }
+
+    return root;
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+
+        
+
+        <footer>
+            Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Jan 18 2018 16:06:50 GMT-0500 (Eastern Standard Time)
+        </footer>
+    </div>
+</div>
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+<script src="scripts/main.js"></script>
+</body>
+</html>

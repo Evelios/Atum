@@ -1,4 +1,5 @@
 import Vector from "./Vector";
+import Line from "./Line";
 import Rectangle from "./Rectangle";
 
 class Polygon {
@@ -34,7 +35,7 @@ class Polygon {
      * 
      * @returns {Vector} The centroid of the polygon
      * 
-     * @memberOf Polygon
+     * @memberof Polygon
      */
     centroid() {
         return Vector.avg(this.corners);
@@ -74,7 +75,7 @@ class Polygon {
      * 
      * @param ammount
      * @returns {Polygon} The inset of the current polygon by
-     * @memberOf Polygon
+     * @memberof Polygon
      */
     inset(ammount) {
         return ammount;
@@ -85,7 +86,7 @@ class Polygon {
      * not true then the polygon is convace or more complex.
      * 
      * @returns {boolean} If the polygon is convex
-     * @memberOf Polygon
+     * @memberof Polygon
      */
     isConvex() {
 
@@ -98,10 +99,13 @@ class Polygon {
     /**
      * Determine if the point is contained within the polygon
      * 
-     * @param {Vector} vector
+     * @param {Vector} vector The position to check containment within
+     *   the polygon
+     * 
+     * @return {bool} True if the vector is contained within the polygon
      * 
      * @see {@link https://github.com/substack/point-in-polygon/blob/master/index.js}
-     * @memberOf Polygon
+     * @memberof Polygon
      */
     contains(vector) {
         if (!this.bbox().contains(vector)) {
@@ -124,6 +128,131 @@ class Polygon {
         }
         
         return inside;
+    }
+
+    /**
+     * Get all the intersection points between this polygon and a line segment
+     * 
+     * @param {Line} line The line to check for intersection points
+     * 
+     * @returns {Vector[]} The list of all the intersection points between this
+     *   polygon and the line segment
+     * @memberof Polygon
+     */
+    lineIntersection(line) {
+        let intersectPoints = [];
+        const len = this.corners.length;
+        for (let i = 0; i < len; i++) {
+            const next = i + 1 === len ? 0 : i + 1;
+            const edge = new Line(this.corners[i], this.corners[next]);
+            const intersect = Line.intersection(edge, line);
+
+            if (intersect !== null) {
+                intersectPoints.push(intersect);
+            }
+        }
+        return intersectPoints;
+    }
+
+    /**
+     * Private Helper Function For intersection:
+     *   This function adds a point to the list if the point is not already
+     * contained within that list.
+     * 
+     * @static
+     * @private
+     * @param {Vector[]} list List of vector points
+     * @param {Vector} vector The Vector to try to add to the list
+     * 
+     * @memberof Polygon
+     */
+    static _addPoint(list, vector) {
+        let contains = false;
+        for (const v of list) {
+            if (v.equals(vector)) {
+                contains = true;
+                break;
+            }
+        }
+        if (!contains) {
+            list.push(vector);
+        }
+    }
+
+    /**
+     * Private Polygon Helper Funciton:
+     *   Order a list of points in clockwise order for proper polygon rendering
+     * 
+     * @private
+     * @static
+     * @param {Vector[]} points The list of points to sort clockwise
+     * @return {Vector[]} The ordered list of points
+     * @memberof Polygon
+     */
+    static _orderClockwise(points) {
+        const center = Vector.avg(points);
+        points.sort((a, b) => {
+            return Math.atan2(b.y - center.y, b.x - center.x) -
+                   Math.atan2(a.y - center.y, a.x - center.x);
+        });
+
+        return points;
+    }
+
+    /**
+     * Get the intersection between this and another polygon. The result is
+     * a new polygon that represents the geometric boolean AND operation on
+     * the two polygons. The result is a new polygon of this intersection. 
+     * 
+     * @static
+     * @param {Polygon} other The other polygon to intersect with
+     * 
+     * @return {Polygon} The intersection between the two polygons
+     * @memberof Polygon
+     */
+    static intersection(poly1, poly2) {
+        let clippedCorners = [];
+
+        // Iterage through poly1 for collisions
+        for (const corner of poly1.corners) {
+            if (poly2.contains(corner)) {
+                Polygon._addPoint(clippedCorners, corner);
+            }
+        }
+
+        // Iterate through poly2 polygon for collisions
+        for (const corner of poly2.corners) {
+            if (poly1.contains(corner)) {
+                Polygon._addPoint(clippedCorners, corner);
+            }
+        }
+
+        const len = poly1.corners.length;
+        for (let i = 0; i < len; i++) {
+            const next = i + 1 === len ? 0 : i + 1;
+            const edge = new Line(poly1.corners[i], poly1.corners[next]);
+            const intersectPts = poly2.lineIntersection(edge);
+
+            for (const v of intersectPts) {
+                Polygon._addPoint(clippedCorners, v);
+            }
+        }
+
+        return new Polygon(Polygon._orderClockwise(clippedCorners));
+    }
+
+    /**
+     * Get the intersection between this and another polygon. The result is
+     * a new polygon that represents the geometric boolean AND operation on
+     * the two polygons. The result is a new polygon of this intersection. 
+     * 
+     * @param {Polygon} other The other polygon to intersect with
+     * 
+     * @return {Polygon} The intersection between the two polygons
+     * @memberof Polygon
+     */
+    intersection(other) {
+        return Polygon.intersection(this, other);
     }
 }
 

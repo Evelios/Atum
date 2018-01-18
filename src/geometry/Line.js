@@ -1,3 +1,6 @@
+import Vector from "./Vector";
+import { fequals } from "../utilities/Util";
+
 class Line  {
     /**
      * @class Line
@@ -16,6 +19,65 @@ class Line  {
         this.p2 = p2;
     }
 
+    /**
+     * Returns the intersection of two line segments. If there is no
+     * intersection, then the function returns null
+     * 
+     * @static
+     * @param {any} line1 The first line
+     * @param {any} line2 The second line
+     * @return {Vector | null} The vector intersection point or null if there
+     *   is no intersection point
+     * @memberof Line
+     * @see {@link https://www.swtestacademy.com/intersection-convex-polygons-algorithm/}
+     */
+    static intersection(line1, line2) {
+        const A1 = line1.p2.y - line1.p1.y;
+        const B1 = line1.p1.x - line1.p2.x;
+        const C1 = A1 * line1.p1.x + B1 * line1.p1.y;
+
+        const A2 = line2.p2.y - line2.p1.y;
+        const B2 = line2.p1.x - line2.p2.x;
+        const C2 = A2 * line2.p1.x + B2 * line2.p1.y;
+
+        const det = A1 * B2 - A2 * B1;
+        if (fequals(det, 0)) {
+            return null;
+        } else {
+            const x = (B2 * C1 - B1 * C2) / det;
+            const y = (A1 * C2 - A2 * C1) / det;
+
+            const onLine1 = (Math.min(line1.p1.x, line1.p2.x) < x || fequals(Math.min(line1.p1.x, line1.p2.x), x)) &&
+                (Math.max(line1.p1.x, line1.p2.x) > x || fequals(Math.max(line1.p1.x, line1.p2.x), x)) &&
+                (Math.min(line1.p1.y, line1.p2.y) < y || fequals(Math.min(line1.p1.y, line1.p2.y), y)) &&
+                (Math.max(line1.p1.y, line1.p2.y) > y || fequals(Math.max(line1.p1.y, line1.p2.y), y));
+
+            const onLine2 = (Math.min(line2.p1.x, line2.p2.x) < x || fequals(Math.min(line2.p1.x, line2.p2.x), x)) &&
+                (Math.max(line2.p1.x, line2.p2.x) > x || fequals(Math.max(line2.p1.x, line2.p2.x), x)) &&
+                (Math.min(line2.p1.y, line2.p2.y) < y || fequals(Math.min(line2.p1.y, line2.p2.y), y)) &&
+                (Math.max(line2.p1.y, line2.p2.y) > y || fequals(Math.max(line2.p1.y, line2.p2.y), y));
+
+            if (onLine1 && onLine2) {
+                return new Vector(x, y);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns the intersection of this and the other segment. If there is no
+     * intersection, then the function returns null
+     * 
+     * @param {Line} other The other line
+     * @return {Vector | null} The vector intersection point or null if there
+     *   is no intersection point
+     * @memberof Line
+     * @see {@link https://www.swtestacademy.com/intersection-convex-polygons-algorithm/}
+     */
+    intersection(other) {
+        return Line.intersection(this, other);
+    }
+       
     /**
      * Determine the orientation of the three input vectors. The output will be
      * one of the following:
@@ -64,8 +126,8 @@ class Line  {
      * Determine if two line segments intersec
      * 
      * @static
-     * @param {Line} line1 
-     * @param {Line} line2 
+     * @param {Line} line1 The first line to test
+     * @param {Line} line2 The second line to test
      * @return {boolean} True if the lines intersect
      * @memberof Line
      * @see {@link http://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/}
@@ -86,25 +148,25 @@ class Line  {
         // Special Cases
         // line1.x, line1.y and line2.x are colinear and
         // line2.x lies on segment line1.xline1.y
-        if (o1 == "Collinear" && Line._onSegment(line1.p1, line2.p1, line1.p2)) {
+        if (o1 === "Collinear" && Line._onSegment(line1.p1, line2.p1, line1.p2)) {
             return true;
         }
 
         // line1.x, line1.y and line2.x are colinear and
         // line2.y lies on segment line1.xline1.y
-        if (o2 == "Collinear" && Line._onSegment(line1.p1, line2.p2, line1.p2)) {
+        if (o2 === "Collinear" && Line._onSegment(line1.p1, line2.p2, line1.p2)) {
             return true;
         }
 
         // line2.x, line2.y and line1.x are colinear and
         // line1.x lies on segment line2.xline2.y
-        if (o3 == "Collinear" && Line._onSegment(line2.p1, line1.p1, line2.p2)) {
+        if (o3 === "Collinear" && Line._onSegment(line2.p1, line1.p1, line2.p2)) {
             return true;
         }
 
         // line2.x, line2.y and line1.y are colinear and
         // line1.y lies on segment line2.xline2.y
-        if (o4 == "Collinear" && Line._onSegment(line2.p1, line1.p2, line2.p2)) {
+        if (o4 === "Collinear" && Line._onSegment(line2.p1, line1.p2, line2.p2)) {
             return true;
         }
 
@@ -112,8 +174,16 @@ class Line  {
 
     }
 
-    intersects(line1, line2) {
-        return Line.intersects(line1, line2);
+    /**
+     * Determine this line segment intersects with the other line segment
+     * 
+     * @param {Line} other The other line segment
+     * @return {boolean} True if the lines intersect
+     * @memberof Line
+     * @see {@link http://www.geeksforgeeks.org/check-if-two-given-line-segments-intersect/}
+     */
+    intersects(other) {
+        return Line.intersects(this, other);
     }
 }
 

@@ -14,8 +14,9 @@ var recursiveDiagram;
 var polyList;
 
 var params = {
+    createAndRender: createAndRender,
     seed : 1,
-    depth : 3
+    depth : 2
 };
 
 //---- Main Setup Functions ----
@@ -42,8 +43,9 @@ function setup() {
 function setUpGui() {
     var gui = new dat.GUI();
 
-    gui.add(params, "seed", 0, 5).step(1).name("Seed").onChange(createAndRender);
-    gui.add(params, "depth", 1, 3).step(1).name("Depth").onChange(createAndRender);
+    gui.add(params, "createAndRender").name("Create New Graph");
+    gui.add(params, "seed", 0, 5).step(1).name("Seed");
+    gui.add(params, "depth", 1, 3).step(1).name("Depth");
 }
 
 //---- Other Functions
@@ -55,7 +57,7 @@ function createAndRender() {
 
 function createGraph() {
     Rand.setSeed(params.seed);
-    recursiveDiagram = recursiveVoronoi(bbox, 1, 150);
+    recursiveDiagram = recursiveVoronoi(bbox, params.depth, 150);
     polyList = treeToList(recursiveDiagram);
 }
 
@@ -66,7 +68,7 @@ function treeToList(vorDiagram) {
     while (frontier.length > 0) {
         var tile = frontier.pop();
 
-        if (tile.children !== null) {
+        if (tile.children !== null && typeof tile.children !== "undefined") {
             for (var subtile of tile.children) {
                 frontier.push(subtile);
             }

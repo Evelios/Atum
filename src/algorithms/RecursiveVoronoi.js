@@ -1,4 +1,6 @@
 import Diagram from "../graph/Diagram";
+import Tile from "../graph/Tile";
+import Polygon from "../geometry/Polygon";
 import { poisson, jitteredGrid } from "../utilities/PointDistribution";
 
 export default function recursiveVoronoi(bbox, depth, density) {
@@ -6,23 +8,31 @@ export default function recursiveVoronoi(bbox, depth, density) {
 
     let diagram = new Diagram(poisson(bbox, density), bbox);
 
-    for (let tile of diagram.tiles) {
-        tile.depth = 0;
+    if (depth > 0) {
+        for (let tile of diagram.tiles) {
+            tile.depth = 0;
 
-        generateInPolygon(tile, 0, density / 6);
+            generateInPolygon(tile, density / 3, 1, depth);
+        }
     }
 
     return diagram;
 }
 
-function generateInPolygon(poly, currentDepth, density) {
+function generateInPolygon(poly, density, currentDepth, maxDepth) {
     "use strict";
 
     let subdiagram = new Diagram(poisson(poly.bbox(), density), poly.bbox());
     let subTiles = clipToRegion(subdiagram, poly);
-    // let subTiles = subdiagram.tiles;
+    subTiles = subTiles.map(tile => Tile.fromPolygon(Polygon.intersection(poly, tile)));
     subTiles.forEach(tile => tile.depth = currentDepth + 1);
     poly.children = subTiles;
+
+    if (currentDepth !== maxDepth) {
+        for (let tile of subTiles) {
+            generateInPolygon(tile, density / 3, currentDepth + 1, maxDepth);
+        }
+    }
 }
 
 // Return just the tiles that remain in that region
@@ -32,12 +42,11 @@ function clipToRegion(diagram, poly) {
     let internalPolys = [];
     let contains;
     for (let tile of diagram.tiles) {
-        // contains = tile.corners.reduce((isTrue, corner) => {
-        //     console.log(isTrue);
-        //     return isTrue || poly.contains(corner);
-        // }, false);
+        contains = tile.corners.reduce((p, c) => {
+            return p || poly.contains(c);
+        }, false);
 
-        contains = poly.contains(tile.center);
+        // contains = contains || poly.contains(poly.center);
 
         if (contains) {
             internalPolys.push(tile);

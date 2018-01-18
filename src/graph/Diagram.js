@@ -66,7 +66,7 @@ class Diagram extends Graph {
      * }
      * 
      * @todo Find a New Name
-     * @memberOf Diagram
+     * @memberof Diagram
      */
     _generate(ruleset) {
         // Run cellular automita
@@ -101,7 +101,7 @@ class Diagram extends Graph {
      * 
      * @return {Tile} The tile at the position
      * 
-     * @memberOf Diagram
+     * @memberof Diagram
      */
     getTile(position) {
         if (!this.bbox.contains(position)) {
@@ -135,7 +135,7 @@ class Diagram extends Graph {
      * @return {Tile[]} A resulting path between two tiles
      *  Returned of the form [start, ..., end]
      * 
-     * @memberOf Diagram
+     * @memberof Diagram
      */
     getPath(start, end, iterations = 100) {
         let curTile = start;

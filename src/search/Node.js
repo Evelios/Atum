@@ -23,7 +23,7 @@ class Node {
      * @param {any} problem 
      * @returns {Array<Node>} The nodes reachable from this node
      * 
-     * @memberOf Node
+     * @memberof Node
      */
     expand(problem) {
         return problem.actions(this.state).map(
@@ -38,7 +38,7 @@ class Node {
      * @param {any} action 
      * @returns {Node} The resulting node
      * 
-     * @memberOf Node
+     * @memberof Node
      */
     childNode(problem, action) {
         const next = problem.result(this.state, action);
@@ -56,7 +56,7 @@ class Node {
      * 
      * @returns {Array<Node>}
      * 
-     * @memberOf Node
+     * @memberof Node
      */
     solution() {
         return this.path().slice(1).map(node => node.action);
@@ -67,7 +67,7 @@ class Node {
      * to the current node in the tree
      * 
      * 
-     * @memberOf Node
+     * @memberof Node
      */
     path() {
         let node = this;
