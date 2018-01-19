@@ -80,7 +80,7 @@ function setUpGui() {
     paramsFolder.add(params, "pointDistribution", params.distributionOptions).name("Point Distribution").onChange(createAndRender);
     paramsFolder.add(params, "seed", 0, 100).name("Seed").onChange(createAndRender);
     paramsFolder.add(params, "density", 25, 100).step(5).name("Point Density").onChange(createAndRender);
-    paramsFolder.add(params, "relaxations", 0, 10).name("Lloyd Relaxations").onChange(createAndRender);
+    paramsFolder.add(params, "relaxations", 0, 10).step(1).name("Lloyd Relaxations").onChange(createAndRender);
 
     var renderFolder = gui.addFolder("Rendering");
 
