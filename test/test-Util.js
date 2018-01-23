@@ -7,11 +7,13 @@ const Util = Atum.Utility.Helpers;
 
 test("Options Setting With Defaults", function(t) {
     const userOptions = {
+        butter: 0,
         eggs: 24,
         bread: "white"
     };
 
     const defaults = {
+        butter: 9001,
         eggs: 12,
         milk: "raw",
         bread: "wheat",
@@ -19,6 +21,7 @@ test("Options Setting With Defaults", function(t) {
     };
 
     const expected = {
+        butter: 0,
         eggs: 24,
         milk: "raw",
         bread: "white",

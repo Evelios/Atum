@@ -22,10 +22,28 @@ class Edge extends Line {
         this.d0 = null;
         this.d1 = null;
         // Corner objects connected by Voronoi edges
-        this.v0 = null;
-        this.v1 = null;
+        this._v0 = null;
+        this._v1 = null;
         this.midpoint = null;
         this.border = false;
+    }
+
+    get v0() {
+        return this._v0;
+    }
+
+    set v0(corner) {
+        this.p1 = corner;
+        this._v0 = corner;
+    }
+
+    get v1() {
+        return this._v1;
+    }
+
+    set v1(corner) {
+        this.p2 = corner;
+        this._v1 = corner;
     }
 }
 

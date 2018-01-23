@@ -8,6 +8,8 @@ To see examples of this library in action you can check out the following demo's
 + [Point Distributions](https://evelios.github.io/Atum/examples/Point_Distributions/Point_Distributions.html)
 + [Cellular Automata](https://evelios.github.io/Atum/examples/Cellular_Automata/Cellular_Automata.html)
 + [Binary Space Partitioning](https://evelios.github.io/Atum/examples/Binary_Space_Partition/Binary_Space_Partition.html)
++ [Polygon Subdivision](https://evelios.github.io/Atum/examples/Polygon_Subdivision/Polygon_Subdivision.html)
++ [Recursive Voronoi Diagram](https://evelios.github.io/Atum/examples/Recursive_Voronoi/Recursive_Voronoi.html)
 
 ## Getting Started With Atum Development / Build
 

@@ -1,7 +1,3 @@
-// Tuneable Parameters
-// 1.25 guarentee split horiz or vert
-// Redistribute the range to split
-
 import Vector from "../geometry/Vector";
 import Rectangle from "../geometry/Rectangle";
 import Rand from "../utilities/Rand";
@@ -59,7 +55,7 @@ export default function binarySpacePartition(bbox, options) {
     let root = bbox;
     root.depth = 0;
     let frontier =  [root];
-    // This is a way of redistributing 2 > infinity (aka 100) where the useable
+    // This is a way of redistributing 2 > 100 (aka infinity) where the useable
     // range stays together. Most of the interesting behavior is near 2 - 4
     const splitDenom = exp(params.splitRange, 7, false).map(0, 1, 2, 100);
 
@@ -111,7 +107,7 @@ export default function binarySpacePartition(bbox, options) {
         node.leftNode = leftNode;
         node.rightNode = rightNode;
 
-        if (node.depth !== params.depth) {
+        if (node.depth < params.depth) {
             frontier.push(leftNode);
             frontier.push(rightNode);
         }

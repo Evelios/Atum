@@ -19,13 +19,113 @@ class Line  {
         this.p2 = p2;
     }
 
+    //---- Property Functions -------------------------------------------------
+
+    /**
+     * Compare the two lines for equality. Two segments are equal if they share
+     * the same two endpoints.
+     * 
+     * @static
+     * @param {any} line1 The first line
+     * @param {any} line2 The second line
+     * @returns {boolean} True if the two lines are equal 
+     * @memberof Line
+     */
+    static equals(line1, line2) {
+        return Vector.equals(line1.p1, line2.p1) &&
+               Vector.equals(line1.p2, line2.p2);
+    }
+
+    /**
+     * Compare this line with the other line for equality. Two segments are
+     * equal if they share the same two endpoints.
+     * 
+     * @param {Line} other The other line to test against
+     * @returns {boolean} True if the two lines are equal 
+     * @memberof Line
+     */
+    equals(other) {
+        return Line.equals(this, other);
+    }
+
+    /**
+     * Get the midpoint of the line segment.
+     * 
+     * @return {Vector} The midpoint of the line segment
+     * @memberof Line
+     */
+    midpoint() {
+        return Vector.midpoint(this.p1, this.p2);
+    }
+
+    /**
+     * Get the length of the line segment
+     * 
+     * @return {numeric} The length of the segment
+     * @memberof Line
+     */
+    length() {
+        return Vector.distance(this.p1, this.p2);
+    }
+
+    /**
+     * Get the slope of the line segment
+     * 
+     * @return {numeric} The slope of the segment
+     * @memberOf Line
+     */
+    slope() {
+        if (!this._slope) {
+            this._slope = (this.p2.y - this.p1.y) / (this.p2.x - this.p1.x);
+        }
+        return this._slope;
+    }
+
+    //---- Member Functions ---------------------------------------------------
+
+    /**
+     * Get the perpendicular line segment to a particular line segment that
+     * has a given length. The segment will be placed at the midpoint of the
+     * imput line and will have the given input length.
+     * 
+     * @static
+     * @param {Line} line The input line segment
+     * @param {numeric} length The length of the output segment
+     * @return {Line} The perpendicular line segment
+     * @memberof Line
+     */
+    static perpendicular(line, length) {
+        const midpoint = line.midpoint();
+        const theta = Math.atan((line.p2.y - line.p1.y) / (line.p2.x - line.p1.x));
+        const xoffset = length / 2 * Math.sin(theta);
+        const yoffset = length / 2 * Math.cos(theta);
+
+        const p1 = Vector.add(midpoint, new Vector(-xoffset, yoffset));
+        const p2 = Vector.add(midpoint, new Vector(xoffset, -yoffset));
+
+        return new Line(p1, p2);
+    }
+
+    /**
+     * Get the perpendicular line segment to this line has a given length.
+     * The segment will be placed at the midpoint of the imput line and
+     * will have the given input length.
+     * 
+     * @param {numeric} length The length of the output segment
+     * @return {Line} The perpendicular line segment
+     * @memberof Line
+     */
+    perpendicular(length) {
+        return Line.perpendicular(this, length);
+    }
+
     /**
      * Returns the intersection of two line segments. If there is no
      * intersection, then the function returns null
      * 
      * @static
-     * @param {any} line1 The first line
-     * @param {any} line2 The second line
+     * @param {Line} line1 The first line
+     * @param {Line} line2 The second line
      * @return {Vector | null} The vector intersection point or null if there
      *   is no intersection point
      * @memberof Line
@@ -184,6 +284,45 @@ class Line  {
      */
     intersects(other) {
         return Line.intersects(this, other);
+    }
+
+
+    /**
+     * Test if a vector is above a particular line segment. A point is above
+     * if the point is geometrically greater than a particular line segment.
+     * 
+     * @static
+     * @param {Line} line 
+     * @param {Vector} point 
+     * 
+     * @returns {boolean} True if the point is greater than (above) the line
+     *  segment
+     * @memberof Line
+     */
+    static pointAboveLine(line, point) {
+        const m = line.slope();
+        const b = line.p1.y - m * line.p1.x;
+        return  point.y > m * point.x + b;
+    }
+
+    /**
+     * Test if a vector is above this line segment. A point is above if
+     * the point is geometrically greater than a particular line segment.
+     * 
+     * @param {Vector} point 
+     * 
+     * @returns {boolean} True if the point is greater than (above) the line
+     *  segment
+     * @memberof Line
+     */
+    pointAboveLine(point) {
+        return Line.pointAboveLine(this, point);
+    }
+
+    //---- Default Lines ------------------------------------------------------
+
+    static zero() {
+        return new Line(Vector.zero(), Vector.zero());
     }
 }
 

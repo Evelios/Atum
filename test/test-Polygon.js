@@ -144,7 +144,22 @@ test("Polygon Intersection", function(t) {
         new Vector(4, 2)
     ]);
 
-    t.deepEqual(Polygon.intersection(poly1, poly2), expected);
-    t.deepEqual(poly1.intersection(poly2), expected);
+    t.deepEqual(Polygon.intersection(poly1, poly2), expected, "Static Function");
+    t.deepEqual(poly1.intersection(poly2), expected, "Member Function");
+    t.end();
+});
+
+test("Polygon Major Axis", function(t) {
+    const poly = new Polygon([
+        new Vector(1, 1),
+        new Vector(1, 3),
+        new Vector(2, 4),
+        new Vector(5, 3),
+        new Vector(3, 1)
+    ]);
+
+    const expected = new Line(new Vector(1, 1), new Vector(5, 3));
+
+    t.deepEqual(poly.majorAxis(), expected);
     t.end();
 });

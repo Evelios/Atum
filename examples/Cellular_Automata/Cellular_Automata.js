@@ -1,14 +1,8 @@
-// To Do:
-// Create parameter values specific to the different CA functions
-// tail for GOL
-// age of tile?
-// what parameters are there for Bacteria Growth?
-
 "use strict";
 
 // Atum Library Variables
 var poisson = Atum.Utility.PointDistribution.poisson;
-var square = Atum.Utility.PointDistribution.hexagon;
+var hexagon = Atum.Utility.PointDistribution.hexagon;
 var Rectangle = Atum.Geometry.Rectangle;
 var Vector = Atum.Geometry.Vector;
 var Diagram = Atum.Graph.Diagram;
@@ -69,11 +63,11 @@ var params = {
     automataChoice: "Game Of Life",
     initChoice: "Random",
     pointFunctions: {
-        "Square": square,
+        "Hexagon": hexagon,
         "Poisson": poisson
     },
     distributionOptions: [
-        "Square",
+        "Hexagon",
         "Poisson"
     ],
     pointDistribution: "Poisson",
@@ -206,7 +200,7 @@ function clearGameOfLife() {
 function gameOfLifeRules(center) {
 
     // Get the number of neighbors
-    var n = center.neighbors.map(el => el.data.alive).reduce((n, val) => n + val);
+    var n = center.neighbors.map(el => el.data.alive).reduce((n, val) => n + val, 0);
 
     return {
         trail2: center.data.trail1 && !center.data.trail2,
@@ -219,31 +213,21 @@ function gameOfLifeRules(center) {
 
 function drawGameOfLife() {
 
-    noStroke();
+    strokeWeight(2);
+    stroke(accentColor.toHexString());
     for (var center of diagram.centers) {
         if (center.data.alive) {
-            if (!center.data.isOld && params.isOld) {
-                fill("#D4A26A");
-            } else {
-                fill("#AA7539");
-            }
+            fill(c1Color.toHexString());
         } else if (center.data.trail1) {
-            fill("#6D5335");
+            fill(tinycolor.mix(c1Color, bgColor, 50).toHexString());
         } else if (center.data.trail2) {
-            fill("#4F4132");
+            fill(tinycolor.mix(c1Color, bgColor, 80).toHexString());
         } else {
-            fill("#303030");
+            fill(bgColor.toHexString());
         }
 
         polygon(center);
     }
-
-    stroke("#393939");
-    strokeWeight(2);
-    for (var edge of diagram.edges) {
-        line(edge.v0.x, edge.v0.y, edge.v1.x, edge.v1.y);
-    }
-    strokeWeight(1);
 }
 
 // ---- Preditor Prey Module --------------------------------------------------
@@ -276,9 +260,9 @@ function preditorPreyRules(center) {
     }
 
     var hasPreyNeighbor = center.neighbors.reduce(
-        (p, c) => p === true || c.data.type === 1);
+        (p, c) => p || c.data.type === 1, false);
     var hasPreditorNeighbor = center.neighbors.reduce(
-        (p, c) => p === true || c.data.type === 2);
+        (p, c) => p || c.data.type === 2, false);
 
     if (center.data.type === 0) { // Empty
         if (hasPreyNeighbor && !hasPreditorNeighbor) {
@@ -366,7 +350,7 @@ function bacteriaGrowthRules(center) {
     const compAges = competitors.map(x => x.data.age);
     let compAveAge = 0;
     if (compAges.length > 0) {
-        compAveAge = compAges.reduce((p, c) => p + c) / competitors.length;
+        compAveAge = compAges.reduce((p, c) => p + c, 0) / competitors.length;
     }
 
     if (competitors.length !== 0 &&
@@ -386,7 +370,8 @@ function bacteriaGrowthRules(center) {
 
 function drawBacteriaGrowth() {
 
-    noStroke();
+    strokeWeight(2);
+    stroke(accentColor.toHexString());
     for (var center of diagram.centers) {
         var color;
         if (center.data.colony === 0) {
@@ -405,13 +390,6 @@ function drawBacteriaGrowth() {
         fill(color.toHexString());
         polygon(center);
     }
-
-    stroke(accentColor.toHexString());
-    strokeWeight(2);
-    for (var edge of diagram.edges) {
-        line(edge.v0.x, edge.v0.y, edge.v1.x, edge.v1.y);
-    }
-    strokeWeight(1);
 }
 
 //---- Helper Functions ----

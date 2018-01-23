@@ -16,7 +16,8 @@ var polyList;
 var params = {
     createAndRender: createAndRender,
     seed : 1,
-    depth : 2
+    depth : 2,
+    density: 150
 };
 
 //---- Main Setup Functions ----
@@ -45,7 +46,8 @@ function setUpGui() {
 
     gui.add(params, "createAndRender").name("Create New Graph");
     gui.add(params, "seed", 0, 5).step(1).name("Seed");
-    gui.add(params, "depth", 1, 3).step(1).name("Depth");
+    gui.add(params, "density", 100, 250, 10).name("Point Density");
+    gui.add(params, "depth", 0, 2).step(1).name("Depth");
 }
 
 //---- Other Functions
@@ -57,7 +59,7 @@ function createAndRender() {
 
 function createGraph() {
     Rand.setSeed(params.seed);
-    recursiveDiagram = recursiveVoronoi(bbox, params.depth, 150);
+    recursiveDiagram = recursiveVoronoi(bbox, params.depth, params.density);
     polyList = treeToList(recursiveDiagram);
 }
 
@@ -87,7 +89,8 @@ function drawGraph() {
     stroke(rectColor);
     noFill();
     for (var tile of polyList) {
-        strokeWeight(3 / (tile.depth * 2 + 1));
+        var weight = 1 + 2 * (1 - Math.sqrt(tile.depth / params.depth));
+        strokeWeight(weight);
         for (var e of tile.edges) {
             line(e.v0.x, e.v0.y, e.v1.x, e.v1.y);
         }

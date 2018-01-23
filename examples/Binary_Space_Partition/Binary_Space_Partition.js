@@ -1,16 +1,19 @@
 "use strict";
 
+// Atum Library Variables
 var Vector = Atum.Geometry.Vector;
 var Rectangle = Atum.Geometry.Rectangle;
 var binarySpacePartition = Atum.Algorithm.binarySpacePartition;
 var Rand = Atum.Utility.Rand;
 var Diagram = Atum.Graph.Diagram;
 
+// Colors
 var bgColor;
 var bgAccent;
 var rectColor;
 var diagramColor;
 
+// Globals
 var width;
 var height;
 var bbox;
@@ -21,7 +24,7 @@ var diagram;
 var params = {
     // Parameters
     seed : 1,
-    depth : 3,
+    depth : 4,
     splitRange: 0.5,
     dropoutRate: 0.0,
 
@@ -78,7 +81,6 @@ function render() {
     background(bgColor);
 
     if (params.rectGrid) {
-        // drawGraph();
         drawWightedGraph(bspTree);
     }
     if (params.delaunay) {
@@ -119,21 +121,11 @@ function treeToList(bspTree) {
     return leafs;
 }
 
-function drawGraph() {
-    strokeWeight(4);
-    stroke(rectColor);
-    noFill();
-    for (var r of rectList) {
-        rect(r.x, r.y, r.width, r.height);
-    }
-}
-
 function drawWightedGraph(bspTree) {
     var left = bspTree.leftNode;
     var right = bspTree.rightNode;
     if (left && right) {
-        var weight = 1 + 6 * (1 - sqrt(left.depth / params.depth));
-        console.log(weight)
+        var weight = 1 + 6 * (1 - Math.sqrt(left.depth / params.depth));
         strokeWeight(weight);
         stroke(rectColor);
         noFill();

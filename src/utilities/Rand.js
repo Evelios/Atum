@@ -104,7 +104,11 @@ class Rand {
      * @memberof Rand
      */
     static _chance(rng, percent) {
-        return rng.rand() < percent;
+        if (percent === 0) {
+            return false;
+        } else {
+            return rng.rand() < percent;
+        }
     }
 
     /**

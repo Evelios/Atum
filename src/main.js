@@ -21,6 +21,7 @@ import * as Helpers from "./utilities/Util";
 // Algorithms
 import binarySpacePartition from "./algorithms/BinarySpacePartition";
 import recursiveVoronoi from "./algorithms/RecursiveVoronoi";
+import polygonSubdivide from "./algorithms/PolygonSubdivide";
 
 /**
  * The Atum procedural graph based library
@@ -52,7 +53,8 @@ const Atum = {
     },
     Algorithm: {
         binarySpacePartition,
-        recursiveVoronoi
+        recursiveVoronoi,
+        polygonSubdivide
     }
 };
 

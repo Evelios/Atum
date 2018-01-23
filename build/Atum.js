@@ -3147,7 +3147,7 @@ function circular(bbox, d) {
     throw "Error: Not Implemented";
 }
 
-},{"../geometry/Rectangle":18,"../geometry/Vector":20,"./Rand":13,"poisson-disk-sample":3}],13:[function(require,module,exports){
+},{"../geometry/Rectangle":19,"../geometry/Vector":21,"./Rand":13,"poisson-disk-sample":3}],13:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3461,7 +3461,11 @@ var Rand = function () {
     }, {
         key: "_chance",
         value: function _chance(rng, percent) {
-            return rng.rand() < percent;
+            if (percent === 0) {
+                return false;
+            } else {
+                return rng.rand() < percent;
+            }
         }
 
         /**
@@ -3605,7 +3609,7 @@ var Rand = function () {
 exports.default = Rand;
 module.exports = exports["default"];
 
-},{"../geometry/Vector":20,"seedRandom":4}],14:[function(require,module,exports){
+},{"../geometry/Vector":21,"seedRandom":4}],14:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3682,7 +3686,7 @@ function binarySpacePartition(bbox, options) {
     var root = bbox;
     root.depth = 0;
     var frontier = [root];
-    // This is a way of redistributing 2 > infinity (aka 100) where the useable
+    // This is a way of redistributing 2 > 100 (aka infinity) where the useable
     // range stays together. Most of the interesting behavior is near 2 - 4
     var splitDenom = (0, _Redist.exp)(params.splitRange, 7, false).map(0, 1, 2, 100);
 
@@ -3729,20 +3733,120 @@ function binarySpacePartition(bbox, options) {
         node.leftNode = leftNode;
         node.rightNode = rightNode;
 
-        if (node.depth !== params.depth) {
+        if (node.depth < params.depth) {
             frontier.push(leftNode);
             frontier.push(rightNode);
         }
     }
 
     return root;
-} // Tuneable Parameters
-// 1.25 guarentee split horiz or vert
-// Redistribute the range to split
-
+}
 module.exports = exports["default"];
 
-},{"../geometry/Rectangle":18,"../geometry/Vector":20,"../utilities/Rand":29,"../utilities/Redist":30,"../utilities/Util":31}],15:[function(require,module,exports){
+},{"../geometry/Rectangle":19,"../geometry/Vector":21,"../utilities/Rand":30,"../utilities/Redist":31,"../utilities/Util":32}],15:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = polygonSubdivide;
+
+var _Polygon = require("../geometry/Polygon");
+
+var _Polygon2 = _interopRequireDefault(_Polygon);
+
+var _Line = require("../geometry/Line");
+
+var _Line2 = _interopRequireDefault(_Line);
+
+var _Rand = require("../utilities/Rand");
+
+var _Rand2 = _interopRequireDefault(_Rand);
+
+var _Util = require("../utilities/Util");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Subdivide a polygon up into smaller polygons. The general principal of this
+ * subdivision works by splitting up the polygon on its minor axis similar to
+ * how a binary space partition would work.
+ * 
+ * @export
+ * @param {Polygon} polygon 
+ * @param {object} options The options that can be changed to control how the
+ *  polygon subdivision works
+ * 
+ *  options = {
+ *      depth {number}: The depth to which the subdivision occurs
+ *      dropoutRate {number}: 0-1 The change a tile won't be subdivided
+ *  }
+ * 
+ *  defaults = {
+ *      depth: 3,
+ *      dropoutRate: 0
+ *  }
+ * 
+ *  @return {Polygon} The root note of the polygon subdivision tree
+ */
+function polygonSubdivide(polygon, options) {
+    "use strict";
+
+    var defaults = {
+        depth: 3,
+        dropoutRate: 0
+    };
+
+    var params = (0, _Util.setOptions)(options, defaults);
+
+    var root = polygon;
+    root.depth = 0;
+
+    var frontier = [root];
+
+    var _loop = function _loop() {
+        var tile = frontier.pop();
+        var minorAxis = tile.minorAxis();
+
+        if (minorAxis === null || _Rand2.default.chance(params.dropoutRate)) {
+            return "continue";
+        }
+
+        var corners1 = tile.corners.filter(function (corner) {
+            return minorAxis.pointAboveLine(corner);
+        });
+
+        var corners2 = tile.corners.filter(function (corner) {
+            return !minorAxis.pointAboveLine(corner);
+        });
+
+        corners1.push(minorAxis.p1, minorAxis.p2, minorAxis.midpoint());
+        corners2.push(minorAxis.p1, minorAxis.p2, minorAxis.midpoint());
+
+        var subpoly1 = new _Polygon2.default(corners1);
+        var subpoly2 = new _Polygon2.default(corners2);
+
+        subpoly1.depth = tile.depth + 1;
+        subpoly2.depth = tile.depth + 1;
+
+        tile.children = [subpoly1, subpoly2];
+
+        if (subpoly1.depth <= params.depth) {
+            frontier.push(subpoly1, subpoly2);
+        }
+    };
+
+    while (frontier.length > 0) {
+        var _ret = _loop();
+
+        if (_ret === "continue") continue;
+    }
+
+    return root;
+}
+module.exports = exports["default"];
+
+},{"../geometry/Line":17,"../geometry/Polygon":18,"../utilities/Rand":30,"../utilities/Util":32}],16:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3887,7 +3991,7 @@ function clipToRegion(diagram, poly) {
 }
 module.exports = exports["default"];
 
-},{"../geometry/Polygon":17,"../graph/Diagram":23,"../graph/Tile":26,"../utilities/PointDistribution":28}],16:[function(require,module,exports){
+},{"../geometry/Polygon":18,"../graph/Diagram":24,"../graph/Tile":27,"../utilities/PointDistribution":29}],17:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -3926,21 +4030,123 @@ var Line = function () {
         this.p2 = p2;
     }
 
+    //---- Property Functions -------------------------------------------------
+
     /**
-     * Returns the intersection of two line segments. If there is no
-     * intersection, then the function returns null
+     * Compare the two lines for equality. Two segments are equal if they share
+     * the same two endpoints.
      * 
      * @static
      * @param {any} line1 The first line
      * @param {any} line2 The second line
-     * @return {Vector | null} The vector intersection point or null if there
-     *   is no intersection point
+     * @returns {boolean} True if the two lines are equal 
      * @memberof Line
-     * @see {@link https://www.swtestacademy.com/intersection-convex-polygons-algorithm/}
      */
 
 
     _createClass(Line, [{
+        key: "equals",
+
+
+        /**
+         * Compare this line with the other line for equality. Two segments are
+         * equal if they share the same two endpoints.
+         * 
+         * @param {Line} other The other line to test against
+         * @returns {boolean} True if the two lines are equal 
+         * @memberof Line
+         */
+        value: function equals(other) {
+            return Line.equals(this, other);
+        }
+
+        /**
+         * Get the midpoint of the line segment.
+         * 
+         * @return {Vector} The midpoint of the line segment
+         * @memberof Line
+         */
+
+    }, {
+        key: "midpoint",
+        value: function midpoint() {
+            return _Vector2.default.midpoint(this.p1, this.p2);
+        }
+
+        /**
+         * Get the length of the line segment
+         * 
+         * @return {numeric} The length of the segment
+         * @memberof Line
+         */
+
+    }, {
+        key: "length",
+        value: function length() {
+            return _Vector2.default.distance(this.p1, this.p2);
+        }
+
+        /**
+         * Get the slope of the line segment
+         * 
+         * @return {numeric} The slope of the segment
+         * @memberOf Line
+         */
+
+    }, {
+        key: "slope",
+        value: function slope() {
+            if (!this._slope) {
+                this._slope = (this.p2.y - this.p1.y) / (this.p2.x - this.p1.x);
+            }
+            return this._slope;
+        }
+
+        //---- Member Functions ---------------------------------------------------
+
+        /**
+         * Get the perpendicular line segment to a particular line segment that
+         * has a given length. The segment will be placed at the midpoint of the
+         * imput line and will have the given input length.
+         * 
+         * @static
+         * @param {Line} line The input line segment
+         * @param {numeric} length The length of the output segment
+         * @return {Line} The perpendicular line segment
+         * @memberof Line
+         */
+
+    }, {
+        key: "perpendicular",
+
+
+        /**
+         * Get the perpendicular line segment to this line has a given length.
+         * The segment will be placed at the midpoint of the imput line and
+         * will have the given input length.
+         * 
+         * @param {numeric} length The length of the output segment
+         * @return {Line} The perpendicular line segment
+         * @memberof Line
+         */
+        value: function perpendicular(length) {
+            return Line.perpendicular(this, length);
+        }
+
+        /**
+         * Returns the intersection of two line segments. If there is no
+         * intersection, then the function returns null
+         * 
+         * @static
+         * @param {Line} line1 The first line
+         * @param {Line} line2 The second line
+         * @return {Vector | null} The vector intersection point or null if there
+         *   is no intersection point
+         * @memberof Line
+         * @see {@link https://www.swtestacademy.com/intersection-convex-polygons-algorithm/}
+         */
+
+    }, {
         key: "intersection",
 
 
@@ -3989,7 +4195,59 @@ var Line = function () {
         value: function intersects(other) {
             return Line.intersects(this, other);
         }
+
+        /**
+         * Test if a vector is above a particular line segment. A point is above
+         * if the point is geometrically greater than a particular line segment.
+         * 
+         * @static
+         * @param {Line} line 
+         * @param {Vector} point 
+         * 
+         * @returns {boolean} True if the point is greater than (above) the line
+         *  segment
+         * @memberof Line
+         */
+
+    }, {
+        key: "pointAboveLine",
+
+
+        /**
+         * Test if a vector is above this line segment. A point is above if
+         * the point is geometrically greater than a particular line segment.
+         * 
+         * @param {Vector} point 
+         * 
+         * @returns {boolean} True if the point is greater than (above) the line
+         *  segment
+         * @memberof Line
+         */
+        value: function pointAboveLine(point) {
+            return Line.pointAboveLine(this, point);
+        }
+
+        //---- Default Lines ------------------------------------------------------
+
     }], [{
+        key: "equals",
+        value: function equals(line1, line2) {
+            return _Vector2.default.equals(line1.p1, line2.p1) && _Vector2.default.equals(line1.p2, line2.p2);
+        }
+    }, {
+        key: "perpendicular",
+        value: function perpendicular(line, length) {
+            var midpoint = line.midpoint();
+            var theta = Math.atan((line.p2.y - line.p1.y) / (line.p2.x - line.p1.x));
+            var xoffset = length / 2 * Math.sin(theta);
+            var yoffset = length / 2 * Math.cos(theta);
+
+            var p1 = _Vector2.default.add(midpoint, new _Vector2.default(-xoffset, yoffset));
+            var p2 = _Vector2.default.add(midpoint, new _Vector2.default(xoffset, -yoffset));
+
+            return new Line(p1, p2);
+        }
+    }, {
         key: "intersection",
         value: function intersection(line1, line2) {
             var A1 = line1.p2.y - line1.p1.y;
@@ -4102,6 +4360,18 @@ var Line = function () {
 
             return false; // Doesn't fall in any of the above cases
         }
+    }, {
+        key: "pointAboveLine",
+        value: function pointAboveLine(line, point) {
+            var m = line.slope();
+            var b = line.p1.y - m * line.p1.x;
+            return point.y > m * point.x + b;
+        }
+    }, {
+        key: "zero",
+        value: function zero() {
+            return new Line(_Vector2.default.zero(), _Vector2.default.zero());
+        }
     }]);
 
     return Line;
@@ -4110,7 +4380,7 @@ var Line = function () {
 exports.default = Line;
 module.exports = exports["default"];
 
-},{"../utilities/Util":31,"./Vector":20}],17:[function(require,module,exports){
+},{"../utilities/Util":32,"./Vector":21}],18:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4162,23 +4432,39 @@ var Polygon = function () {
 
         _classCallCheck(this, Polygon);
 
-        this.corners = corners ? corners : [];
+        this.corners = corners ? Polygon._orderClockwise(corners) : [];
         this.center = center ? center : this.centroid();
         this._bbox = null;
     }
 
+    //---- Private Polygon Helper Functions -----------------------------------
+
     /**
-     * Get the centroid of the polygon. This is the vector average of all the
-     * points that make up the polygon.
+     * Private Polygon Helper Funciton:
+     *   Order a list of points in clockwise order for proper polygon rendering
      * 
-     * @returns {Vector} The centroid of the polygon
-     * 
+     * @private
+     * @static
+     * @param {Vector[]} points The list of points to sort clockwise
+     * @return {Vector[]} The ordered list of points
      * @memberof Polygon
      */
 
 
     _createClass(Polygon, [{
         key: "centroid",
+
+
+        //---- Polygon Property Functions -----------------------------------------
+
+        /**
+         * Get the centroid of the polygon. This is the vector average of all the
+         * points that make up the polygon.
+         * 
+         * @returns {Vector} The centroid of the polygon
+         * 
+         * @memberof Polygon
+         */
         value: function centroid() {
             return _Vector2.default.avg(this.corners);
         }
@@ -4237,15 +4523,23 @@ var Polygon = function () {
         }
 
         /**
+         * Get the edge lines of the polygon
+         * 
+         * @return {Line[]} The edges of the polygon
+         * @memberof Polygon
+         */
+
+    }, {
+        key: "inset",
+
+
+        /**
          * Get the polygon inset of the current polygon by the input ammount
          * 
          * @param ammount
          * @returns {Polygon} The inset of the current polygon by
          * @memberof Polygon
          */
-
-    }, {
-        key: "inset",
         value: function inset(ammount) {
             return ammount;
         }
@@ -4254,13 +4548,118 @@ var Polygon = function () {
          * Returns wheither or not this polygon is a convex polygon. If this is
          * not true then the polygon is convace or more complex.
          * 
-         * @returns {boolean} If the polygon is convex
+         * @return {boolean} If the polygon is convex
          * @memberof Polygon
          */
 
     }, {
         key: "isConvex",
         value: function isConvex() {}
+
+        /**
+         * Get the major axis of this polygon. The major axis is the two verticies
+         * of the polygon that are the furthest appart from eachother
+         * 
+         * @return {Line} The major axis of the polygon
+         * @memberof Polygon
+         */
+
+    }, {
+        key: "majorAxis",
+        value: function majorAxis() {
+            var v1 = null;
+            var v2 = null;
+            var maxDist = 0;
+            var dist = void 0;
+
+            var _iteratorNormalCompletion2 = true;
+            var _didIteratorError2 = false;
+            var _iteratorError2 = undefined;
+
+            try {
+                for (var _iterator2 = this.corners[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                    var c1 = _step2.value;
+                    var _iteratorNormalCompletion3 = true;
+                    var _didIteratorError3 = false;
+                    var _iteratorError3 = undefined;
+
+                    try {
+                        for (var _iterator3 = this.corners[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                            var c2 = _step3.value;
+
+                            if (!_Vector2.default.equals(c1, c2)) {
+                                dist = _Vector2.default.dist2(c1, c2);
+                                if (dist > maxDist) {
+                                    maxDist = dist;
+                                    v1 = c1;
+                                    v2 = c2;
+                                }
+                            }
+                        }
+                    } catch (err) {
+                        _didIteratorError3 = true;
+                        _iteratorError3 = err;
+                    } finally {
+                        try {
+                            if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                                _iterator3.return();
+                            }
+                        } finally {
+                            if (_didIteratorError3) {
+                                throw _iteratorError3;
+                            }
+                        }
+                    }
+                }
+            } catch (err) {
+                _didIteratorError2 = true;
+                _iteratorError2 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
+                    }
+                } finally {
+                    if (_didIteratorError2) {
+                        throw _iteratorError2;
+                    }
+                }
+            }
+
+            return new _Line2.default(v1, v2);
+        }
+
+        /**
+         * Get the minor axis of the polygon. The minor axis is considered to be
+         * the perpendicular to the major axis. This is not the two verticies
+         * that are closest to eachother. This insures that the polygon is more
+         * evenly divided in half along what should be the shorter portion of the
+         * polygon.
+         * 
+         * @return {Line | null} The minor axis of the polygon, if there was a
+         *  problem null is returned
+         * @memberof Polygon
+         * @todo Fix line intersection bug. Line intersection should always return 2
+         *  segments but is sometimes returning 1 or 0.
+         */
+
+    }, {
+        key: "minorAxis",
+        value: function minorAxis() {
+            var majorAxis = this.majorAxis();
+            var minorSegment = _Line2.default.perpendicular(majorAxis, majorAxis.length() * 2);
+            var clippedList = this.lineIntersection(minorSegment);
+
+            // Temporary
+            if (clippedList.length < 2) {
+                return null;
+            }
+
+            return new _Line2.default(clippedList[0], clippedList[1]);
+        }
+
+        //---- Member Functions ---------------------------------------------------
+
     }, {
         key: "rotate",
         value: function rotate() {}
@@ -4319,12 +4718,11 @@ var Polygon = function () {
             var intersectPoints = [];
             var len = this.corners.length;
             for (var i = 0; i < len; i++) {
-                var next = i + 1 === len ? 0 : i + 1;
-                var edge = new _Line2.default(this.corners[i], this.corners[next]);
+                var edge = new _Line2.default(this.corners[i], this.corners[(i + 1) % len]);
                 var intersect = _Line2.default.intersection(edge, line);
 
                 if (intersect !== null) {
-                    intersectPoints.push(intersect);
+                    Polygon._addPoint(intersectPoints, intersect);
                 }
             }
             return intersectPoints;
@@ -4360,55 +4758,36 @@ var Polygon = function () {
         value: function intersection(other) {
             return Polygon.intersection(this, other);
         }
-    }], [{
-        key: "_addPoint",
-        value: function _addPoint(list, vector) {
-            var contains = false;
-            var _iteratorNormalCompletion2 = true;
-            var _didIteratorError2 = false;
-            var _iteratorError2 = undefined;
-
-            try {
-                for (var _iterator2 = list[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                    var v = _step2.value;
-
-                    if (v.equals(vector)) {
-                        contains = true;
-                        break;
-                    }
-                }
-            } catch (err) {
-                _didIteratorError2 = true;
-                _iteratorError2 = err;
-            } finally {
-                try {
-                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                        _iterator2.return();
-                    }
-                } finally {
-                    if (_didIteratorError2) {
-                        throw _iteratorError2;
-                    }
-                }
+    }, {
+        key: "edges",
+        get: function get() {
+            if (this._edges) {
+                return this._edges;
             }
 
-            if (!contains) {
-                list.push(vector);
+            var edges = [];
+            var len = this.corners.length;
+            for (var i = 0; i < len; i++) {
+                var c1 = this.corners[i];
+                var c2 = this.corners[(i + 1) % len];
+                edges.push(new _Line2.default(c1, c2));
             }
+            this._edges = edges;
+            return this._edges;
         }
 
         /**
-         * Private Polygon Helper Funciton:
-         *   Order a list of points in clockwise order for proper polygon rendering
+         * Set the edge lines of a polygon.
+         * Note: This does not change the corners of the polygons,
+         *   only use this if you know what you are doing
          * 
-         * @private
-         * @static
-         * @param {Vector[]} points The list of points to sort clockwise
-         * @return {Vector[]} The ordered list of points
          * @memberof Polygon
          */
-
-    }, {
+        ,
+        set: function set(edges) {
+            this._edges = edges;
+        }
+    }], [{
         key: "_orderClockwise",
         value: function _orderClockwise(points) {
             var center = _Vector2.default.avg(points);
@@ -4417,6 +4796,42 @@ var Polygon = function () {
             });
 
             return points;
+        }
+    }, {
+        key: "_addPoint",
+        value: function _addPoint(list, vector) {
+            var contains = false;
+            var _iteratorNormalCompletion4 = true;
+            var _didIteratorError4 = false;
+            var _iteratorError4 = undefined;
+
+            try {
+                for (var _iterator4 = list[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+                    var v = _step4.value;
+
+                    if (v.equals(vector)) {
+                        contains = true;
+                        break;
+                    }
+                }
+            } catch (err) {
+                _didIteratorError4 = true;
+                _iteratorError4 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
+                        _iterator4.return();
+                    }
+                } finally {
+                    if (_didIteratorError4) {
+                        throw _iteratorError4;
+                    }
+                }
+            }
+
+            if (!contains) {
+                list.push(vector);
+            }
         }
 
         /**
@@ -4437,13 +4852,13 @@ var Polygon = function () {
             var clippedCorners = [];
 
             // Iterage through poly1 for collisions
-            var _iteratorNormalCompletion3 = true;
-            var _didIteratorError3 = false;
-            var _iteratorError3 = undefined;
+            var _iteratorNormalCompletion5 = true;
+            var _didIteratorError5 = false;
+            var _iteratorError5 = undefined;
 
             try {
-                for (var _iterator3 = poly1.corners[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-                    var corner = _step3.value;
+                for (var _iterator5 = poly1.corners[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+                    var corner = _step5.value;
 
                     if (poly2.contains(corner)) {
                         Polygon._addPoint(clippedCorners, corner);
@@ -4452,43 +4867,43 @@ var Polygon = function () {
 
                 // Iterate through poly2 polygon for collisions
             } catch (err) {
-                _didIteratorError3 = true;
-                _iteratorError3 = err;
+                _didIteratorError5 = true;
+                _iteratorError5 = err;
             } finally {
                 try {
-                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
-                        _iterator3.return();
+                    if (!_iteratorNormalCompletion5 && _iterator5.return) {
+                        _iterator5.return();
                     }
                 } finally {
-                    if (_didIteratorError3) {
-                        throw _iteratorError3;
+                    if (_didIteratorError5) {
+                        throw _iteratorError5;
                     }
                 }
             }
 
-            var _iteratorNormalCompletion4 = true;
-            var _didIteratorError4 = false;
-            var _iteratorError4 = undefined;
+            var _iteratorNormalCompletion6 = true;
+            var _didIteratorError6 = false;
+            var _iteratorError6 = undefined;
 
             try {
-                for (var _iterator4 = poly2.corners[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-                    var _corner = _step4.value;
+                for (var _iterator6 = poly2.corners[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+                    var _corner = _step6.value;
 
                     if (poly1.contains(_corner)) {
                         Polygon._addPoint(clippedCorners, _corner);
                     }
                 }
             } catch (err) {
-                _didIteratorError4 = true;
-                _iteratorError4 = err;
+                _didIteratorError6 = true;
+                _iteratorError6 = err;
             } finally {
                 try {
-                    if (!_iteratorNormalCompletion4 && _iterator4.return) {
-                        _iterator4.return();
+                    if (!_iteratorNormalCompletion6 && _iterator6.return) {
+                        _iterator6.return();
                     }
                 } finally {
-                    if (_didIteratorError4) {
-                        throw _iteratorError4;
+                    if (_didIteratorError6) {
+                        throw _iteratorError6;
                     }
                 }
             }
@@ -4499,33 +4914,33 @@ var Polygon = function () {
                 var edge = new _Line2.default(poly1.corners[i], poly1.corners[next]);
                 var intersectPts = poly2.lineIntersection(edge);
 
-                var _iteratorNormalCompletion5 = true;
-                var _didIteratorError5 = false;
-                var _iteratorError5 = undefined;
+                var _iteratorNormalCompletion7 = true;
+                var _didIteratorError7 = false;
+                var _iteratorError7 = undefined;
 
                 try {
-                    for (var _iterator5 = intersectPts[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-                        var v = _step5.value;
+                    for (var _iterator7 = intersectPts[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+                        var v = _step7.value;
 
                         Polygon._addPoint(clippedCorners, v);
                     }
                 } catch (err) {
-                    _didIteratorError5 = true;
-                    _iteratorError5 = err;
+                    _didIteratorError7 = true;
+                    _iteratorError7 = err;
                 } finally {
                     try {
-                        if (!_iteratorNormalCompletion5 && _iterator5.return) {
-                            _iterator5.return();
+                        if (!_iteratorNormalCompletion7 && _iterator7.return) {
+                            _iterator7.return();
                         }
                     } finally {
-                        if (_didIteratorError5) {
-                            throw _iteratorError5;
+                        if (_didIteratorError7) {
+                            throw _iteratorError7;
                         }
                     }
                 }
             }
 
-            return new Polygon(Polygon._orderClockwise(clippedCorners));
+            return new Polygon(clippedCorners);
         }
     }]);
 
@@ -4535,7 +4950,7 @@ var Polygon = function () {
 exports.default = Polygon;
 module.exports = exports["default"];
 
-},{"./Line":16,"./Rectangle":18,"./Vector":20}],18:[function(require,module,exports){
+},{"./Line":17,"./Rectangle":19,"./Vector":21}],19:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4686,7 +5101,7 @@ var Rectangle = function () {
 exports.default = Rectangle;
 module.exports = exports["default"];
 
-},{"./Vector":20}],19:[function(require,module,exports){
+},{"./Vector":21}],20:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -4744,7 +5159,7 @@ var Triangle = function (_Polygon) {
 exports.default = Triangle;
 module.exports = exports["default"];
 
-},{"./Polygon":17,"./Vector":20}],20:[function(require,module,exports){
+},{"./Polygon":18,"./Vector":21}],21:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5417,7 +5832,7 @@ var Vector = function () {
 exports.default = Vector;
 module.exports = exports["default"];
 
-},{"../utilities/Util":31}],21:[function(require,module,exports){
+},{"../utilities/Util":32}],22:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5490,7 +5905,7 @@ var Center = function (_Vector) {
 exports.default = Center;
 module.exports = exports["default"];
 
-},{"../geometry/Polygon":17,"../geometry/Vector":20}],22:[function(require,module,exports){
+},{"../geometry/Polygon":18,"../geometry/Vector":21}],23:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5545,7 +5960,7 @@ var Corner = function (_Vector) {
 exports.default = Corner;
 module.exports = exports["default"];
 
-},{"../geometry/Polygon":17,"../geometry/Vector":20}],23:[function(require,module,exports){
+},{"../geometry/Polygon":18,"../geometry/Vector":21}],24:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -5863,12 +6278,14 @@ var Diagram = function (_Graph) {
 exports.default = Diagram;
 module.exports = exports["default"];
 
-},{"../geometry/Vector":20,"./Graph":25,"./Tile":26}],24:[function(require,module,exports){
+},{"../geometry/Vector":21,"./Graph":26,"./Tile":27}],25:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _Vector = require("../geometry/Vector");
 
@@ -5912,12 +6329,32 @@ var Edge = function (_Line) {
         _this.d0 = null;
         _this.d1 = null;
         // Corner objects connected by Voronoi edges
-        _this.v0 = null;
-        _this.v1 = null;
+        _this._v0 = null;
+        _this._v1 = null;
         _this.midpoint = null;
         _this.border = false;
         return _this;
     }
+
+    _createClass(Edge, [{
+        key: "v0",
+        get: function get() {
+            return this._v0;
+        },
+        set: function set(corner) {
+            this.p1 = corner;
+            this._v0 = corner;
+        }
+    }, {
+        key: "v1",
+        get: function get() {
+            return this._v1;
+        },
+        set: function set(corner) {
+            this.p2 = corner;
+            this._v1 = corner;
+        }
+    }]);
 
     return Edge;
 }(_Line3.default);
@@ -5925,7 +6362,7 @@ var Edge = function (_Line) {
 exports.default = Edge;
 module.exports = exports["default"];
 
-},{"../geometry/Line":16,"../geometry/Vector":20}],25:[function(require,module,exports){
+},{"../geometry/Line":17,"../geometry/Vector":21}],26:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6449,7 +6886,7 @@ var Graph = function () {
 exports.default = Graph;
 module.exports = exports["default"];
 
-},{"../geometry/Vector":20,"../utilities/Util":31,"./Center":21,"./Corner":22,"./Edge":24,"Voronoi":1}],26:[function(require,module,exports){
+},{"../geometry/Vector":21,"../utilities/Util":32,"./Center":22,"./Corner":23,"./Edge":25,"Voronoi":1}],27:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6596,7 +7033,7 @@ var Tile = function (_Polygon) {
 exports.default = Tile;
 module.exports = exports["default"];
 
-},{"../geometry/Polygon":17,"../geometry/Vector":20,"../graph/Center":21,"../graph/Corner":22,"../graph/Edge":24}],27:[function(require,module,exports){
+},{"../geometry/Polygon":18,"../geometry/Vector":21,"../graph/Center":22,"../graph/Corner":23,"../graph/Edge":25}],28:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -6667,6 +7104,10 @@ var _RecursiveVoronoi = require("./algorithms/RecursiveVoronoi");
 
 var _RecursiveVoronoi2 = _interopRequireDefault(_RecursiveVoronoi);
 
+var _PolygonSubdivide = require("./algorithms/PolygonSubdivide");
+
+var _PolygonSubdivide2 = _interopRequireDefault(_PolygonSubdivide);
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -6680,11 +7121,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  */
 
 
-// Algorithms
-
-
-// Utilities
-// Geometry
+// Graph
 var Atum = {
     Geometry: {
         Vector: _Vector2.default,
@@ -6708,19 +7145,24 @@ var Atum = {
     },
     Algorithm: {
         binarySpacePartition: _BinarySpacePartition2.default,
-        recursiveVoronoi: _RecursiveVoronoi2.default
+        recursiveVoronoi: _RecursiveVoronoi2.default,
+        polygonSubdivide: _PolygonSubdivide2.default
     }
 };
 
-// Graph
+// Algorithms
+
+
+// Utilities
+// Geometry
 exports.default = Atum;
 module.exports = exports["default"];
 
-},{"./Utilities/PointDistribution":12,"./algorithms/BinarySpacePartition":14,"./algorithms/RecursiveVoronoi":15,"./geometry/Line":16,"./geometry/Polygon":17,"./geometry/Rectangle":18,"./geometry/Triangle":19,"./geometry/Vector":20,"./graph/Center":21,"./graph/Corner":22,"./graph/Diagram":23,"./graph/Edge":24,"./graph/Graph":25,"./utilities/Rand":29,"./utilities/Redist":30,"./utilities/Util":31}],28:[function(require,module,exports){
+},{"./Utilities/PointDistribution":12,"./algorithms/BinarySpacePartition":14,"./algorithms/PolygonSubdivide":15,"./algorithms/RecursiveVoronoi":16,"./geometry/Line":17,"./geometry/Polygon":18,"./geometry/Rectangle":19,"./geometry/Triangle":20,"./geometry/Vector":21,"./graph/Center":22,"./graph/Corner":23,"./graph/Diagram":24,"./graph/Edge":25,"./graph/Graph":26,"./utilities/Rand":30,"./utilities/Redist":31,"./utilities/Util":32}],29:[function(require,module,exports){
 arguments[4][12][0].apply(exports,arguments)
-},{"../geometry/Rectangle":18,"../geometry/Vector":20,"./Rand":29,"dup":12,"poisson-disk-sample":3}],29:[function(require,module,exports){
+},{"../geometry/Rectangle":19,"../geometry/Vector":21,"./Rand":30,"dup":12,"poisson-disk-sample":3}],30:[function(require,module,exports){
 arguments[4][13][0].apply(exports,arguments)
-},{"../geometry/Vector":20,"dup":13,"seedRandom":4}],30:[function(require,module,exports){
+},{"../geometry/Vector":21,"dup":13,"seedRandom":4}],31:[function(require,module,exports){
 /**
  * Theses function are used to redistribute data located in the range 0-1
  * They take all the data and rearrange them and purturbe them slightly so that
@@ -6859,7 +7301,7 @@ function step(x) {
     return Math.floor(bins * x) / bins;
 }
 
-},{}],31:[function(require,module,exports){
+},{}],32:[function(require,module,exports){
 /**
  * A utility file with helper functions that can be used to aid in the
  * development of the package.
@@ -6882,7 +7324,7 @@ function has(obj, prop) {
 function setOptions(options, defaults) {
     var out = {};
     for (var v in defaults) {
-        out[v] = options[v] ? options[v] : defaults[v];
+        out[v] = options[v] !== undefined ? options[v] : defaults[v];
     }
     return out;
 }
@@ -6905,5 +7347,5 @@ Number.prototype.map = function (in_min, in_max, out_min, out_max) {
     return (this - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 };
 
-},{}]},{},[27])(27)
+},{}]},{},[28])(28)
 });

@@ -199,9 +199,21 @@
             
             <span class="subtitle">Methods</span>
             
+                <li data-name="Edge#equals"><a href="Edge.html#equals">equals</a></li>
+            
                 <li data-name="Edge#intersection"><a href="Edge.html#intersection">intersection</a></li>
             
                 <li data-name="Edge#intersects"><a href="Edge.html#intersects">intersects</a></li>
+            
+                <li data-name="Edge#length"><a href="Edge.html#length">length</a></li>
+            
+                <li data-name="Edge#midpoint"><a href="Edge.html#midpoint">midpoint</a></li>
+            
+                <li data-name="Edge#perpendicular"><a href="Edge.html#perpendicular">perpendicular</a></li>
+            
+                <li data-name="Edge#pointAboveLine"><a href="Edge.html#pointAboveLine">pointAboveLine</a></li>
+            
+                <li data-name="Edge#slope"><a href="Edge.html#slope">slope</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -262,13 +274,31 @@
             
             <span class="subtitle">Methods</span>
             
+                <li data-name="Line.equals"><a href="Line.html#.equals">equals</a></li>
+            
                 <li data-name="Line.intersection"><a href="Line.html#.intersection">intersection</a></li>
             
                 <li data-name="Line.intersects"><a href="Line.html#.intersects">intersects</a></li>
             
+                <li data-name="Line.perpendicular"><a href="Line.html#.perpendicular">perpendicular</a></li>
+            
+                <li data-name="Line.pointAboveLine"><a href="Line.html#.pointAboveLine">pointAboveLine</a></li>
+            
+                <li data-name="Line#equals"><a href="Line.html#equals">equals</a></li>
+            
                 <li data-name="Line#intersection"><a href="Line.html#intersection">intersection</a></li>
             
                 <li data-name="Line#intersects"><a href="Line.html#intersects">intersects</a></li>
+            
+                <li data-name="Line#length"><a href="Line.html#length">length</a></li>
+            
+                <li data-name="Line#midpoint"><a href="Line.html#midpoint">midpoint</a></li>
+            
+                <li data-name="Line#perpendicular"><a href="Line.html#perpendicular">perpendicular</a></li>
+            
+                <li data-name="Line#pointAboveLine"><a href="Line.html#pointAboveLine">pointAboveLine</a></li>
+            
+                <li data-name="Line#slope"><a href="Line.html#slope">slope</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -368,6 +398,12 @@
             </span>
             <ul class="members itemMembers">
             
+            <span class="subtitle">Members</span>
+            
+                <li data-name="Polygon#edges"><a href="Polygon.html#edges">edges</a></li>
+            
+                <li data-name="Polygon#edges"><a href="Polygon.html#edges">edges</a></li>
+            
             </ul>
             <ul class="typedefs itemMembers">
             
@@ -391,6 +427,10 @@
                 <li data-name="Polygon#isConvex"><a href="Polygon.html#isConvex">isConvex</a></li>
             
                 <li data-name="Polygon#lineIntersection"><a href="Polygon.html#lineIntersection">lineIntersection</a></li>
+            
+                <li data-name="Polygon#majorAxis"><a href="Polygon.html#majorAxis">majorAxis</a></li>
+            
+                <li data-name="Polygon#minorAxis"><a href="Polygon.html#minorAxis">minorAxis</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -487,6 +527,10 @@
             </span>
             <ul class="members itemMembers">
             
+            <span class="subtitle">Members</span>
+            
+                <li data-name="Rectangle#edges"><a href="Rectangle.html#edges">edges</a></li>
+            
             </ul>
             <ul class="typedefs itemMembers">
             
@@ -516,6 +560,10 @@
                 <li data-name="Rectangle#isConvex"><a href="Rectangle.html#isConvex">isConvex</a></li>
             
                 <li data-name="Rectangle#lineIntersection"><a href="Rectangle.html#lineIntersection">lineIntersection</a></li>
+            
+                <li data-name="Rectangle#majorAxis"><a href="Rectangle.html#majorAxis">majorAxis</a></li>
+            
+                <li data-name="Rectangle#minorAxis"><a href="Rectangle.html#minorAxis">minorAxis</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -580,6 +628,10 @@
             </span>
             <ul class="members itemMembers">
             
+            <span class="subtitle">Members</span>
+            
+                <li data-name="Triangle#edges"><a href="Triangle.html#edges">edges</a></li>
+            
             </ul>
             <ul class="typedefs itemMembers">
             
@@ -601,6 +653,10 @@
                 <li data-name="Triangle#isConvex"><a href="Triangle.html#isConvex">isConvex</a></li>
             
                 <li data-name="Triangle#lineIntersection"><a href="Triangle.html#lineIntersection">lineIntersection</a></li>
+            
+                <li data-name="Triangle#majorAxis"><a href="Triangle.html#majorAxis">majorAxis</a></li>
+            
+                <li data-name="Triangle#minorAxis"><a href="Triangle.html#minorAxis">minorAxis</a></li>
             
             </ul>
             <ul class="events itemMembers">
@@ -982,6 +1038,154 @@ graph.
             
 <dt>
     <div class="nameContainer inherited">
+        <h4 class="name" id="equals">
+            
+                <span class="inherited"><a href="Line.html#equals">inherited</a></span>
+            
+            equals<span class="signature">(other)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="geometry_Line.js.html">geometry/Line.js</a>, <a href="geometry_Line.js.html#line47">line 47</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Compare this line with the other line for equality. Two segments are
+equal if they share the same two endpoints.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>other</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Line.html">Line</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                The other line to test against</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        boolean
+                        
+                    
+            </td>
+            <td class="description last">True if the two lines are equal</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
         <h4 class="name" id="intersection">
             
                 <span class="inherited"><a href="Line.html#intersection">inherited</a></span>
@@ -991,7 +1195,7 @@ graph.
     
         
         <div class="tag-source">
-            <a href="geometry_Line.js.html">geometry/Line.js</a>, <a href="geometry_Line.js.html#line77">line 77</a>
+            <a href="geometry_Line.js.html">geometry/Line.js</a>, <a href="geometry_Line.js.html#line177">line 177</a>
         </div>
         
     </div>
@@ -1150,7 +1354,7 @@ intersection, then the function returns null
     
         
         <div class="tag-source">
-            <a href="geometry_Line.js.html">geometry/Line.js</a>, <a href="geometry_Line.js.html#line185">line 185</a>
+            <a href="geometry_Line.js.html">geometry/Line.js</a>, <a href="geometry_Line.js.html#line285">line 285</a>
         </div>
         
     </div>
@@ -1291,6 +1495,610 @@ intersection, then the function returns null
     
 </dd>
 
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="length">
+            
+                <span class="inherited"><a href="Line.html#length">inherited</a></span>
+            
+            length<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{numeric}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="geometry_Line.js.html">geometry/Line.js</a>, <a href="geometry_Line.js.html#line67">line 67</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Get the length of the line segment
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        numeric
+                        
+                    
+            </td>
+            <td class="description last">The length of the segment</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="midpoint">
+            
+                <span class="inherited"><a href="Line.html#midpoint">inherited</a></span>
+            
+            midpoint<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="Vector.html">Vector</a>}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="geometry_Line.js.html">geometry/Line.js</a>, <a href="geometry_Line.js.html#line57">line 57</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Get the midpoint of the line segment.
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        <a href="Vector.html">Vector</a>
+                        
+                    
+            </td>
+            <td class="description last">The midpoint of the line segment</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="perpendicular">
+            
+                <span class="inherited"><a href="Line.html#perpendicular">inherited</a></span>
+            
+            perpendicular<span class="signature">(length)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{<a href="Line.html">Line</a>}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="geometry_Line.js.html">geometry/Line.js</a>, <a href="geometry_Line.js.html#line118">line 118</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Get the perpendicular line segment to this line has a given length.
+The segment will be placed at the midpoint of the imput line and
+will have the given input length.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>length</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">numeric</span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                The length of the output segment</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        <a href="Line.html">Line</a>
+                        
+                    
+            </td>
+            <td class="description last">The perpendicular line segment</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="pointAboveLine">
+            
+                <span class="inherited"><a href="Line.html#pointAboveLine">inherited</a></span>
+            
+            pointAboveLine<span class="signature">(point)</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{boolean}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="geometry_Line.js.html">geometry/Line.js</a>, <a href="geometry_Line.js.html#line318">line 318</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Test if a vector is above this line segment. A point is above if
+the point is geometrically greater than a particular line segment.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>point</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="Vector.html">Vector</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            <td class="description last">
+                
+                </td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        boolean
+                        
+                    
+            </td>
+            <td class="description last">True if the point is greater than (above) the line
+ segment</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <div class="nameContainer inherited">
+        <h4 class="name" id="slope">
+            
+                <span class="inherited"><a href="Line.html#slope">inherited</a></span>
+            
+            slope<span class="signature">()</span><span class="glyphicon glyphicon-circle-arrow-right"></span><span class="type-signature returnType">{numeric}</span>
+        </h4>
+    
+        
+        <div class="tag-source">
+            <a href="geometry_Line.js.html">geometry/Line.js</a>, <a href="geometry_Line.js.html#line77">line 77</a>
+        </div>
+        
+    </div>
+
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Get the slope of the line segment
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Type</th>
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    
+        <tr>
+            
+            <td class="type">
+            
+                        numeric
+                        
+                    
+            </td>
+            <td class="description last">The slope of the segment</td>
+        </tr>
+    
+    </tbody>
+</table>
+
+    
+    
+    
+</dd>
+
         </dl>
     
     
@@ -1308,7 +2116,7 @@ intersection, then the function returns null
         
 
         <footer>
-            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Jan 18 2018 16:06:50 GMT-0500 (Eastern Standard Time)
+            Documentation generated by <a target="_blank" href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Tue Jan 23 2018 14:15:56 GMT-0500 (Eastern Standard Time)
         </footer>
     </div>
 </div>

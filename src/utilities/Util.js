@@ -11,7 +11,7 @@ export function has(obj, prop) { return Object.prototype.hasOwnProperty.call(obj
 export function setOptions(options, defaults) {
     let out = {};
     for (const v in defaults) {
-        out[v] = options[v] ? options[v] : defaults[v];
+        out[v] = options[v] !== undefined ? options[v] : defaults[v];
     }
     return out;
 }

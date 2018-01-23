@@ -24,10 +24,34 @@ class Polygon {
      *  the verticies.
      */
     constructor(corners = null, center = null) {
-        this.corners = corners ? corners : [];
+        this.corners = corners ? Polygon._orderClockwise(corners) : [];
         this.center = center ? center : this.centroid();
         this._bbox = null;
     }
+
+    //---- Private Polygon Helper Functions -----------------------------------
+
+    /**
+     * Private Polygon Helper Funciton:
+     *   Order a list of points in clockwise order for proper polygon rendering
+     * 
+     * @private
+     * @static
+     * @param {Vector[]} points The list of points to sort clockwise
+     * @return {Vector[]} The ordered list of points
+     * @memberof Polygon
+     */
+    static _orderClockwise(points) {
+        const center = Vector.avg(points);
+        points.sort((a, b) => {
+            return Math.atan2(b.y - center.y, b.x - center.x) -
+                   Math.atan2(a.y - center.y, a.x - center.x);
+        });
+
+        return points;
+    }
+
+    //---- Polygon Property Functions -----------------------------------------
 
     /**
      * Get the centroid of the polygon. This is the vector average of all the
@@ -71,6 +95,39 @@ class Polygon {
     }
 
     /**
+     * Get the edge lines of the polygon
+     * 
+     * @return {Line[]} The edges of the polygon
+     * @memberof Polygon
+     */
+    get edges() {
+        if (this._edges) {
+            return this._edges;
+        }
+
+        let edges = [];
+        const len = this.corners.length;
+        for (let i = 0; i < len; i++) {
+            const c1 = this.corners[i];
+            const c2 = this.corners[(i + 1) % len];
+            edges.push(new Line(c1, c2));
+        }
+        this._edges = edges;
+        return this._edges;
+    }
+
+    /**
+     * Set the edge lines of a polygon.
+     * Note: This does not change the corners of the polygons,
+     *   only use this if you know what you are doing
+     * 
+     * @memberof Polygon
+     */
+    set edges(edges) {
+        this._edges = edges;
+    }
+
+    /**
      * Get the polygon inset of the current polygon by the input ammount
      * 
      * @param ammount
@@ -85,12 +142,69 @@ class Polygon {
      * Returns wheither or not this polygon is a convex polygon. If this is
      * not true then the polygon is convace or more complex.
      * 
-     * @returns {boolean} If the polygon is convex
+     * @return {boolean} If the polygon is convex
      * @memberof Polygon
      */
     isConvex() {
 
     }
+
+    /**
+     * Get the major axis of this polygon. The major axis is the two verticies
+     * of the polygon that are the furthest appart from eachother
+     * 
+     * @return {Line} The major axis of the polygon
+     * @memberof Polygon
+     */
+    majorAxis() {
+        let v1 = null;
+        let v2 = null;
+        let maxDist = 0;
+        let dist;
+
+        for (const c1 of this.corners) {
+            for (const c2 of this.corners) {
+                if (!Vector.equals(c1, c2)) {
+                    dist = Vector.dist2(c1, c2);
+                    if (dist > maxDist) {
+                        maxDist = dist;
+                        v1 = c1;
+                        v2 = c2;
+                    }
+                }
+            }
+        }
+
+        return new Line(v1, v2);
+    }
+
+    /**
+     * Get the minor axis of the polygon. The minor axis is considered to be
+     * the perpendicular to the major axis. This is not the two verticies
+     * that are closest to eachother. This insures that the polygon is more
+     * evenly divided in half along what should be the shorter portion of the
+     * polygon.
+     * 
+     * @return {Line | null} The minor axis of the polygon, if there was a
+     *  problem null is returned
+     * @memberof Polygon
+     * @todo Fix line intersection bug. Line intersection should always return 2
+     *  segments but is sometimes returning 1 or 0.
+     */
+    minorAxis() {
+        const majorAxis = this.majorAxis();
+        const minorSegment = Line.perpendicular(majorAxis, majorAxis.length() * 2);
+        const clippedList = this.lineIntersection(minorSegment);
+
+        // Temporary
+        if (clippedList.length < 2) {
+            return null;
+        }
+
+        return new Line(clippedList[0], clippedList[1]);
+    }
+
+    //---- Member Functions ---------------------------------------------------
 
     rotate() {
 
@@ -143,12 +257,11 @@ class Polygon {
         let intersectPoints = [];
         const len = this.corners.length;
         for (let i = 0; i < len; i++) {
-            const next = i + 1 === len ? 0 : i + 1;
-            const edge = new Line(this.corners[i], this.corners[next]);
+            const edge = new Line(this.corners[i], this.corners[(i + 1) % len]);
             const intersect = Line.intersection(edge, line);
 
             if (intersect !== null) {
-                intersectPoints.push(intersect);
+                Polygon._addPoint(intersectPoints, intersect);
             }
         }
         return intersectPoints;
@@ -177,26 +290,6 @@ class Polygon {
         if (!contains) {
             list.push(vector);
         }
-    }
-
-    /**
-     * Private Polygon Helper Funciton:
-     *   Order a list of points in clockwise order for proper polygon rendering
-     * 
-     * @private
-     * @static
-     * @param {Vector[]} points The list of points to sort clockwise
-     * @return {Vector[]} The ordered list of points
-     * @memberof Polygon
-     */
-    static _orderClockwise(points) {
-        const center = Vector.avg(points);
-        points.sort((a, b) => {
-            return Math.atan2(b.y - center.y, b.x - center.x) -
-                   Math.atan2(a.y - center.y, a.x - center.x);
-        });
-
-        return points;
     }
 
     /**
@@ -238,7 +331,7 @@ class Polygon {
             }
         }
 
-        return new Polygon(Polygon._orderClockwise(clippedCorners));
+        return new Polygon(clippedCorners);
     }
 
     /**
